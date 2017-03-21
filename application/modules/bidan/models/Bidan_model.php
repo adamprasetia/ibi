@@ -75,7 +75,7 @@ class Bidan_model extends CI_Model
 	{
 		$result = $this->input->get('search');
 		if($result <> ''){
-			return $this->db->where('(a.nomor like "%'.$result.'%" and a.name like "%'.$result.'%")');
+			return $this->db->where('(a.nomor like "%'.$result.'%" or a.name like "%'.$result.'%")');
 		}		
 	}		
 }

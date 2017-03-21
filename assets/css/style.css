@@ -43,7 +43,7 @@
 	margin-bottom:5px;
 }
 .nav-tabs{
-	margin-bottom:5px;
+    margin-top:5px;
 }
 .control-label{
 	min-width:150px;
@@ -140,6 +140,10 @@ textarea.sig{
 }
 .box{
     margin-bottom:5px;
+}
+.box-header{
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #d2d6de;
 }
 .img-table{
     width:30px;

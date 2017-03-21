@@ -33,6 +33,18 @@ class General_model extends CI_Model
 		}
 		return $data;
 	}					
+	function dropdown_with_nomor($tbl_name,$caption,$where = array())
+	{
+		foreach ($where as $key => $value) {
+			$this->db->where($key,$value);
+		}
+		$result = $this->db->get($tbl_name)->result();
+		$data[''] = '- '.$caption.' -';
+		foreach($result as $r){
+			$data[$r->id] = $r->nomor.' - '.$r->name;
+		}
+		return $data;
+	}					
 	function double_check($tabel,$field,$value,$id=false)
 	{
 		$this->db->where($field,$value);
