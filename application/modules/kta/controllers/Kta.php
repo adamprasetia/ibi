@@ -35,7 +35,7 @@ class Kta extends MY_Controller
 		foreach($head_data as $r => $value){
 			$heading[] = anchor($this->data['module'].get_query_string(array('order_column'=>"$r",'order_type'=>$this->general->order_type($r))),"$value ".$this->general->order_icon("$r"));
 		}		
-		$heading[] = $this->lang->line('action');
+		$heading[] = array('data'=>$this->lang->line('action'),'style'=>'min-width:110px');
 		$this->table->set_heading($heading);
 		$result = $this->model->get()->result();
 		$i=1+$offset;
@@ -84,11 +84,15 @@ class Kta extends MY_Controller
 			'bidan'=>$this->input->post('bidan'),
 			'type'=>$this->input->post('type'),
 			'nomor'=>$this->input->post('nomor'),
-			'attachment'=>implode(',',$this->input->post('attachment')),
 			'date'=>format_ymd($this->input->post('date')),
 			'status'=>$this->input->post('status'),
 			'masa_berlaku'=>format_ymd($this->input->post('masa_berlaku'))
 		);
+		if ($this->input->post('attachment')) {
+			$data['attachment'] = implode(',',$this->input->post('attachment'));
+		}else{
+			$data['attachment'] = '';
+		}
 		return $data;
 	}
 	private function _set_rules()

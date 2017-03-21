@@ -105,6 +105,7 @@ class Bidan extends MY_Controller
 			'alamat_rumah'=>$this->input->post('alamat_rumah'),
 			'alamat_praktik'=>$this->input->post('alamat_praktik'),
 			'tlp'=>$this->input->post('tlp'),
+			'golongan_darah'=>$this->input->post('golongan_darah'),
 			'pendidikan'=>$this->input->post('pendidikan'),
 			'kampus'=>$this->input->post('kampus'),
 			'tahun_lulus'=>$this->input->post('tahun_lulus'),
@@ -153,6 +154,7 @@ class Bidan extends MY_Controller
 		$this->form_validation->set_rules('alamat_rumah','Alamat Rumah','trim');
 		$this->form_validation->set_rules('alamat_praktik','Alamat Praktik','trim');
 		$this->form_validation->set_rules('tlp','No Telp/HP','trim');
+		$this->form_validation->set_rules('golongan_darah','Golongan Darah','trim');
 		$this->form_validation->set_rules('pendidikan','Pendidikan','trim');
 		$this->form_validation->set_rules('kampus','Institusi/Kampus','trim');
 		$this->form_validation->set_rules('tahun_lulus','Tahun Lulusan','trim');

@@ -43,7 +43,7 @@ class Bidan_kta extends MY_Controller
 		foreach($head_data as $r => $value){
 			$heading[] = anchor($this->data['index'].get_query_string(array('order_column'=>"$r",'order_type'=>$this->general->order_type($r))),"$value ".$this->general->order_icon("$r"));
 		}		
-		$heading[] = $this->lang->line('action');
+		$heading[] = array('data'=>$this->lang->line('action'),'style'=>'min-width:110px');
 		$this->table->set_heading($heading);
 		$result = $this->model->get($bidan_id)->result();
 		$i=1+$offset;

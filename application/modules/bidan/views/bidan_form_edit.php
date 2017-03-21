@@ -54,6 +54,11 @@
 				<small><?php echo form_error('tlp')?></small>
 			</div>
 			<div class="form-group form-inline">
+				<?php echo form_label('Golongan Darah','golongan_darah',array('class'=>'control-label'))?>
+				<?php echo form_dropdown('golongan_darah',$this->general_model->dropdown('golongan_darah','Golongan Darah'),set_value('golongan_darah',(isset($row->golongan_darah)?$row->golongan_darah:'')),'id="golongan_darah" class="form-control input-sm"')?>
+				<small><?php echo form_error('golongan_darah')?></small>
+			</div>			
+			<div class="form-group form-inline">
 				<?php echo form_label('Pendidikan','pendidikan',array('class'=>'control-label'))?>
 				<?php echo form_dropdown('pendidikan',$this->general_model->dropdown('pendidikan','Pendidikan'),set_value('pendidikan',(isset($row->pendidikan)?$row->pendidikan:'')),'id="pendidikan" class="form-control input-sm"')?>
 				<small><?php echo form_error('pendidikan')?></small>

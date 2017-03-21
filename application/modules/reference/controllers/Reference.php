@@ -70,7 +70,7 @@ class Reference extends MY_Controller
 	private function _field()
 	{
 		$data = array(
-			'name'=>strtoupper($this->input->post('name'))
+			'name'=>$this->input->post('name')
 		);
 		return $data;		
 	}

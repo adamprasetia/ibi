@@ -387,3 +387,50 @@ function opt_year()
     }
     return $return;
 }
+function dateformatindo($vardate,$type='')
+{
+    $hari = array('Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu');
+    $bulan = array(1=>'Januari', 2=>'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
+    $dywk = date('w',strtotime($vardate));
+    $dywk = $hari[$dywk];
+    $dy = date('j',strtotime($vardate));
+    $d = date('d',strtotime($vardate));
+    $mth = date('n',strtotime($vardate));
+    $m = date('M',strtotime($vardate));
+    $mk = date('m',strtotime($vardate));
+    $y = date('y',strtotime($vardate));
+    $mth = $bulan[$mth];
+    $yr = date('Y',strtotime($vardate));
+    $hr = date('H',strtotime($vardate));
+    $mi = date('i',strtotime($vardate));
+
+    if ($type=='') {
+        return $dywk.', '.$dy.' '.$mth.' '.$yr.'';
+    } elseif ($type=='1') {
+        return $dywk.', '.$dy.' '.$mth.' '.$yr.' | '.$hr.':'.$mi.' WIB';
+    }elseif($type=='2') {
+        return $dy.' '.$mth.' '.$yr.'';
+    }elseif($type=='3'){
+        return $dy.' '.$mth.' '.$yr.' &nbsp; '.$hr.':'.$mi.' WIB';
+    }elseif($type=='4'){
+        return $dywk.', '.$dy.' '.$mth.' '.$yr ;
+    }elseif($type=='5'){
+        return $dy.'/'.$m.'/'.$yr.' | '.$hr.':'.$mi.' WIB';
+    }elseif($type=='7'){
+        return $dywk.', '.$dy.' '.$mth.' '.$yr.' - '.$hr.':'.$mi.' WIB';
+    }elseif($type=='d'){
+        return $d;
+    }elseif($type=='mth'){
+        return $mth;
+    }elseif($type=='yr'){
+        return $yr;
+    }elseif($type=='my'){
+        return $m .' '.$y;
+    }elseif($type=='6'){
+        return $yr.'/'.$mk.'/'.$d;
+    }elseif ($type==8){
+        return date('Y-m-d',strtotime($vardate)).'T'.date('H:i:s',strtotime($vardate)).'Z';
+    }elseif ($type==10){
+        return $d." ".$mth." ".$yr;
+    }
+}
