@@ -1,24 +1,20 @@
 <section class="content-header">
 	<h1>
-		<?php echo $this->lang->line('menu_reference') ?>
-		<small><?php echo $heading?></small>
+		<?php echo $title; ?>
+		<small><?php echo $subtitle; ?></small>
 	</h1>
 	<ol class="breadcrumb">
-		<li><?php echo anchor('home','<span class="glyphicon glyphicon-home"></span> '.$this->lang->line('home'))?></li>
-	    <li><?php echo anchor($breadcrumb,$this->lang->line('list'))?></li>
-	    <li class="active"><?php echo $heading?></li>
+		<li><a href="<?php echo site_url('home') ?>"><span class="glyphicon glyphicon-home"></span> Beranda</a></li>
+		<li><a href="<?php echo site_url('reference/'.$section.get_query_string()) ?>">List</a></li>
+	    <li class="active"><?php echo $title; ?></li>
 	</ol>
 </section>
 <section class="content">
-	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation" class="active"><?php echo $add_btn ?></li>
-		<li role="presentation"><?php echo $list_btn ?></li>
-	</ul>
 	<?php echo $this->session->flashdata('alert')?>
-	<?php echo form_open($action)?>
+	<form action="<?php echo $action; ?>" method="post" class="form-inline">
 	<div class="box box-default">
 		<div class="box-header owner">
-			<?php echo $owner?>
+			<?php echo $owner; ?>
 		</div>
 		<div class="box-body">
 			<div class="form-group form-inline">
@@ -28,9 +24,9 @@
 			</div>
 		</div>
 		<div class="box-footer">
-			<button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Are you sure')"><span class="glyphicon glyphicon-save"></span> Save</button>
-			<?php echo anchor($breadcrumb,'<span class="glyphicon glyphicon-repeat"></span> Back',array('class'=>'btn btn-danger btn-sm'))?>
+			<button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apa anda yakin ?')"><span class="glyphicon glyphicon-save"></span> Simpan</button>
+			<a href="<?php echo site_url('reference/'.$section.get_query_string()) ?>" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-repeat"></span> Kembali</a>
 		</div>
 	</div>
-	<?php echo form_close()?>
+	</form>
 </section>

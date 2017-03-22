@@ -3,12 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends MY_Controller {
 
+	function __construct()
+	{
+		parent::__construct();
+	}
 	public function index()
 	{
-		// $menu = $this->general->get_menu();
-		// echo "<pre>";var_dump($menu);exit;
-		// echo "<pre>";var_dump($this->user_login['url']);exit;
-		$data['content'] = $this->load->view('home_view','',true);
+		$home_view['total_bidan'] = $this->general_model->get('bidan')->num_rows();
+		$data['content'] = $this->load->view('home_view',$home_view,true);
 		$this->load->view('template_view',$data);
 	}
 	public function logout()

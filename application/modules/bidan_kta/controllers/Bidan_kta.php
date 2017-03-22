@@ -41,7 +41,7 @@ class Bidan_kta extends MY_Controller
 		$heading[] = form_checkbox(array('id'=>'selectAll','value'=>1));
 		$heading[] = '#';
 		foreach($head_data as $r => $value){
-			$heading[] = anchor($this->data['index'].get_query_string(array('order_column'=>"$r",'order_type'=>$this->general->order_type($r))),"$value ".$this->general->order_icon("$r"));
+			$heading[] = anchor($this->data['index'].'/index/'.$bidan_id.get_query_string(array('order_column'=>"$r",'order_type'=>$this->general->order_type($r))),"$value ".$this->general->order_icon("$r"));
 		}		
 		$heading[] = array('data'=>$this->lang->line('action'),'style'=>'min-width:110px');
 		$this->table->set_heading($heading);
@@ -51,10 +51,10 @@ class Bidan_kta extends MY_Controller
 			$this->table->add_row(
 				array('data'=>form_checkbox(array('name'=>'check[]','value'=>$r->id)),'width'=>'10px'),
 				$i++,
-				format_dmy($r->date),
+				dateformatindo($r->date,2),
 				$r->bidan_kta_type_name,
 				$r->nomor,
-				format_dmy($r->masa_berlaku),
+				dateformatindo($r->masa_berlaku,2),
 				$r->bidan_kta_status_name,
 				anchor($this->data['index'].'/edit/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
 				."&nbsp;|&nbsp;".anchor($this->data['index'].'/delete/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
@@ -89,11 +89,13 @@ class Bidan_kta extends MY_Controller
 		$data = array(
 			'type'=>$this->input->post('type'),
 			'nomor'=>$this->input->post('nomor'),
-			'attachment'=>implode(',',$this->input->post('attachment')),
 			'date'=>format_ymd($this->input->post('date')),
 			'status'=>$this->input->post('status'),
 			'masa_berlaku'=>format_ymd($this->input->post('masa_berlaku'))
 		);
+		if ($this->input->post('attachment')) {
+			$data['attachment'] = implode(',',$this->input->post('attachment'));
+		}
 		return $data;
 	}
 	private function _set_rules()

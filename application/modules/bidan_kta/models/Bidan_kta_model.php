@@ -20,7 +20,7 @@ class Bidan_kta_model extends CI_Model
 			$data[] = $this->db->where('a.type',$this->input->get('type'));
 		if($this->input->get('status') <> '')
 			$data[] = $this->db->where('a.status',$this->input->get('status'));
-		$data[] = $this->db->order_by($this->general->get_order_column('a.id'),$this->general->get_order_type('desc'));
+		$data[] = $this->db->order_by($this->general->get_order_column('a.masa_berlaku'),$this->general->get_order_type('desc'));
 		$data[] = $this->db->offset($this->general->get_offset());
 		return $data;
 	}

@@ -7,10 +7,10 @@ class Bidan extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['title'] = 'Bidan';
-		$this->data['subtitle'] = 'List';
-		$this->data['index'] = 'bidan';
-		$this->load->model($this->data['index'].'_model','model');
+		$this->data['title'] = 'Master Bidan';
+		$this->data['subtitle'] = 'Pengolahan data bidan';
+		$this->data['module'] = 'bidan';
+		$this->load->model($this->data['module'].'_model','model');
 		$this->load->helper('text');
 	}
 	public function index()
@@ -19,20 +19,14 @@ class Bidan extends MY_Controller
 		$limit = $this->general->get_limit();
 		$total = $this->model->count_all();
 		
-		$this->data['action'] = $this->data['index'].'/search'.get_query_string(null,'offset');
-		$this->data['action_delete'] = $this->data['index'].'/delete'.get_query_string();
-		$this->data['add_btn'] = anchor($this->data['index'].'/add',$this->lang->line('new'),array('role'=>'tab'));
-		$this->data['list_btn'] = anchor($this->data['index'],$this->lang->line('list'),array('role'=>'tab'));
-		$this->data['delete_btn'] = '<button id="delete-btn" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> '.$this->lang->line('delete_by_checked').'</button>';
-
 		$this->table->set_template(tbl_tmp());
 		$head_data = array(
 			'nomor' => 'No Rekomendasi',
 			'name' => 'Nama Lengkap',
 			// 'tempat_lahir' => 'Tempat Lahir',
 			'tanggal_lahir' => 'TTL',
-			'alamat_rumah' => 'Alamat Rumah',
-			'alamat_praktik' => 'Alamat Praktik',
+			// 'alamat_rumah' => 'Alamat Rumah',
+			// 'alamat_praktik' => 'Alamat Praktik',
 			'tlp' => 'No Telp/HP',
 			// 'pendidikan_name' => 'Pendidikan',
 			// 'kampus' => 'Institusi/Kampus',
@@ -44,9 +38,9 @@ class Bidan extends MY_Controller
 		$heading[] = form_checkbox(array('id'=>'selectAll','value'=>1));
 		$heading[] = '#';
 		foreach($head_data as $r => $value){
-			$heading[] = anchor($this->data['index'].get_query_string(array('order_column'=>"$r",'order_type'=>$this->general->order_type($r))),"$value ".$this->general->order_icon("$r"));
+			$heading[] = anchor($this->data['module'].get_query_string(array('order_column'=>"$r",'order_type'=>$this->general->order_type($r))),"$value ".$this->general->order_icon("$r"));
 		}		
-		$heading[] = $this->lang->line('action');
+		$heading[] = array('data'=>$this->lang->line('action'),'style'=>'min-width:115px');
 		$this->table->set_heading($heading);
 		$result = $this->model->get()->result();
 		$i=1+$offset;
@@ -54,12 +48,12 @@ class Bidan extends MY_Controller
 			$this->table->add_row(
 				array('data'=>form_checkbox(array('name'=>'check[]','value'=>$r->id)),'width'=>'10px'),
 				$i++,
-				anchor($this->data['index'].'/edit/'.$r->id.get_query_string(),$r->nomor),
+				anchor($this->data['module'].'/edit/'.$r->id.get_query_string(),$r->nomor),
 				$r->name,
 				// $r->tempat_lahir,
-				$r->tempat_lahir.', '.format_dmy($r->tanggal_lahir),
-				array('data'=>word_limiter($r->alamat_rumah,2),'title'=>$r->alamat_rumah),
-				array('data'=>word_limiter($r->alamat_praktik,2),'title'=>$r->alamat_praktik),
+				$r->tempat_lahir.', '.dateformatindo($r->tanggal_lahir,2),
+				// array('data'=>word_limiter($r->alamat_rumah,2),'title'=>$r->alamat_rumah),
+				// array('data'=>word_limiter($r->alamat_praktik,2),'title'=>$r->alamat_praktik),
 				$r->tlp,
 				// $r->pendidikan_name,
 				// $r->kampus,
@@ -67,22 +61,22 @@ class Bidan extends MY_Controller
 				$r->tempat_kerja,
 				$r->status_pegawai_name,
 				// $r->nip,
-				anchor($this->data['index'].'/edit/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
-				."&nbsp;|&nbsp;".anchor($this->data['index'].'/delete/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
+				anchor($this->data['module'].'/edit/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
+				."&nbsp;|&nbsp;".anchor($this->data['module'].'/delete/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
 			);
 		}
 		$this->data['table'] = $this->table->generate();
 		$this->data['total'] = page_total($offset,$limit,$total);
 		
 		$config = pag_tmp();
-		$config['base_url'] = site_url($this->data['index'].get_query_string(null,'offset'));
+		$config['base_url'] = site_url($this->data['module'].get_query_string(null,'offset'));
 		$config['total_rows'] = $total;
 		$config['per_page'] = $limit;
 
 		$this->pagination->initialize($config); 
 		$this->data['pagination'] = $this->pagination->create_links();
 
-		$this->data['content'] = $this->load->view($this->data['index'].'_list',$this->data,true);
+		$this->data['content'] = $this->load->view($this->data['module'].'_list',$this->data,true);
 		$this->load->view('template_view',$this->data);
 	}
 	public function search()
@@ -93,7 +87,7 @@ class Bidan extends MY_Controller
 			'pendidikan'=>$this->input->post('pendidikan'),
 			'status_pegawai'=>$this->input->post('status_pegawai')
 		);
-		redirect($this->data['index'].get_query_string($data));		
+		redirect($this->data['module'].get_query_string($data));		
 	}
 	private function _field()
 	{
@@ -178,12 +172,9 @@ class Bidan extends MY_Controller
 	{
 		$this->_set_rules();
 		if($this->form_validation->run()===false){
-			$this->data['action'] = $this->data['index'].'/add'.get_query_string();
-			$this->data['add_btn'] = anchor($this->data['index'].'/add',$this->lang->line('new'),array('role'=>'tab'));
-			$this->data['list_btn'] = anchor($this->data['index'],$this->lang->line('list'),array('role'=>'tab'));
-			$this->data['breadcrumb'] = $this->data['index'].get_query_string();
+			$this->data['action'] = $this->data['module'].'/add'.get_query_string();
 			$this->data['owner'] = '';
-			$this->data['content'] = $this->load->view($this->data['index'].'_form_add',$this->data,true);
+			$this->data['content'] = $this->load->view($this->data['module'].'_form_add',$this->data,true);
 			$this->load->view('template_view',$this->data);
 		}else{
 			$field = $this->_field();
@@ -229,7 +220,7 @@ class Bidan extends MY_Controller
 				}
 			}
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('new_success').'</div>');
-			redirect($this->data['index'].'/add'.get_query_string());
+			redirect($this->data['module'].'/add'.get_query_string());
 		}
 	}
 	public function edit($id)
@@ -237,15 +228,11 @@ class Bidan extends MY_Controller
 		$this->_set_rules();
 		if($this->form_validation->run()===false){
 			$this->data['bidan_id'] = $id;
-			$this->data['add_btn'] = anchor(current_url(),$this->lang->line('edit'),array('role'=>'tab'));
-			$this->data['list_btn'] = anchor($this->data['index'],$this->lang->line('list'),array('role'=>'tab'));
 			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
 			$this->data['row']->tanggal_lahir = format_dmy($this->data['row']->tanggal_lahir);
-			$this->data['action'] = $this->data['index'].'/edit/'.$id.get_query_string();
-			$this->data['breadcrumb'] = $this->data['index'].get_query_string();
-			$this->data['heading'] = $this->lang->line('edit');
+			$this->data['action'] = $this->data['module'].'/edit/'.$id.get_query_string();
 			$this->data['owner'] = owner($this->data['row']);
-			$this->data['content'] = $this->load->view($this->data['index'].'_form_edit',$this->data,true);
+			$this->data['content'] = $this->load->view($this->data['module'].'_form_edit',$this->data,true);
 			$this->load->view('template_view',$this->data);
 		}else{
 			$field = $this->_field();
@@ -254,7 +241,7 @@ class Bidan extends MY_Controller
 			$data['date_update'] = date('Y-m-d H:i:s');
 			$this->model->edit($id,$data);
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('edit_success').'</div>');
-			redirect($this->data['index'].'/edit/'.$id.get_query_string());
+			redirect($this->data['module'].'/edit/'.$id.get_query_string());
 		}
 	}
 	public function delete($id='')
@@ -279,6 +266,6 @@ class Bidan extends MY_Controller
 			}
 		}
 		$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('delete_success').'</div>');
-		redirect($this->data['index'].get_query_string());
+		redirect($this->data['module'].get_query_string());
 	}
 }

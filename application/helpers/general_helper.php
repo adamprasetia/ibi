@@ -389,6 +389,9 @@ function opt_year()
 }
 function dateformatindo($vardate,$type='')
 {
+    if ($vardate=='0000-00-00') {
+        return '';
+    }
     $hari = array('Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu');
     $bulan = array(1=>'Januari', 2=>'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
     $dywk = date('w',strtotime($vardate));
@@ -432,5 +435,15 @@ function dateformatindo($vardate,$type='')
         return date('Y-m-d',strtotime($vardate)).'T'.date('H:i:s',strtotime($vardate)).'Z';
     }elseif ($type==10){
         return $d." ".$mth." ".$yr;
+    }
+}
+function reminder_badge($date)
+{
+    if (date('Ymd',strtotime($date)) <= date('Ymd')) {
+        return 'bg-red';
+    }else if (date('Ymd',strtotime($date)) <= date('Ymd', strtotime("+1 month", time()))) {
+        return 'bg-yellow';
+    }else{
+        return 'bg-green';
     }
 }

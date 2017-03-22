@@ -4,19 +4,20 @@
 		<small><?php echo $subtitle ?></small>
 	</h1>
 	<ol class="breadcrumb">
-		<li><?php echo anchor('home','<span class="glyphicon glyphicon-home"></span> '.$this->lang->line('home'))?></li>
+		<li><a href="<?php echo site_url('home') ?>"><span class="glyphicon glyphicon-home"></span> Beranda</a></li>
 		<li class="active"><?php echo $title ?></li>
 	</ol>
 </section>
 <section class="content">
-	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation"><?php echo $add_btn ?></li>
-		<li role="presentation" class="active"><?php echo $list_btn ?></li>
-	</ul>
 	<?php echo $this->session->flashdata('alert')?>
 	<div class="box box-default">
-		<div class="box-body">
-			<?php echo form_open($action,array('class'=>'form-inline'))?>
+		<div class="box-body">		
+			<a href="<?php echo site_url('bidan/add'.get_query_string()) ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
+		</div>
+	</div>		
+	<div class="box box-default">
+		<div class="box-header">
+			<form action="<?php echo site_url($module.'/search'.get_query_string(null,'offset')) ?>" method="post" class="form-inline">
 				<div class="form-group">
 					<?php echo form_dropdown('limit',array('10'=>'10','50'=>'50','100'=>'100'),set_value('limit',$this->input->get('limit')),'onchange="submit()" class="form-control input-sm"')?> 
 				</div>
@@ -29,23 +30,27 @@
 				<div class="form-group">
 					<?php echo form_dropdown('status_pegawai',$this->general_model->dropdown('status_pegawai','Status Kepegawaian'),$this->input->get('status_pegawai'),'class="form-control input-sm" onchange="submit()"')?>
 				</div>
-			<?php echo form_close()?>
-			<?php echo form_open($action_delete,array('class'=>'form-check-delete'))?>
-			<div class="table-responsive">
-				<?php echo $table?>
-			</div>
-			<?php echo form_close()?>
+			</form>
 		</div>
-		<div class="box-footer">
-			<?php echo form_label($total,'',array('class'=>'label-footer'))?>
-			<div class="pull-right">
-				<?php echo $pagination?>
-			</div>
-		</div>		
+		<div class="box-body">
+			<form action="<?php echo site_url($module.'/delete'.get_query_string()) ?>" method="post" class="form-check-delete">
+				<div class="table-responsive">
+					<?php echo $table; ?>
+				</div>
+			</form>
+		</div>
 	</div>
 	<div class="box box-default">
+		<div class="box-body">
+			<label class="label-footer"><?php echo $total; ?></label>
+			<div class="pull-right">
+				<?php echo $pagination; ?>
+			</div>
+		</div>
+	</div>	
+	<div class="box box-default">
 		<div class="box-body">		
-			<?php echo $delete_btn?>
+			<button id="delete-btn" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> Hapus yang diceklis</button>
 		</div>
 	</div>	
 </section>

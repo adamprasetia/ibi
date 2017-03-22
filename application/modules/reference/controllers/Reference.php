@@ -7,6 +7,8 @@ class Reference extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->data['title'] = 'Master '.ucfirst(str_replace('_',' ',$this->uri->segment(2)));
+		$this->data['subtitle'] = 'Pengolahan data referensi '.ucfirst(str_replace('_',' ',$this->uri->segment(2)));
 		$this->data['index'] = 'reference';
 		$this->data['section'] = $this->uri->segment(2);
 		$this->load->model($this->data['index'].'_model','model');
@@ -16,12 +18,6 @@ class Reference extends MY_Controller
 		$offset = $this->general->get_offset();
 		$limit = $this->general->get_limit();
 		$total = $this->model->count_all();
-
-		$xdata['action'] = $this->data['index'].'/'.$this->data['section'].'/search'.get_query_string(null,'offset');
-		$xdata['action_delete'] = $this->data['index'].'/'.$this->data['section'].'/delete'.get_query_string();
-		$xdata['add_btn'] = anchor($this->data['index'].'/'.$this->data['section'].'/add',$this->lang->line('new'),array('role'=>'tab'));
-		$xdata['list_btn'] = anchor($this->data['index'].'/'.$this->data['section'],$this->lang->line('list'),array('role'=>'tab'));
-		$xdata['delete_btn'] = '<button id="delete-btn" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> '.$this->lang->line('delete_by_checked').'</button>';
 
 		$this->table->set_template(tbl_tmp());
 		$head_data = array(
@@ -45,8 +41,8 @@ class Reference extends MY_Controller
 				."&nbsp;|&nbsp;".anchor($this->data['index'].'/'.$this->data['section'].'/delete/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
 			);
 		}
-		$xdata['table'] = $this->table->generate();
-		$xdata['total'] = page_total($offset,$limit,$total);
+		$this->data['table'] = $this->table->generate();
+		$this->data['total'] = page_total($offset,$limit,$total);
 		
 		$config = pag_tmp();
 		$config['base_url'] = site_url($this->data['index'].'/'.$this->data['section'].get_query_string(null,'offset'));
@@ -54,9 +50,9 @@ class Reference extends MY_Controller
 		$config['per_page'] = $limit;
 
 		$this->pagination->initialize($config); 
-		$xdata['pagination'] = $this->pagination->create_links();
+		$this->data['pagination'] = $this->pagination->create_links();
 
-		$data['content'] = $this->load->view($this->data['index'].'_list',$xdata,true);
+		$data['content'] = $this->load->view($this->data['index'].'_list',$this->data,true);
 		$this->load->view('template_view',$data);
 	}
 	public function search()
@@ -82,13 +78,9 @@ class Reference extends MY_Controller
 	{
 		$this->_set_rules();
 		if($this->form_validation->run()===false){
-			$xdata['action'] = $this->data['index'].'/'.$this->data['section'].'/add'.get_query_string();
-			$xdata['add_btn'] = anchor($this->data['index'].'/'.$this->data['section'].'/add',$this->lang->line('new'),array('role'=>'tab'));
-			$xdata['list_btn'] = anchor($this->data['index'].'/'.$this->data['section'],$this->lang->line('list'),array('role'=>'tab'));
-			$xdata['breadcrumb'] = $this->data['index'].'/'.$this->data['section'].get_query_string();
-			$xdata['heading'] = $this->lang->line('new');
-			$xdata['owner'] = '';
-			$data['content'] = $this->load->view($this->data['index'].'_form',$xdata,true);
+			$this->data['action'] = $this->data['index'].'/'.$this->data['section'].'/add'.get_query_string();
+			$this->data['owner'] = '';
+			$data['content'] = $this->load->view($this->data['index'].'_form',$this->data,true);
 			$this->load->view('template_view',$data);
 		}else{
 			$data = $this->_field();
@@ -103,14 +95,10 @@ class Reference extends MY_Controller
 	{
 		$this->_set_rules();
 		if($this->form_validation->run()===false){
-			$xdata['add_btn'] = anchor(current_url(),$this->lang->line('edit'),array('role'=>'tab'));
-			$xdata['list_btn'] = anchor($this->data['index'].'/'.$this->data['section'],$this->lang->line('list'),array('role'=>'tab'));
-			$xdata['row'] = $this->model->get_from_field('id',$id)->row();
-			$xdata['action'] = $this->data['index'].'/'.$this->data['section'].'/edit/'.$id.get_query_string();
-			$xdata['breadcrumb'] = $this->data['index'].'/'.$this->data['section'].get_query_string();
-			$xdata['heading'] = $this->lang->line('edit');
-			$xdata['owner'] = owner($xdata['row']);
-			$data['content'] = $this->load->view($this->data['index'].'_form',$xdata,true);
+			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
+			$this->data['action'] = $this->data['index'].'/'.$this->data['section'].'/edit/'.$id.get_query_string();
+			$this->data['owner'] = owner($this->data['row']);
+			$data['content'] = $this->load->view($this->data['index'].'_form',$this->data,true);
 			$this->load->view('template_view',$data);
 		}else{
 			$data = $this->_field();
