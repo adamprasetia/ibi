@@ -97,7 +97,7 @@ class Reference extends MY_Controller
 		if($this->form_validation->run()===false){
 			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
 			$this->data['action'] = $this->data['index'].'/'.$this->data['section'].'/edit/'.$id.get_query_string();
-			$this->data['owner'] = owner($this->data['row']);
+			$this->data['owner'] = '<div class="box-header owner">'.owner($this->data['row']).'</div>';
 			$data['content'] = $this->load->view($this->data['index'].'_form',$this->data,true);
 			$this->load->view('template_view',$data);
 		}else{

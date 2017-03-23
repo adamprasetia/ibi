@@ -231,7 +231,7 @@ class Bidan extends MY_Controller
 			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
 			$this->data['row']->tanggal_lahir = format_dmy($this->data['row']->tanggal_lahir);
 			$this->data['action'] = $this->data['module'].'/edit/'.$id.get_query_string();
-			$this->data['owner'] = owner($this->data['row']);
+			$this->data['owner'] = '<div class="box-header owner">'.owner($this->data['row']).'</div>';
 			$this->data['content'] = $this->load->view($this->data['module'].'_form_edit',$this->data,true);
 			$this->load->view('template_view',$this->data);
 		}else{

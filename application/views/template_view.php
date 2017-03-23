@@ -28,8 +28,8 @@
 <div class="wrapper">
   <header class="main-header">
     <a href="<?php echo base_url() ?>" class="logo">
-      <span class="logo-mini"><b><?php echo config_item('app_alias') ?></b></span>
-      <span class="logo-lg"><b><?php echo config_item('app_name') ?></b></span>
+      <span class="logo-mini"><b><?php echo config_item('app_alias'); ?></b></span>
+      <span class="logo-lg"><b><?php echo config_item('app_alias'); ?></b></span>
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -39,13 +39,13 @@
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="hidden-xs"><?php echo $this->user_login['name'] ?></span>
+              <span class="hidden-xs"><?php echo $this->user_login['name']; ?></span>
             </a>
             <ul class="dropdown-menu">
               <li class="user-header">
                 <p>
-                  <?php echo $this->user_login['name'] ?>
-                  <small><?php echo $this->user_login['level_name'] ?></small>
+                  <?php echo $this->user_login['name']; ?>
+                  <small><?php echo $this->user_login['level_name']; ?></small>
                 </p>
               </li>
               <li class="user-footer">
@@ -64,12 +64,24 @@
   </header>
   <aside class="main-sidebar">
     <section class="sidebar">
-      <?php echo $this->menu ?>
+      <?php echo $this->menu; ?>
     </section>
   </aside>
 
     <div class="content-wrapper">
-        <?php echo $content ?>
+      <section class="content-header">
+        <h1>
+          <?php echo $title ?>
+          <small><?php echo $subtitle ?></small>
+        </h1>
+        <ol class="breadcrumb">
+          <li><a href="<?php echo site_url('home') ?>"><span class="glyphicon glyphicon-home"></span> Beranda</a></li>
+          <li class="active"><?php echo $title; ?></li>
+        </ol>
+      </section>
+      <section class="content">
+        <?php echo $content; ?>
+      </section>
     </div>
 
     <footer class="main-footer">

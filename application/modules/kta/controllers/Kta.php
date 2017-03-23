@@ -132,7 +132,7 @@ class Kta extends MY_Controller
 			$this->data['row']->date = format_dmy($this->data['row']->date);
 			$this->data['row']->attachment = explode(',', $this->data['row']->attachment);
 			$this->data['action'] = $this->data['module'].'/edit/'.$id.get_query_string();
-			$this->data['owner'] = owner($this->data['row']);
+			$this->data['owner'] = '<div class="box-header owner">'.owner($this->data['row']).'</div>';
 			$this->data['content'] = $this->load->view($this->data['module'].'_form',$this->data,true);
 			$this->load->view('template_view',$this->data);
 		}else{

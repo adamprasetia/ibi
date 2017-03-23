@@ -27,7 +27,7 @@ class Backup extends MY_Controller {
 
         $backup =& $this->dbutil->backup($prefs); 
 
-        $db_name = 'bear_'.date("Y-m-d-H-i-s").'.zip';
+        $db_name = 'ibi_'.date("Y-m-d-H-i-s").'.zip';
         $save = './backup/'.$db_name;
 
         $this->load->helper('file');

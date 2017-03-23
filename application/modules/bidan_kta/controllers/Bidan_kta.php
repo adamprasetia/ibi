@@ -24,11 +24,6 @@ class Bidan_kta extends MY_Controller
 		
 		$this->data['bidan_id'] = $bidan_id;
 		$this->data['bidan'] = $this->general_model->get_from_field('bidan','id',$bidan_id)->row();
-		$this->data['action'] = $this->data['index'].'/search/'.$bidan_id.get_query_string(null,'offset');
-		$this->data['action_delete'] = $this->data['index'].'/delete/'.$bidan_id.get_query_string();
-		$this->data['add_btn'] = anchor($this->data['index'].'/add/'.$bidan_id,$this->lang->line('new'),array('role'=>'tab'));
-		$this->data['list_btn'] = anchor($this->data['index'].'/index/'.$bidan_id,$this->lang->line('list'),array('role'=>'tab'));
-		$this->data['delete_btn'] = '<button id="delete-btn" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span> '.$this->lang->line('delete_by_checked').'</button>';
 
 		$this->table->set_template(tbl_tmp());
 		$head_data = array(
@@ -114,9 +109,6 @@ class Bidan_kta extends MY_Controller
 			$this->data['bidan_id'] = $bidan_id;
 			$this->data['bidan'] = $this->general_model->get_from_field('bidan','id',$bidan_id)->row();
 			$this->data['action'] = $this->data['index'].'/add/'.$bidan_id.get_query_string();
-			$this->data['add_btn'] = anchor($this->data['index'].'/add/'.$bidan_id,$this->lang->line('new'),array('role'=>'tab'));
-			$this->data['list_btn'] = anchor($this->data['index'].'/index/'.$bidan_id,$this->lang->line('list'),array('role'=>'tab'));
-			$this->data['breadcrumb'] = $this->data['index'].get_query_string();
 			$this->data['owner'] = '';
 			$this->data['content'] = $this->load->view($this->data['view'].'_form',$this->data,true);
 			$this->load->view('template_view',$this->data);
@@ -137,16 +129,12 @@ class Bidan_kta extends MY_Controller
 			$this->data['attachment'] = $this->general_model->get('bidan_kta_attachment')->result();
 			$this->data['bidan_id'] = $bidan_id;
 			$this->data['bidan'] = $this->general_model->get_from_field('bidan','id',$bidan_id)->row();
-			$this->data['add_btn'] = anchor(current_url(),$this->lang->line('edit'),array('role'=>'tab'));
-			$this->data['list_btn'] = anchor($this->data['index'].'/index/'.$bidan_id,$this->lang->line('list'),array('role'=>'tab'));
 			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
 			$this->data['row']->masa_berlaku = format_dmy($this->data['row']->masa_berlaku);
 			$this->data['row']->date = format_dmy($this->data['row']->date);
 			$this->data['row']->attachment = explode(',', $this->data['row']->attachment);
 			$this->data['action'] = $this->data['index'].'/edit/'.$bidan_id.'/'.$id.get_query_string();
-			$this->data['breadcrumb'] = $this->data['index'].get_query_string();
-			$this->data['heading'] = $this->lang->line('edit');
-			$this->data['owner'] = owner($this->data['row']);
+			$this->data['owner'] = '<div class="box-header owner">'.owner($this->data['row']).'</div>';
 			$this->data['content'] = $this->load->view($this->data['view'].'_form',$this->data,true);
 			$this->load->view('template_view',$this->data);
 		}else{
