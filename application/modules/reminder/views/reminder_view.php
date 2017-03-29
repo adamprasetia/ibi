@@ -15,7 +15,7 @@
 			    <?php $i=1;foreach ($kta_expire as $row): ?>				    	
 			    <tr>
 			      <td><?php echo $i ?>.</td>
-			      <td><a href="<?php echo site_url('bidan/kta/index/'.$row->bidan) ?>"><?php echo $row->bidan_name ?></a></td>
+			      <td><a href="<?php echo site_url('bidan/kta/index/'.$row->bidan_id) ?>"><?php echo $row->bidan_name ?></a></td>
 			      <td><span class="badge <?php echo reminder_badge($row->masa_berlaku) ?>"><?php echo dateformatindo($row->masa_berlaku,2) ?></span></td>
 			    </tr>
 			    <?php $i++;endforeach ?>

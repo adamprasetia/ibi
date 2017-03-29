@@ -8,13 +8,9 @@ class Bidan_model extends CI_Model
 	function query()
 	{	
 		$data[] = $this->db->select(array(
-			'a.*',
-			'b.name as pendidikan_name',
-			'c.name as status_pegawai_name'
+			'a.*'
 		));
 		$data[] = $this->db->from($this->tbl_name.' a');
-		$data[] = $this->db->join('pendidikan b','a.pendidikan = b.id','left');
-		$data[] = $this->db->join('status_pegawai c','a.status_pegawai = c.id','left');
 		$data[] = $this->search();
 		if($this->input->get('pendidikan') <> '')
 			$data[] = $this->db->where('a.pendidikan',$this->input->get('pendidikan'));

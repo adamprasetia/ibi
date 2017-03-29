@@ -16,7 +16,7 @@ class Bidan extends CI_Controller
 		foreach($result as $row){
 			$data[] = array(
 				'id'=>$row->id,
-				'name'=>$row->nomor.' - '.$row->name
+				'name'=>$row->name
 			);
 		}
 		echo json_encode($data);

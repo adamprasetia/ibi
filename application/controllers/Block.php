@@ -11,7 +11,8 @@ class Block extends MY_Controller
 	}
 	public function index()
 	{
-		$block_view['title'] = 'Oops, Maaf Anda tidak berhak mengakses content ini!';
+		$block_view['title'] = 'Blocked';
+		$block_view['subtitle'] = '';
 		$data['content'] = $this->load->view('block_view',$block_view,true);
 		$this->load->view('template_view',$data);
 	}

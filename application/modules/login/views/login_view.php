@@ -21,7 +21,7 @@
 <div class="login-box">
     <img src="<?php echo base_url('assets/img/logo.png'); ?>" class="img-responsive center-block" width="200">
     <div class="login-logo">
-        <a href="<?php echo base_url() ?>"><b><?php echo config_item('app_name') ?></b></a>
+        <h3><b><?php echo config_item('app_name') ?></b></h3>
     </div>
     <div class="login-box-body">
         <p class="login-box-msg"><?php echo $this->lang->line('login_quote') ?></p>

@@ -184,11 +184,11 @@ function format_y($date){
     }
 }
 function format_dmy($date){
-    if($date <> '' && $date <> null){
+    if($date <> '' && $date <> null && $date <> '0000-00-00'){
         $x = explode("-",$date);
         return $x[2]."/".$x[1]."/".$x[0];
     }else{
-        return "00/00/0000";
+        return "";
     }
 }
 function timeago($waktu){
@@ -347,7 +347,7 @@ function get_dd(){
     }
     return $data;
 }
-function get_mm(){    
+function get_mm($id = ''){    
     $data = array(
         ''=>'- Bulan -',
         '1'=>'Januari',
@@ -363,6 +363,9 @@ function get_mm(){
         '11'=>'November',
         '12'=>'Desember'
     );
+    if ($id) {
+        return $data[$id];
+    }
     return $data;
 }
 function calcutate_age($dob){

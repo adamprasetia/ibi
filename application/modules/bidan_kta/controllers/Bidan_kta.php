@@ -27,11 +27,9 @@ class Bidan_kta extends MY_Controller
 
 		$this->table->set_template(tbl_tmp());
 		$head_data = array(
-			'date' => 'Tanggal Permohonan',
-			'bidan_kta_type_name' => 'Jenis Pengajuan',
-			'nomor' => 'Nomor',
-			'masa_berlaku' => 'Masa Berlaku',
-			'bidan_kta_status_name' => 'Status'
+			'tanggal' => 'Tanggal Permohonan',
+			'bidan_'.$this->data['modulesub'].'_tipe_name' => 'Jenis Pengajuan',
+			'bidan_'.$this->data['modulesub'].'_status_name' => 'Status'
 		);
 		$heading[] = form_checkbox(array('id'=>'selectAll','value'=>1));
 		$heading[] = '#';
@@ -46,11 +44,9 @@ class Bidan_kta extends MY_Controller
 			$this->table->add_row(
 				array('data'=>form_checkbox(array('name'=>'check[]','value'=>$r->id)),'width'=>'10px'),
 				$i++,
-				dateformatindo($r->date,2),
-				$r->bidan_kta_type_name,
-				$r->nomor,
-				dateformatindo($r->masa_berlaku,2),
-				$r->bidan_kta_status_name,
+				dateformatindo($r->tanggal,2),
+				$r->{'bidan_'.$this->data['modulesub'].'_tipe_name'},
+				$r->{'bidan_'.$this->data['modulesub'].'_status_name'},
 				anchor($this->data['index'].'/edit/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
 				."&nbsp;|&nbsp;".anchor($this->data['index'].'/delete/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
 			);
@@ -74,38 +70,54 @@ class Bidan_kta extends MY_Controller
 		$data = array(
 			'search'=>$this->input->post('search'),
 			'limit'=>$this->input->post('limit'),
-			'type'=>$this->input->post('type'),
-			'status'=>$this->input->post('status')
+			'tipe'=>$this->input->post('tipe'),
+			'status'=>$this->input->post('status'),
+			'date_from'=>$this->input->post('date_from'),
+			'date_to'=>$this->input->post('date_to')
 		);
 		redirect($this->data['index'].'/index/'.$bidan_id.get_query_string($data));		
 	}
 	private function _field()
 	{
 		$data = array(
-			'type'=>$this->input->post('type'),
-			'nomor'=>$this->input->post('nomor'),
-			'date'=>format_ymd($this->input->post('date')),
-			'status'=>$this->input->post('status'),
-			'masa_berlaku'=>format_ymd($this->input->post('masa_berlaku'))
+			'tipe'=>$this->input->post('tipe'),
+			'tanggal'=>format_ymd($this->input->post('tanggal')),
+			'masa_berlaku'=>$this->input->post('masa_berlaku'),
+			'status'=>$this->input->post('status')
 		);
-		if ($this->input->post('attachment')) {
-			$data['attachment'] = implode(',',$this->input->post('attachment'));
+		if ($this->input->post('syarat')) {
+			$data['syarat'] = implode(',',$this->input->post('syarat'));
 		}
 		return $data;
 	}
-	private function _set_rules()
+	public function _check_double($tipe = '',$bidan_id = '')
 	{
-		$this->form_validation->set_rules('type','Jenis Pengajuan','trim');
-		$this->form_validation->set_rules('nomor','Nomor','trim');
-		$this->form_validation->set_rules('date','Tanggal Permohonan','trim');
-		$this->form_validation->set_rules('status','Status','trim');
+		$result = $this->model->check_double($bidan_id);
+		if ($result) {
+			$this->form_validation->set_message('_check_double', 'Sudah terdaftar di pengajuan '.$this->data['title']);	
+			return FALSE;
+		}
+		return TRUE;
+	}	
+	private function _set_rules($bidan_id = '')
+	{
+		// echo $bidan_id;exit;
+		if ($bidan_id) {
+			$this->form_validation->set_rules('tipe','Jenis Pengajuan','required|trim|callback__check_double['.$bidan_id.']');
+		}else{
+			$this->form_validation->set_rules('tipe','Jenis Pengajuan','required|trim');			
+		}		
+		$this->form_validation->set_rules('tanggal','Tanggal Permohonan','required|trim');
 		$this->form_validation->set_rules('masa_berlaku','Masa Berlaku','trim');
+		$this->form_validation->set_rules('status','Status','required|trim');
+		$this->form_validation->set_error_delimiters('<p class="error">','</p>');
+		$this->form_validation->set_message('required', '%s tidak boleh kosong');			
 	}
 	public function add($bidan_id)
 	{
-		$this->_set_rules();
+		$this->_set_rules($bidan_id);
 		if($this->form_validation->run()===false){
-			$this->data['attachment'] = $this->general_model->get('bidan_kta_attachment')->result();
+			$this->data['syarat'] = $this->general_model->get('bidan_'.$this->data['modulesub'].'_syarat')->result();
 			$this->data['bidan_id'] = $bidan_id;
 			$this->data['bidan'] = $this->general_model->get_from_field('bidan','id',$bidan_id)->row();
 			$this->data['action'] = $this->data['index'].'/add/'.$bidan_id.get_query_string();
@@ -126,13 +138,12 @@ class Bidan_kta extends MY_Controller
 	{
 		$this->_set_rules();
 		if($this->form_validation->run()===false){
-			$this->data['attachment'] = $this->general_model->get('bidan_kta_attachment')->result();
+			$this->data['syarat'] = $this->general_model->get('bidan_'.$this->data['modulesub'].'_syarat')->result();
 			$this->data['bidan_id'] = $bidan_id;
 			$this->data['bidan'] = $this->general_model->get_from_field('bidan','id',$bidan_id)->row();
 			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
-			$this->data['row']->masa_berlaku = format_dmy($this->data['row']->masa_berlaku);
-			$this->data['row']->date = format_dmy($this->data['row']->date);
-			$this->data['row']->attachment = explode(',', $this->data['row']->attachment);
+			$this->data['row']->tanggal = format_dmy($this->data['row']->tanggal);
+			$this->data['row']->syarat = explode(',', $this->data['row']->syarat);
 			$this->data['action'] = $this->data['index'].'/edit/'.$bidan_id.'/'.$id.get_query_string();
 			$this->data['owner'] = '<div class="box-header owner">'.owner($this->data['row']).'</div>';
 			$this->data['content'] = $this->load->view($this->data['view'].'_form',$this->data,true);

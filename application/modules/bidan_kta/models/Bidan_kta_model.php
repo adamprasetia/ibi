@@ -9,18 +9,22 @@ class Bidan_kta_model extends CI_Model
 	{	
 		$data[] = $this->db->select(array(
 			'a.*',
-			'b.name as bidan_kta_type_name',
-			'c.name as bidan_kta_status_name'
+			'b.name as '.$this->tbl_name.'_tipe_name',
+			'c.name as '.$this->tbl_name.'_status_name'
 		));
 		$data[] = $this->db->from($this->tbl_name.' a');
-		$data[] = $this->db->join('bidan_kta_type b','a.type = b.id','left');
-		$data[] = $this->db->join('bidan_kta_status c','a.status = c.id','left');
+		$data[] = $this->db->join($this->tbl_name.'_tipe b','a.tipe = b.id','left');
+		$data[] = $this->db->join($this->tbl_name.'_status c','a.status = c.id','left');
 		$data[] = $this->search();
-		if($this->input->get('type') <> '')
-			$data[] = $this->db->where('a.type',$this->input->get('type'));
+		if($this->input->get('tipe') <> '')
+			$data[] = $this->db->where('a.tipe',$this->input->get('tipe'));
 		if($this->input->get('status') <> '')
 			$data[] = $this->db->where('a.status',$this->input->get('status'));
-		$data[] = $this->db->order_by($this->general->get_order_column('a.masa_berlaku'),$this->general->get_order_type('desc'));
+		if($this->input->get('date_from') <> '' && $this->input->get('date_to') <> ''){
+			$data[] = $this->db->where('a.tanggal >=',format_ymd($this->input->get('date_from')));
+			$data[] = $this->db->where('a.tanggal <=',format_ymd($this->input->get('date_to')));
+		}		
+		$data[] = $this->db->order_by($this->general->get_order_column('a.id'),$this->general->get_order_type('desc'));
 		$data[] = $this->db->offset($this->general->get_offset());
 		return $data;
 	}
@@ -31,21 +35,17 @@ class Bidan_kta_model extends CI_Model
 		$this->db->limit($this->general->get_limit());
 		return $this->db->get();
 	}
-	function get_all()
+	function check_double($bidan = '')
 	{
-		$this->query();
-		return $this->db->get($this->tbl_name);
-	}
-	function get_last_id()
-	{
-		$this->db->limit(1);
-		$this->db->order_by('id','desc');
-		$result = $this->db->get($this->tbl_name);
-		if ($result->num_rows()) {
-			return str_pad($result->row()->id+1,3,'0', STR_PAD_LEFT);
+		$this->db->where('bidan',$bidan);
+		$this->db->where('status <>','1');
+		$this->db->from($this->tbl_name);
+		$result = $this->db->get();
+		if ($result->num_rows() > 0) {
+			return TRUE;
 		}
-		return '001';
-	}	
+		return FALSE;
+	}
 	function add($data)
 	{
 		$this->db->insert($this->tbl_name,$data);

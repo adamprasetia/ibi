@@ -56,4 +56,16 @@ class Module_model extends CI_Model
 			return $this->db->where('(name like "%'.$result.'%" OR url like "%'.$result.'%")');
 		}		
 	}		
+	function dropdown($tbl_name,$caption,$where = array())
+	{
+		foreach ($where as $key => $value) {
+			$this->db->where($key,$value);
+		}
+		$result = $this->db->get($tbl_name)->result();
+		$data[''] = '- '.$caption.' -';
+		foreach($result as $r){
+			$data[$r->id] = $r->name;
+		}
+		return $data;
+	}						
 }

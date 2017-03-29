@@ -15,8 +15,8 @@ class Reminder extends MY_Controller
 	public function index()
 	{
 		$this->data['kta_expire'] = $this->model->kta_expire()->result();
+		// echo "<pre>";var_dump($this->model->kta_expire()->result());exit;
 		$this->data['content'] = $this->load->view('reminder_view',$this->data,true);
 		$this->load->view('template_view',$this->data);
-		// echo "<pre>";var_dump($kta_expire);exit;
 	}
 }

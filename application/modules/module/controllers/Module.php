@@ -20,7 +20,7 @@ class Module extends MY_Controller
 
 		$this->table->set_template(tbl_tmp());
 		$head_data = array(
-			'name'=>$this->lang->line('name'),
+			'name'=>'Name',
 			'url'=>'Url',
 			'icon'=>'Icon',
 			'parent'=>'Parent',

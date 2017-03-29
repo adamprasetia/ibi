@@ -35,5 +35,19 @@ class Model extends CI_Model
 		$this->db->where('a.id',$id);
 		$this->db->limit(1);
 		return $this->db->get()->row();
-	}	
+	}
+	function str_before($bidan = '',$tanggal = '')
+	{
+		$this->db->from('bidan_str');
+		$this->db->where('bidan',$bidan);
+		$this->db->where('status','1');
+		$this->db->where('tanggal <',$tanggal);
+		$this->db->order_by('masa_berlaku','desc');
+		$this->db->limit(1);
+		$result = $this->db->get();
+		if ($result->num_rows() > 0) {
+			return $result->row();
+		}
+		return '';
+	}
 }

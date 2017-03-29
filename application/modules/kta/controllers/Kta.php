@@ -7,8 +7,8 @@ class Kta extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->data['title'] = 'KTA';
-		$this->data['subtitle'] = 'List';
+		$this->data['title'] = 'KTA (Kartu Anggota)';
+		$this->data['subtitle'] = 'Perpanjangan dan pembuatan KTA beserta kehilangan';
 		$this->data['module'] = 'kta';
 		$this->data['table'] = 'bidan_kta';
 		$this->load->model($this->data['module'].'_model','model');
@@ -23,12 +23,9 @@ class Kta extends MY_Controller
 		$this->table->set_template(tbl_tmp());
 		$head_data = array(
 			'bidan_name' => 'Nama Pemohon',
-			'bidan_nomor' => 'No Rek Pemohon',
-			'date' => 'Tanggal Permohonan',
-			'bidan_kta_type_name' => 'Jenis Pengajuan',
-			'nomor' => 'No ID KTA',
-			'masa_berlaku' => 'Masa Berlaku',
-			'bidan_kta_status_name' => 'Status'
+			'tanggal' => 'Tanggal Permohonan',
+			'bidan_'.$this->data['module'].'_tipe_name' => 'Jenis Pengajuan',
+			'bidan_'.$this->data['module'].'_status_name' => 'Status'
 		);
 		$heading[] = form_checkbox(array('id'=>'selectAll','value'=>1));
 		$heading[] = '#';
@@ -43,13 +40,10 @@ class Kta extends MY_Controller
 			$this->table->add_row(
 				array('data'=>form_checkbox(array('name'=>'check[]','value'=>$r->id)),'width'=>'10px'),
 				$i++,
-				$r->bidan_name,
-				$r->bidan_nomor,
-				format_dmy($r->date),
-				$r->bidan_kta_type_name,
-				$r->nomor,
-				format_dmy($r->masa_berlaku),
-				$r->bidan_kta_status_name,
+				anchor($this->data['module'].'/edit/'.$r->id.get_query_string(),$r->bidan_name),
+				dateformatindo($r->tanggal,2),
+				$r->{'bidan_'.$this->data['module'].'_tipe_name'},
+				$r->{'bidan_'.$this->data['module'].'_status_name'},
 				anchor($this->data['module'].'/edit/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
 				."&nbsp;|&nbsp;".anchor($this->data['module'].'/delete/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
 			);
@@ -73,8 +67,10 @@ class Kta extends MY_Controller
 		$data = array(
 			'search'=>$this->input->post('search'),
 			'limit'=>$this->input->post('limit'),
-			'type'=>$this->input->post('type'),
-			'status'=>$this->input->post('status')
+			'tipe'=>$this->input->post('tipe'),
+			'status'=>$this->input->post('status'),
+			'date_from'=>$this->input->post('date_from'),
+			'date_to'=>$this->input->post('date_to')
 		);
 		redirect($this->data['module'].'/index'.get_query_string($data));		
 	}
@@ -82,33 +78,46 @@ class Kta extends MY_Controller
 	{
 		$data = array(
 			'bidan'=>$this->input->post('bidan'),
-			'type'=>$this->input->post('type'),
-			'nomor'=>$this->input->post('nomor'),
-			'date'=>format_ymd($this->input->post('date')),
-			'status'=>$this->input->post('status'),
-			'masa_berlaku'=>format_ymd($this->input->post('masa_berlaku'))
+			'tipe'=>$this->input->post('tipe'),
+			'tanggal'=>format_ymd($this->input->post('tanggal')),
+			'masa_berlaku'=>$this->input->post('masa_berlaku'),
+			'status'=>$this->input->post('status')
 		);
-		if ($this->input->post('attachment')) {
-			$data['attachment'] = implode(',',$this->input->post('attachment'));
+		if ($this->input->post('syarat')) {
+			$data['syarat'] = implode(',',$this->input->post('syarat'));
 		}else{
-			$data['attachment'] = '';
+			$data['syarat'] = '';
 		}
 		return $data;
 	}
-	private function _set_rules()
+	public function _check_double()
 	{
-		$this->form_validation->set_rules('bidan','Nama Pemohon','trim');
-		$this->form_validation->set_rules('type','Jenis Pengajuan','trim');
-		$this->form_validation->set_rules('nomor','Nomor','trim');
-		$this->form_validation->set_rules('date','Tanggal Permohonan','trim');
-		$this->form_validation->set_rules('status','Status','trim');
+		$result = $this->model->check_double();
+		if ($result) {
+			$this->form_validation->set_message('_check_double', 'Sudah terdaftar di pengajuan '.strtoupper($this->data['module']));	
+			return FALSE;
+		}
+		return TRUE;
+	}
+	private function _set_rules($type = '')
+	{
+		if ($type=='add') {
+			$this->form_validation->set_rules('bidan','Nama Pemohon','trim|callback__check_double');
+		}else{
+			$this->form_validation->set_rules('bidan','Nama Pemohon','trim');
+		}
+		$this->form_validation->set_rules('tipe','Jenis Pengajuan','required|trim');
+		$this->form_validation->set_rules('tanggal','Tanggal Permohonan','required|trim');
 		$this->form_validation->set_rules('masa_berlaku','Masa Berlaku','trim');
+		$this->form_validation->set_rules('status','Status','required|trim');
+		$this->form_validation->set_error_delimiters('<p class="error">','</p>');
+		$this->form_validation->set_message('required', '%s tidak boleh kosong');	
 	}
 	public function add()
 	{
-		$this->_set_rules();
+		$this->_set_rules('add');
 		if($this->form_validation->run()===false){
-			$this->data['attachment'] = $this->general_model->get('bidan_kta_attachment')->result();
+			$this->data['syarat'] = $this->general_model->get('bidan_'.$this->data['module'].'_syarat')->result();
 			$this->data['action'] = $this->data['module'].'/add'.get_query_string();
 			$this->data['owner'] = '';
 			$this->data['content'] = $this->load->view($this->data['module'].'_form',$this->data,true);
@@ -119,18 +128,17 @@ class Kta extends MY_Controller
 			$data['date_create'] = date('Y-m-d H:i:s');
 			$this->model->add($data);
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('new_success').'</div>');
-			redirect($this->data['module'].get_query_string());
+			redirect($this->data['module'].'/add'.get_query_string());
 		}
 	}
 	public function edit($id)
 	{
 		$this->_set_rules();
 		if($this->form_validation->run()===false){
-			$this->data['attachment'] = $this->general_model->get('bidan_kta_attachment')->result();
+			$this->data['syarat'] = $this->general_model->get('bidan_'.$this->data['module'].'_syarat')->result();
 			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
-			$this->data['row']->masa_berlaku = format_dmy($this->data['row']->masa_berlaku);
-			$this->data['row']->date = format_dmy($this->data['row']->date);
-			$this->data['row']->attachment = explode(',', $this->data['row']->attachment);
+			$this->data['row']->tanggal = format_dmy($this->data['row']->tanggal);
+			$this->data['row']->syarat = explode(',', $this->data['row']->syarat);
 			$this->data['action'] = $this->data['module'].'/edit/'.$id.get_query_string();
 			$this->data['owner'] = '<div class="box-header owner">'.owner($this->data['row']).'</div>';
 			$this->data['content'] = $this->load->view($this->data['module'].'_form',$this->data,true);

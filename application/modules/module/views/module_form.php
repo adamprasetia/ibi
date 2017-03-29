@@ -4,7 +4,7 @@
 	<?php echo $owner; ?>
 	<div class="box-body">
 		<div class="form-group form-inline">
-			<?php echo form_label($this->lang->line('name'),'name',array('class'=>'control-label'))?>
+			<?php echo form_label('Nama','name',array('class'=>'control-label'))?>
 			<?php echo form_input(array('name'=>'name','class'=>'form-control input-sm','maxlength'=>'100','size'=>'50','autocomplete'=>'off','value'=>set_value('name',(isset($row->name)?$row->name:'')),'required'=>'required'))?>
 			<small><?php echo form_error('name')?></small>
 		</div>
