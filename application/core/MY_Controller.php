@@ -13,10 +13,6 @@ class MY_Controller extends CI_Controller {
 		if ($module == 'reference') {
 			$module .= '/'.$this->uri->segment(2);
 		}
-		// if ($this->uri->segment(2) && !in_array($this->uri->segment(2),array('add','edit','delete','search','index','do_backup'))) {
-		// if ($this->uri->segment(2) && !in_array($this->uri->segment(2),array('add','edit','delete','search','index','do_backup','kta','str','sipb_m','sipb_p','sib','pelatihan'))) {
-			// $module .= '/'.$this->uri->segment(2);
-		// }
 
 		if (!in_array($module, $this->session->userdata('user_login')['url']) 
 			&& !in_array($module,array('block',

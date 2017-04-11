@@ -31,26 +31,6 @@ class Surat_model extends CI_Model
 		$this->db->where($field,$value);
 		return $this->db->get($this->tbl_name);	
 	}	
-	function surat_total($bulan,$tahun)
-	{
-		$this->db->where('month(tanggal)',$bulan);
-		$this->db->where('year(tanggal)',$tahun);
-		$this->db->from('bidan_kta');
-		// $this->db->limit(2);
-		return $this->db->get()->num_rows();			
-	}
-	function bidan($bulan,$tahun)
-	{
-		$this->db->select(array('a.*','b.*','c.name as golongan_darah_name','d.name as bidan_kta_tipe_name'));
-		$this->db->where('month(a.tanggal)',$bulan);
-		$this->db->where('year(a.tanggal)',$tahun);
-		$this->db->from('bidan_kta a');
-		$this->db->join('bidan b','a.bidan=b.id','left');
-		$this->db->join('golongan_darah c','b.golongan_darah=c.id','left');
-		$this->db->join('bidan_kta_tipe d','a.tipe=d.id','left');
-		// $this->db->limit(2);
-		return $this->db->get()->result();
-	}
 	function add($data)
 	{
 		$this->db->insert($this->tbl_name,$data);

@@ -13,7 +13,7 @@
 			<div class="panel-body">
 				<div class="form-group form-inline">
 					<?php echo form_label('Tanggal Permohonan','tanggal',array('class'=>'control-label'))?>
-					<?php echo form_input(array('id'=>'tanggal','name'=>'tanggal','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','autocomplete'=>'off','value'=>set_value('tanggal',(isset($row->tanggal)?$row->tanggal:date('d/m/Y')))))?>
+					<?php echo form_input(array('id'=>'tanggal','name'=>'tanggal','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','size'=>'10','autocomplete'=>'off','value'=>set_value('tanggal',(isset($row->tanggal)?$row->tanggal:date('d/m/Y')))))?>
 					<small><?php echo form_error('tanggal')?></small>
 				</div>
 				<div class="form-group form-inline">
@@ -23,16 +23,18 @@
 				</div>
 			</div>
 		</div>
-		<div id="data_sebelum" class="panel panel-default">
-			<div class="panel-body">			
-				<div class="form-group form-inline">
+		<div class="panel panel-default">
+			<div class="panel-body">		
+				<div id="nomor_sebelum_div" class="form-group form-inline">
 					<label id="nomor_sebelum_label" for="nomor_sebelum" class="control-label">Nomor</label>
-					: <span id="nomor_sebelum"></span>
-				</div>						
+					<?php echo form_input(array('id'=>'nomor_sebelum','name'=>'nomor_sebelum','class'=>'form-control input-sm','maxlength'=>'20','size'=>'20','autocomplete'=>'off','value'=>set_value('nomor_sebelum',(isset($row->nomor_sebelum)?$row->nomor_sebelum:''))))?>
+					<small><?php echo form_error('nomor_sebelum')?></small>
+				</div>										
 				<div id="masa_berlaku_sebelum_div" class="form-group form-inline">
 					<label id="masa_berlaku_sebelum_label" for="masa_berlaku_sebelum" class="control-label">Masa Berlaku</label>
-					: <span id="masa_berlaku_sebelum"></span>
-				</div>						
+					<?php echo form_input(array('id'=>'masa_berlaku_sebelum','name'=>'masa_berlaku_sebelum','class'=>'form-control input-sm input-tanggal','maxlength'=>'4','size'=>'10','autocomplete'=>'off','value'=>set_value('masa_berlaku_sebelum',(isset($row->masa_berlaku_sebelum)?$row->masa_berlaku_sebelum:''))))?>
+					<small><?php echo form_error('masa_berlaku_sebelum')?></small>
+				</div>
 			</div>
 		</div>				
 		<div class="panel panel-default">
@@ -61,7 +63,7 @@
 				</div>										
 				<div id="masa_berlaku" class="form-group form-inline">
 					<?php echo form_label('Masa Berlaku','masa_berlaku',array('class'=>'control-label'))?>
-					<?php echo form_input(array('name'=>'masa_berlaku','class'=>'form-control input-sm','maxlength'=>'4','size'=>'10','autocomplete'=>'off','value'=>set_value('masa_berlaku',(isset($row->masa_berlaku)?$row->masa_berlaku:''))))?>
+					<?php echo form_input(array('name'=>'masa_berlaku','class'=>'form-control input-sm input-tanggal','maxlength'=>'4','size'=>'10','autocomplete'=>'off','value'=>set_value('masa_berlaku',(isset($row->masa_berlaku)?$row->masa_berlaku:''))))?>
 					<small><?php echo form_error('masa_berlaku')?></small>
 				</div>
 			</div>
@@ -77,20 +79,20 @@
 </form>
 <script type="text/javascript">
 	function bidan(){
-		$('#nomor_sebelum').html('');
+		$('#nomor_sebelum').val('');
 		$.ajax({
 			url:'<?php echo base_url() ?>index.php/api/bidan/get_by_id/<?php echo $bidan_id; ?>',
 			dataType:'json',
 			type:'post',
 			success:function(str){
-				$('#nomor_sebelum').html(str.sertikom);
+				$('#nomor_sebelum').val(str.sertikom);
 			}
 		});
 	}
 	function str_last()
 	{
-		$('#nomor_sebelum').html('');
-		$('#masa_berlaku_sebelum').html('');
+		$('#nomor_sebelum').val('');
+		$('#masa_berlaku_sebelum').val('');
 		$.ajax({
 			url:'<?php echo base_url() ?>index.php/api/str/last',
 			dataType:'json',
@@ -98,8 +100,8 @@
 			data:{bidan:<?php echo $bidan_id; ?>,tanggal:$('#tanggal').val()},
 			success:function(str){
 				if (str) {
-					$('#nomor_sebelum').html(str.nomor);
-					$('#masa_berlaku_sebelum').html(str.masa_berlaku);
+					$('#nomor_sebelum').val(str.nomor);
+					$('#masa_berlaku_sebelum').val(str.masa_berlaku);
 				}
 			}
 		});
@@ -121,23 +123,23 @@
 		if ($('#tipe').val()=='1') {
 			bidan();
 			$('#nomor_sebelum_label').html('Nomor Sertikom');
+			$('#nomor_sebelum_div').show();
 			$('#masa_berlaku_sebelum_div').hide();
-			$('#data_sebelum').show();			
 		}else if ($('#tipe').val()=='2') {
 			str_last();
 			$('#nomor_sebelum_label').html('Nomor STR');
 			$('#masa_berlaku_sebelum_label').html('Masa Berlaku STR');
+			$('#nomor_sebelum_div').show();
 			$('#masa_berlaku_sebelum_div').show();
-			$('#data_sebelum').show();
 		}else if ($('#tipe').val()=='3') {
 			str_last();
 			$('#nomor_sebelum_label').html('Nomor SIB');
 			$('#masa_berlaku_sebelum_label').html('Masa Berlaku SIB');
+			$('#nomor_sebelum_div').show();
 			$('#masa_berlaku_sebelum_div').show();
-			$('#data_sebelum').show();
 		}else{
+			$('#nomor_sebelum_div').hide();
 			$('#masa_berlaku_sebelum_div').hide();
-			$('#data_sebelum').hide();
 		}
 	}
 	general();

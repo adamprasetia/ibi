@@ -15,7 +15,7 @@ class Str extends CI_Controller
 		$tanggal = format_ymd($this->input->post('tanggal'));
 		$result = $this->model->str_before($bidan,$tanggal);
 		if ($result) {
-			$result->masa_berlaku = dateformatindo($result->masa_berlaku,2);
+			$result->masa_berlaku = format_dmy($result->masa_berlaku);
 			echo json_encode($result);
 		}
 	}

@@ -11,14 +11,11 @@
 					<small><?php echo form_error('tipe')?></small>
 				</div>						
 				<div class="form-group form-inline">
-					<?php echo form_label('Bulan','bulan',array('class'=>'control-label'))?>
-					<?php echo form_dropdown('bulan',get_mm(),set_value('bulan',(isset($row->bulan)?$row->bulan:'')),'id="bulan" class="form-control input-sm"')?>
-					<small><?php echo form_error('bulan')?></small>
-				</div>			
-				<div class="form-group form-inline">
-					<?php echo form_label('Tahun','tahun',array('class'=>'control-label'))?>
-					<?php echo form_input(array('name'=>'tahun','class'=>'form-control input-sm input-tahun','maxlength'=>'4','size'=>'4','autocomplete'=>'off','value'=>set_value('tahun',(isset($row->tahun)?$row->tahun:date('Y')))))?>
-					<small><?php echo form_error('tahun')?></small>
+					<?php echo form_label('Periode Tanggal','date_from',array('class'=>'control-label'))?>
+					<?php echo form_input(array('name'=>'date_from','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','autocomplete'=>'off','value'=>set_value('date_from',(isset($row->date_from)?$row->date_from:date('d/m/Y')))))?>
+					<?php echo form_input(array('name'=>'date_to','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','autocomplete'=>'off','value'=>set_value('date_to',(isset($row->date_to)?$row->date_to:date('d/m/Y')))))?>
+					<small><?php echo form_error('date_from')?></small>
+					<small><?php echo form_error('date_to')?></small>
 				</div>
 				<div class="form-group form-inline">
 					<?php echo form_label('Nomor','nomor',array('class'=>'control-label'))?>
