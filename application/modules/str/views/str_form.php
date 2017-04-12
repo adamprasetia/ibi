@@ -75,7 +75,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="data_sebelum" class="panel panel-default">
+		<div class="panel panel-default">
 			<div class="panel-body">			
 				<div class="form-group form-inline">
 					<label id="nomor_sebelum_label" for="nomor_sebelum" class="control-label">Nomor</label>
@@ -220,23 +220,23 @@
 			bidan();
 			if ($('#tipe').val()=='1') {
 				$('#nomor_sebelum_label').html('Nomor Sertikom');
+				$('#nomor_sebelum_div').show();
 				$('#masa_berlaku_sebelum_div').hide();
-				$('#data_sebelum').show();			
 			}else if ($('#tipe').val()=='2') {
 				str_last();
 				$('#nomor_sebelum_label').html('Nomor STR');
+				$('#nomor_sebelum_div').show();
 				$('#masa_berlaku_sebelum_label').html('Masa Berlaku STR');
 				$('#masa_berlaku_sebelum_div').show();
-				$('#data_sebelum').show();
 			}else if ($('#tipe').val()=='3') {
 				str_last();
 				$('#nomor_sebelum_label').html('Nomor SIB');
+				$('#nomor_sebelum_div').show();
 				$('#masa_berlaku_sebelum_label').html('Masa Berlaku SIB');
 				$('#masa_berlaku_sebelum_div').show();
-				$('#data_sebelum').show();
 			}else{
+				$('#nomor_sebelum_div').hide();
 				$('#masa_berlaku_sebelum_div').hide();
-				$('#data_sebelum').hide();
 			}
 		}
 		general();

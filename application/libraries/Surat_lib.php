@@ -321,7 +321,7 @@ class Surat_lib{
 				$pdf->Cell(70,5,$b->name,1,0,'L');
 				$pdf->Cell(100,5,$b->kampus,1,0,'L');
 				$pdf->Cell(50,5,$b->no_ijazah,1,0,'C');
-				$pdf->Cell(0,5,$b->nomor_sebelum,1,0,'C');
+				$pdf->Cell(0,5,$b->sertikom,1,0,'C');
 				$pdf->Ln(5);
 				$i++;
 			}
@@ -333,7 +333,7 @@ class Surat_lib{
 			$pdf->AddPage('L','A4');
 			$pdf->SetTitle($title);
 			$pdf->SetFont('Arial','B',12);
-			$pdf->Cell(0,5,'DAFTAR NAMA PENGUSUL REGISTRASI STR',0,0,'C');
+			$pdf->Cell(0,5,'DAFTAR NAMA PENGUSUL RE-REGISTRASI STR',0,0,'C');
 			$pdf->Ln(5);
 			$pdf->Cell(0,5,'PERIODE '.strtoupper(dateformatindo($surat->date_from,2)).' S/D '.strtoupper(dateformatindo($surat->date_to,2)),0,0,'C');
 			$pdf->Ln(5);
@@ -361,6 +361,162 @@ class Surat_lib{
 				$i++;
 			}
 		}
+		/* PENGUSULAN RE-REGISTRASI STR */
+		else if($surat->tipe==7){
+			$title = 'PENGUSULAN RE-REGISTRASI STR PERIODE '.strtoupper(dateformatindo($surat->date_from,2)).' S/D '.strtoupper(dateformatindo($surat->date_to,2));
+
+			$pdf->AddPage('P','A4');
+			$pdf->SetTitle($title);
+			$pdf->SetFont('Arial','B',12);
+			$pdf->Cell(0,5,'PENGUSULAN RE-REGISTRASI STR',0,0,'C');
+			$pdf->Ln(5);
+			$pdf->Cell(0,5,'PERIODE '.strtoupper(dateformatindo($surat->date_from,2)).' S/D '.strtoupper(dateformatindo($surat->date_to,2)),0,0,'C');
+			$pdf->Ln(5);
+			$pdf->Cell(0,5,'PC IBI KABUPATEN CIANJUR',0,0,'C');
+			$pdf->Ln(10);
+			$pdf->SetFont('Arial','B',8);
+			$pdf->Cell(10,10,'NO',1,0,'C');
+			$pdf->Cell(60,10,'IDENTITAS BIDAN',1,0,'C');
+			$pdf->Cell(60,10,'FOTO',1,0,'C');
+			$pdf->Cell(0,10,'PENGAMBILAN STR',1,0,'C');
+			$pdf->Ln(10);
+			$pdf->SetFont('Arial','',7);
+			$i = 1;
+			$h = 80;
+			$nu = 1;
+			$bidan = $this->ci->surat_str_model->perpanjang($surat->date_from,$surat->date_to);
+			foreach ($bidan as $b) {
+				/* No */
+				$pdf->SetXY(10,40+(($i-1)*$h));
+				$pdf->Cell(10,$h,$nu,1,0,'C');
+
+				/* Indentitas */
+				$pdf->SetXY(20,40+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'Nama Bidan : ','TLR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,45+(($i-1)*$h));
+				$pdf->SetFont('Arial','',7);
+				$pdf->Cell(60,5,strtoupper($b->name),'LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,50+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'Alamat : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,55+(($i-1)*$h));
+				$pdf->SetFont('Arial','',7);
+				$pdf->MultiCell(60,5,strtoupper($b->alamat),'LR','L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,70+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'No HP : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,75+(($i-1)*$h));
+				$pdf->SetFont('Arial','',7);
+				$pdf->MultiCell(60,5,strtoupper($b->tlp),'LR','L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,80+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'Institusi : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,85+(($i-1)*$h));
+				$pdf->SetFont('Arial','',7);
+				$pdf->MultiCell(60,5,strtoupper($b->kampus),'LR','L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,90+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'No Ijazah : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,95+(($i-1)*$h));
+				$pdf->SetFont('Arial','',7);
+				$pdf->MultiCell(60,5,strtoupper($b->no_ijazah),'LR','L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,100+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'No STR : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,105+(($i-1)*$h));
+				$pdf->SetFont('Arial','',7);
+				$pdf->MultiCell(60,5,strtoupper($b->nomor_sebelum),'LR','L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,110+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'EXPIRED STR : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(20,115+(($i-1)*$h));
+				$pdf->SetFont('Arial','',7);
+				$pdf->MultiCell(60,5,strtoupper(dateformatindo($b->masa_berlaku_sebelum,2)),'LRB','L');
+
+				/* Foto*/
+				$pdf->SetXY(80,40+(($i-1)*$h));
+				if (file_exists('./files/bidan/'.$b->bidan.'.jpg')) {
+					$pdf->Image(base_url('files/bidan/'.$b->bidan.'.jpg'),80,40+(($i-1)*$h),60,$h);					
+				}
+				$pdf->Cell(60,$h,'',1,0,'L');
+
+				/* Pengambilan */
+				$pdf->SetXY(140,40+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'No STR Baru : ','TLR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(140,45+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(140,50+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'Expired STR Baru : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(140,55+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(140,60+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'Tanggal Pengambilan : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(140,65+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(140,70+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'Nama Pengambil : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(140,75+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(140,80+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,5,'TTD Pengambil : ','LR',0,'L');
+				$pdf->Ln(5);
+				$pdf->SetXY(140,85+(($i-1)*$h));
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Cell(60,35,'','LRB',0,'L');
+				if ($i%3==0) {
+					$pdf->AddPage('P','A4');
+					$pdf->SetFont('Arial','B',12);
+					$pdf->Cell(0,5,'PENGUSULAN RE-REGISTRASI STR',0,0,'C');
+					$pdf->Ln(5);
+					$pdf->Cell(0,5,'PERIODE '.strtoupper(dateformatindo($surat->date_from,2)).' S/D '.strtoupper(dateformatindo($surat->date_to,2)),0,0,'C');
+					$pdf->Ln(5);
+					$pdf->Cell(0,5,'PC IBI KABUPATEN CIANJUR',0,0,'C');
+					$pdf->Ln(10);
+					$pdf->SetFont('Arial','B',8);
+					$pdf->Cell(10,10,'NO',1,0,'C');
+					$pdf->Cell(60,10,'IDENTITAS BIDAN',1,0,'C');
+					$pdf->Cell(60,10,'FOTO',1,0,'C');
+					$pdf->Cell(0,10,'PENGAMBILAN STR',1,0,'C');
+					$pdf->Ln(10);
+					$pdf->SetFont('Arial','',7);
+					$i = 0;
+				}
+				$i++;
+				$nu++;
+			}
+
+		}		
 		$pdf->Output("./files/surat/".$surat->id.".pdf",$type);		
 	}
 }

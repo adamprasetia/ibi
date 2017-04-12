@@ -6,11 +6,6 @@
 	</div>
 </div>
 <div class="box box-default">
-	<div class="box-body">
-		<a href="<?php echo site_url('bidan/'.$modulesub.'/add/'.$bidan_id.get_query_string()) ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
-	</div>
-</div>
-<div class="box box-default">
 	<form action="<?php echo site_url($index.'/search/'.$bidan_id.get_query_string(null,'offset')) ?>" method="post" class="form-inline">
 	<div class="box-header">
 		<div class="form-group">
@@ -29,12 +24,15 @@
 		</div>
 	</div>
 	<div class="box-header">
-		<div class="form-group">
-			Tanggal : 
-			<?php echo form_input(array('name'=>'date_from','value'=>$this->input->get('date_from'),'autocomplete'=>'off','placeholder'=>'Dari','size'=>'10','class'=>'form-control input-sm input-tanggal'))?>
-			<?php echo form_input(array('name'=>'date_to','value'=>$this->input->get('date_to'),'autocomplete'=>'off','placeholder'=>'Sampai','size'=>'10','class'=>'form-control input-sm input-tanggal'))?>
+		<a href="<?php echo site_url('bidan/'.$modulesub.'/add/'.$bidan_id.get_query_string()) ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
+		<div class="pull-right">
+			<div class="form-group">
+				Tanggal : 
+				<?php echo form_input(array('name'=>'date_from','value'=>$this->input->get('date_from'),'autocomplete'=>'off','placeholder'=>'Dari','size'=>'10','class'=>'form-control input-sm input-tanggal'))?>
+				<?php echo form_input(array('name'=>'date_to','value'=>$this->input->get('date_to'),'autocomplete'=>'off','placeholder'=>'Sampai','size'=>'10','class'=>'form-control input-sm input-tanggal'))?>
+			</div>
+			<button class="btn btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-filter"></span> Filter</button>			
 		</div>
-		<button class="btn btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-filter"></span> Filter</button>			
 	</div>
 	</form>	
 	<div class="box-body">

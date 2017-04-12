@@ -29,7 +29,9 @@ class Bidan_str extends MY_Controller
 		$head_data = array(
 			'tanggal' => 'Tanggal Permohonan',
 			'bidan_'.$this->data['modulesub'].'_tipe_name' => 'Jenis Pengajuan',
-			'bidan_'.$this->data['modulesub'].'_status_name' => 'Status'
+			'bidan_'.$this->data['modulesub'].'_status_name' => 'Status',
+			'nomor' => 'Nomor',
+			'masa_berlaku' => 'Masa Berlaku'
 		);
 		$heading[] = form_checkbox(array('id'=>'selectAll','value'=>1));
 		$heading[] = '#';
@@ -47,6 +49,8 @@ class Bidan_str extends MY_Controller
 				dateformatindo($r->tanggal,2),
 				$r->{'bidan_'.$this->data['modulesub'].'_tipe_name'},
 				$r->{'bidan_'.$this->data['modulesub'].'_status_name'},
+				$r->nomor,
+				dateformatindo($r->masa_berlaku,2),
 				anchor($this->data['index'].'/edit/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
 				."&nbsp;|&nbsp;".anchor($this->data['index'].'/delete/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
 			);
@@ -83,9 +87,7 @@ class Bidan_str extends MY_Controller
 			'tipe'=>$this->input->post('tipe'),
 			'tanggal'=>format_ymd($this->input->post('tanggal')),
 			'nomor'=>$this->input->post('nomor'),
-			'nomor_sebelum'=>$this->input->post('nomor_sebelum'),
 			'masa_berlaku'=>format_ymd($this->input->post('masa_berlaku')),
-			'masa_berlaku_sebelum'=>format_ymd($this->input->post('masa_berlaku_sebelum')),
 			'status'=>$this->input->post('status')
 		);
 		if ($this->input->post('syarat')) {
@@ -147,7 +149,6 @@ class Bidan_str extends MY_Controller
 			$this->data['bidan'] = $this->general_model->get_from_field('bidan','id',$bidan_id)->row();
 			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
 			$this->data['row']->tanggal = format_dmy($this->data['row']->tanggal);
-			$this->data['row']->masa_berlaku_sebelum = format_dmy($this->data['row']->masa_berlaku_sebelum);
 			$this->data['row']->masa_berlaku = format_dmy($this->data['row']->masa_berlaku);
 			$this->data['row']->syarat = explode(',', $this->data['row']->syarat);
 			$this->data['action'] = $this->data['index'].'/edit/'.$bidan_id.'/'.$id.get_query_string();

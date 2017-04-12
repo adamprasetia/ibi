@@ -39,16 +39,19 @@
 				</div>											
 			</div>
 		</div>
-		<hr>						
-		<div class="form-group form-inline">
-			<?php echo form_label('Status','status',array('class'=>'control-label'))?>
-			<?php echo form_dropdown('status',$this->general_model->dropdown('bidan_'.$modulesub.'_status','Status'),set_value('status',(isset($row->status)?$row->status:'2')),'id="status" class="form-control input-sm"')?>
-			<small><?php echo form_error('status')?></small>
-		</div>
-		<div id="masa_berlaku" class="form-group form-inline">
-			<?php echo form_label('Masa Berlaku','masa_berlaku',array('class'=>'control-label'))?>
-			<?php echo form_input(array('name'=>'masa_berlaku','class'=>'form-control input-sm','maxlength'=>'4','size'=>'10','autocomplete'=>'off','value'=>set_value('masa_berlaku',(isset($row->masa_berlaku)?$row->masa_berlaku:''))))?>
-			<small><?php echo form_error('masa_berlaku')?></small>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group form-inline">
+					<?php echo form_label('Status','status',array('class'=>'control-label'))?>
+					<?php echo form_dropdown('status',$this->general_model->dropdown('bidan_'.$modulesub.'_status','Status'),set_value('status',(isset($row->status)?$row->status:'2')),'id="status" class="form-control input-sm"')?>
+					<small><?php echo form_error('status')?></small>
+				</div>
+				<div id="masa_berlaku" class="form-group form-inline">
+					<?php echo form_label('Masa Berlaku','masa_berlaku',array('class'=>'control-label'))?>
+					<?php echo form_input(array('name'=>'masa_berlaku','class'=>'form-control input-sm','maxlength'=>'4','size'=>'10','autocomplete'=>'off','value'=>set_value('masa_berlaku',(isset($row->masa_berlaku)?$row->masa_berlaku:''))))?>
+					<small><?php echo form_error('masa_berlaku')?></small>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

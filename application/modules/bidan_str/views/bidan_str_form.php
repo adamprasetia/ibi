@@ -24,19 +24,17 @@
 			</div>
 		</div>
 		<div class="panel panel-default">
-			<div class="panel-body">		
+			<div class="panel-body">			
 				<div id="nomor_sebelum_div" class="form-group form-inline">
 					<label id="nomor_sebelum_label" for="nomor_sebelum" class="control-label">Nomor</label>
-					<?php echo form_input(array('id'=>'nomor_sebelum','name'=>'nomor_sebelum','class'=>'form-control input-sm','maxlength'=>'20','size'=>'20','autocomplete'=>'off','value'=>set_value('nomor_sebelum',(isset($row->nomor_sebelum)?$row->nomor_sebelum:''))))?>
-					<small><?php echo form_error('nomor_sebelum')?></small>
-				</div>										
+					: <span id="nomor_sebelum"></span>
+				</div>						
 				<div id="masa_berlaku_sebelum_div" class="form-group form-inline">
 					<label id="masa_berlaku_sebelum_label" for="masa_berlaku_sebelum" class="control-label">Masa Berlaku</label>
-					<?php echo form_input(array('id'=>'masa_berlaku_sebelum','name'=>'masa_berlaku_sebelum','class'=>'form-control input-sm input-tanggal','maxlength'=>'4','size'=>'10','autocomplete'=>'off','value'=>set_value('masa_berlaku_sebelum',(isset($row->masa_berlaku_sebelum)?$row->masa_berlaku_sebelum:''))))?>
-					<small><?php echo form_error('masa_berlaku_sebelum')?></small>
-				</div>
+					: <span id="masa_berlaku_sebelum"></span>
+				</div>						
 			</div>
-		</div>				
+		</div>		
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="form-group">
@@ -79,20 +77,20 @@
 </form>
 <script type="text/javascript">
 	function bidan(){
-		$('#nomor_sebelum').val('');
+		$('#nomor_sebelum').html('');
 		$.ajax({
 			url:'<?php echo base_url() ?>index.php/api/bidan/get_by_id/<?php echo $bidan_id; ?>',
 			dataType:'json',
 			type:'post',
 			success:function(str){
-				$('#nomor_sebelum').val(str.sertikom);
+				$('#nomor_sebelum').html(str.sertikom);
 			}
 		});
 	}
 	function str_last()
 	{
-		$('#nomor_sebelum').val('');
-		$('#masa_berlaku_sebelum').val('');
+		$('#nomor_sebelum').html('');
+		$('#masa_berlaku_sebelum').html('');
 		$.ajax({
 			url:'<?php echo base_url() ?>index.php/api/str/last',
 			dataType:'json',
@@ -100,8 +98,8 @@
 			data:{bidan:<?php echo $bidan_id; ?>,tanggal:$('#tanggal').val()},
 			success:function(str){
 				if (str) {
-					$('#nomor_sebelum').val(str.nomor);
-					$('#masa_berlaku_sebelum').val(str.masa_berlaku);
+					$('#nomor_sebelum').html(str.nomor);
+					$('#masa_berlaku_sebelum').html(str.masa_berlaku);
 				}
 			}
 		});
