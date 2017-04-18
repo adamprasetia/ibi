@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['save'] = 'Simpan';
 $lang['cancel'] = 'Batal';
+$lang['back'] = 'Kembali';
 $lang['new'] = 'Tambah';
 $lang['edit'] = 'Ubah';
 $lang['delete'] = 'Hapus';

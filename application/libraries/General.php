@@ -44,7 +44,8 @@ class General{
 		}
 		return $this->ci->table->generate();
 	}
-	public function get_pagination($index,$total,$limit){
+	public function get_pagination($index,$total,$limit)
+	{
 		$config = pag_tmp();
 		$config['base_url'] = $index.get_query_string(null,'offset');
 		$config['total_rows'] = $total;
@@ -157,6 +158,26 @@ class General{
 			return $data;
 		}
 	}
+	function limit($data = 10)
+	{
+		$limit = $this->ci->input->get('limit');
+		if ($limit) {
+			$data = $limit;
+		}
+		return $data;
+	}
+	function offset($data = 0)
+	{
+		$offset = $this->ci->input->get('offset');
+		if ($offset) {
+			$data = $offset;
+		}
+		return $data;
+	}
+	function total($table_name = '',$filter = array())
+	{
+		return $this->ci->general_model->total($table_name,$filter);
+	}	
 	public function get_offset($offset=0){
 		if ($offset) {
 			return $offset;

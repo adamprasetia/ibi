@@ -1,11 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class General_model extends CI_Model 
-{
+class General_model extends CI_Model {
+
 	function get($table_name)
 	{
+		$this->db->where('status','1');
 		return $this->db->get($table_name);	
-	}			
+	}
+	function total($table_name = '',$filter = array())
+	{
+		$this->db->where('status','1');
+		$this->db->where($filter);
+		return $this->db->get($table_name)->num_rows();
+	}
 	function get_from_field($table_name,$field,$value)
 	{
 		$this->db->where($field,$value);
@@ -57,6 +64,10 @@ class General_model extends CI_Model
 	}	
 	function add($table,$data)
 	{
+		$user_login = $this->session->userdata('user_login');
+		$data['status'] = '1';
+		$data['user_create'] = $user_login['id'];
+		$data['date_create'] = date('Y-m-d H:i:s');		
 		$this->db->insert($table,$data);
 		return $this->db->insert_id();
 	}
@@ -66,13 +77,20 @@ class General_model extends CI_Model
 
 	function edit($table,$id,$data)
 	{
+		$user_login = $this->session->userdata('user_login');
+		$data['user_update'] = $user_login['id'];
+		$data['date_update'] = date('Y-m-d H:i:s');
 		$this->db->where('id',$id);
 		$this->db->update($table,$data);
 	}
 	function delete($table,$id)
 	{
+		$user_login = $this->session->userdata('user_login');
+		$data['status'] = '2';
+		$data['user_update'] = $user_login['id'];
+		$data['date_update'] = date('Y-m-d H:i:s');		
 		$this->db->where('id',$id);
-		$this->db->delete($table);
+		$this->db->update($table,$data);
 	}
 	function delete_from_field($table,$field,$id)
 	{
@@ -88,5 +106,19 @@ class General_model extends CI_Model
 			return $result->result();		
 		}
 		return false;
-	}				
+	}
+	function last($tbl_name = '', $bidan = '',$tanggal = '')
+	{
+		$this->db->from($tbl_name);
+		$this->db->where('bidan',$bidan);
+		$this->db->where('status','1');
+		$this->db->where('tanggal <',$tanggal);
+		$this->db->order_by('masa_berlaku','desc');
+		$this->db->limit(1);
+		$result = $this->db->get();
+		if ($result->num_rows() > 0) {
+			return $result->row();
+		}
+		return '';
+	}	
 }

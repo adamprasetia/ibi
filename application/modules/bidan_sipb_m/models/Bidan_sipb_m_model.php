@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Kta_model extends CI_Model
+class Bidan_sipb_m_model extends CI_Model
 {
-	private $tbl_name = 'bidan_kta';
+	private $tbl_name = 'bidan_sipb_m';
 	private $tbl_key = 'id';
 	
 	function query()
@@ -10,13 +10,11 @@ class Kta_model extends CI_Model
 		$data[] = $this->db->select(array(
 			'a.*',
 			'b.name as '.$this->tbl_name.'_tipe_name',
-			'c.name as '.$this->tbl_name.'_status_name',
-			'd.name as bidan_name'
+			'c.name as '.$this->tbl_name.'_status_name'
 		));
 		$data[] = $this->db->from($this->tbl_name.' a');
 		$data[] = $this->db->join($this->tbl_name.'_tipe b','a.tipe = b.id','left');
 		$data[] = $this->db->join($this->tbl_name.'_status c','a.status = c.id','left');
-		$data[] = $this->db->join('bidan d','a.bidan = d.id','left');
 		$data[] = $this->search();
 		if($this->input->get('tipe') <> '')
 			$data[] = $this->db->where('a.tipe',$this->input->get('tipe'));
@@ -25,21 +23,20 @@ class Kta_model extends CI_Model
 		if($this->input->get('date_from') <> '' && $this->input->get('date_to') <> ''){
 			$data[] = $this->db->where('a.tanggal >=',format_ymd($this->input->get('date_from')));
 			$data[] = $this->db->where('a.tanggal <=',format_ymd($this->input->get('date_to')));
-		}
+		}		
 		$data[] = $this->db->order_by($this->general->get_order_column('a.id'),$this->general->get_order_type('desc'));
 		$data[] = $this->db->offset($this->general->get_offset());
 		return $data;
 	}
-	function get()
+	function get($bidan_id)
 	{
 		$this->query();
+		$this->db->where('bidan',$bidan_id);
 		$this->db->limit($this->general->get_limit());
 		return $this->db->get();
 	}
-	function check_double()
+	function check_double($bidan = '')
 	{
-		$bidan = $this->input->post('bidan');
-
 		$this->db->where('bidan',$bidan);
 		$this->db->where('status <>','1');
 		$this->db->from($this->tbl_name);
@@ -70,16 +67,17 @@ class Kta_model extends CI_Model
 		$this->db->where($field,$value);
 		return $this->db->get($this->tbl_name);	
 	}
-	function count_all()
+	function count_all($bidan_id)
 	{
 		$this->query();
+		$this->db->where('bidan',$bidan_id);
 		return $this->db->get()->num_rows();
 	}
 	function search()
 	{
 		$result = $this->input->get('search');
 		if($result <> ''){
-			return $this->db->where('(a.nomor like "%'.$result.'%" or d.name like "%'.$result.'%")');
+			return $this->db->where('(a.nomor like "%'.$result.'%")');
 		}		
 	}		
 }

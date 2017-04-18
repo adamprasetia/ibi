@@ -24,6 +24,15 @@
 			</div>
 		</div>
 		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group form-inline">
+					<?php echo form_label('Bidan Lain','bidan_lain',array('class'=>'control-label'))?>
+					: <?php echo form_dropdown('bidan_lain',$this->general_model->dropdown('bidan','Bidan'),set_value('bidan_lain',(isset($row->bidan_lain)?$row->bidan_lain:'')),'id="bidan_lain" class="form-control input-sm select2"')?>
+					<small><?php echo form_error('bidan_lain')?></small>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
 			<div class="panel-body">			
 				<div id="nomor_str_div" class="form-group form-inline">
 					<label id="nomor_str_label" for="nomor_str" class="control-label">Nomor STR/SIB</label>
@@ -79,6 +88,33 @@
 	</div>
 </div>
 </form>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var app = {
+			bidan:$('#bidan')
+		};
+
+		app.bidan.select2({
+		    placeholder: "- Bidan -",
+		    dropdownAutoWidth:'true',
+		    width: 'auto',    
+		    ajax: {
+		    url: '<?php echo base_url() ?>index.php/api/bidan',
+		    dataType: 'json',
+		    processResults: function (data) {
+		          return {
+		              results: $.map(data, function (item) {
+		                  return {
+		                      text: item.name,
+		                      id: item.id
+		                  }
+		              })
+		          };
+		      }
+		  	}
+		});
+	});
+</script>
 <script type="text/javascript">
 	function bidan(){
 		$('#nama_tempat').html('');

@@ -368,6 +368,27 @@ function get_mm($id = ''){
     }
     return $data;
 }
+function get_mm_roman($id = ''){    
+    $data = array(
+        ''=>'- Bulan -',
+        '1'=>'I',
+        '2'=>'II',
+        '3'=>'III',
+        '4'=>'IV',
+        '5'=>'V',
+        '6'=>'VI',
+        '7'=>'VII',
+        '8'=>'VIII',
+        '9'=>'IX',
+        '10'=>'X',
+        '11'=>'XI',
+        '12'=>'XII'
+    );
+    if ($id) {
+        return $data[$id];
+    }
+    return $data;
+}
 function calcutate_age($dob){
     $dob = date("Y-m-d",strtotime($dob));
 
@@ -445,6 +466,16 @@ function reminder_badge($date)
     if (date('Ymd',strtotime($date)) <= date('Ymd')) {
         return 'bg-red';
     }else if (date('Ymd',strtotime($date)) <= date('Ymd', strtotime("+1 month", time()))) {
+        return 'bg-yellow';
+    }else{
+        return 'bg-green';
+    }
+}
+function reminder_badge_year($year)
+{
+    if ($year <= date('Y')) {
+        return 'bg-red';
+    }else if ($year <= (date('Y')+1)) {
         return 'bg-yellow';
     }else{
         return 'bg-green';

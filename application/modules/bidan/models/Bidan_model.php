@@ -8,9 +8,11 @@ class Bidan_model extends CI_Model
 	function query()
 	{	
 		$data[] = $this->db->select(array(
-			'a.*'
+			'a.*',
+			'b.name as pendidikan_name'
 		));
 		$data[] = $this->db->from($this->tbl_name.' a');
+		$data[] = $this->db->join('pendidikan b','a.pendidikan=b.id','left');
 		$data[] = $this->search();
 		if($this->input->get('pendidikan') <> '')
 			$data[] = $this->db->where('a.pendidikan',$this->input->get('pendidikan'));
@@ -25,6 +27,12 @@ class Bidan_model extends CI_Model
 		$this->query();
 		$this->db->limit($this->general->get_limit());
 		return $this->db->get();
+	}
+	function get_by_id($id)
+	{
+		$this->query();
+		$this->db->where('a.id',$id);
+		return $this->db->get()->row();
 	}
 	function get_all()
 	{

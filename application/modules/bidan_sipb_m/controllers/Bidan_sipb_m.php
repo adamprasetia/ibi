@@ -1,18 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Bidan_sipb_p extends MY_Controller 
+class Bidan_sipb_m extends MY_Controller 
 {
 	private $data = array();
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['title'] = 'SIPB P';
+		$this->data['title'] = 'SIPB M';
 		$this->data['subtitle'] = 'List';
 		$this->data['module'] = 'bidan';
-		$this->data['modulesub'] = 'sipb_p';
+		$this->data['modulesub'] = 'sipb_m';
 		$this->data['index'] = $this->data['module'].'/'.$this->data['modulesub'];
-		$this->data['view'] = 'bidan_sipb_p';
+		$this->data['view'] = 'bidan_sipb_m';
 		$this->load->model($this->data['view'].'_model','model');
 		$this->load->helper('text');
 	}
@@ -86,6 +86,7 @@ class Bidan_sipb_p extends MY_Controller
 	{
 		$data = array(
 			'tipe'=>$this->input->post('tipe'),
+			'bidan_lain'=>$this->input->post('bidan_lain'),
 			'tanggal'=>format_ymd($this->input->post('tanggal')),
 			'nomor'=>$this->input->post('nomor'),
 			'masa_berlaku'=>format_ymd($this->input->post('masa_berlaku')),
@@ -182,11 +183,20 @@ class Bidan_sipb_p extends MY_Controller
 	}
 	public function pdf($bidan_id,$id)
 	{
-		$this->load->model('bidan_str/bidan_str_model');
 		$this->load->model('bidan/bidan_model');
 		$bidan = $this->bidan_model->get_by_id($bidan_id);
-		$sipb_p = $this->general_model->get_from_field('bidan_sipb_p','id',$id)->row();
-		$str = $this->bidan_str_model->last($bidan->id,$sipb_p->tanggal);
+		$sipb_m = $this->general_model->get_from_field('bidan_sipb_m','id',$id)->row();
+		$bidan_lain = false;
+		if ($sipb_m->bidan_lain) {
+			$bidan_lain = $this->bidan_model->get_by_id($sipb_m->bidan_lain);			
+		}
+		$str = $this->general_model->last('bidan_str',$bidan->id,$sipb_m->tanggal);
+		if ($bidan_lain) {
+			$str_lain = $this->general_model->last('bidan_str',$bidan_lain->id,$sipb_m->tanggal);			
+		}
+		if ($sipb_m->tipe!=1) {
+			$last_sipb = $this->general_model->last('bidan_sipb_m',$bidan->id,$sipb_m->tanggal);			
+		}
 
 		require_once "assets/plugins/fpdf/fpdf.php";		
 		$pdf = new FPDF();
@@ -231,39 +241,60 @@ class Bidan_sipb_p extends MY_Controller
 		$pdf->Ln(5);
 		$pdf->Cell(0,5,'TENTANG',0,0,'C');
 		$pdf->Ln(5);
-		$pdf->Cell(0,5,'PENERBITAN SURAT IZIN PRAKTIK BIDAN (SIKB/P)',0,0,'C');
+		$pdf->Cell(0,5,'PENERBITAN SURAT IZIN PRAKTIK BIDAN (SIPB/M)',0,0,'C');
 		$pdf->Ln(10);
 		$pdf->SetFont('Arial','',10);
-		$pdf->MultiCell(0,5,'        Berdasarkan Peraturan Menteri Kesehatan Republik Indonesia Nomor 1464/MENKES/PER/X/2010, tentang Izin dan Penyelenggaraan Praktik Bidan  bahwa Surat Tanda Register (STR) atas nama : '.$bidan->name.' Nomor : '.$str->nomor.'. Masih berlaku sampai dengan '.dateformatindo($str->masa_berlaku,2),0,'J');
+		if ($bidan_lain) {
+			if ($sipb_m->tipe==1) {
+				$pdf->MultiCell(0,5,'        Berdasarkan Peraturan Menteri Kesehatan Republik Indonesia Nomor 1464/MENKES/PER/X/2010, tentang Izin dan Penyelenggaraan Praktik Bidan. Dengan ini kami Pengurus Organisasi Ikatan Bidan Indonesia Kabupaten Cianjur memberikan rekomendasi untuk penerbitan Surat Izin Praktik Bidan (SIPB) satu atap (1 BPM dengan 2 SIPB) kepada yang bersangkutan karena telah memenuhi persyaratan administrasi dan persyaratan praktik bidan, sesuai dengan ketentuan yang berlaku, atas nama :',0,'J');
+			}else{
+				$pdf->MultiCell(0,5,'        Berdasarkan Peraturan Menteri Kesehatan Republik Indonesia Nomor 1464/MENKES/PER/X/2010, tentang Izin dan Penyelenggaraan Praktik Bidan. Dengan ini kami Pengurus Organisasi Ikatan Bidan Indonesia Kabupaten Cianjur memberikan rekomendasi untuk penerbitan Surat Izin Praktik Bidan (SIPB) 1 atap (1 BPM 2 SIPB) dengan Bidan '.$bidan->name.' Nomor SIPB '.$last_sipb->nomor.' kepada yang bersangkutan karena telah memenuhi persyaratan administrasi dan persyaratan praktik bidan, sesuai dengan ketentuan yang berlaku, atas nama :',0,'J');				
+			}
+		}else{
+			$pdf->MultiCell(0,5,'        Berdasarkan Peraturan Menteri Kesehatan Republik Indonesia Nomor 1464/MENKES/PER/X/2010, tentang Izin dan Penyelenggaraan Praktik Bidan. Dengan ini kami Pengurus Organisasi Ikatan Bidan Indonesia Kabupaten Cianjur memberikan rekomendasi untuk penerbitan Surat Izin Praktik Bidan (SIPB) kepada yang bersangkutan karena telah memenuhi persyaratan administrasi dan persyaratan praktik bidan, sesuai dengan ketentuan yang berlaku, atas nama :',0,'J');
+		}
+		$pdf->SetFont('Arial','',8);
 		$pdf->Ln(5);
-		$pdf->MultiCell(0,5,'        Dengan ini kami Pengurus Organisasi Ikatan Bidan Indonesia Kabupaten Cianjur memberikan rekomendasi untuk penerbitan Surat Izin Kerja Bidan (SIKB) kepada yang bersangkutan karena telah memenuhi persyaratan administrasi, sesuai dengan ketentuan yang berlaku, atas nama :',0,'J');
+		$pdf->Cell(35,5,'Nama',0,0,'L');
+		$pdf->Cell(5,5,' : ',0,0,'C');
+		$pdf->Cell(55,5,$bidan->name,0,0,'L');
 		$pdf->Ln(5);
-		$pdf->Cell(45,5,'Nama',0,0,'L');
-		$pdf->Cell(10,5,' : ',0,0,'C');
-		$pdf->Cell(0,5,$bidan->name,0,0,'L');
+		$pdf->Cell(35,5,'Tempat, Tanggal lahir',0,0,'L');
+		$pdf->Cell(5,5,' : ',0,0,'C');
+		$pdf->Cell(55,5,$bidan->tempat_lahir.', '.dateformatindo($bidan->tanggal_lahir,2),0,0,'L');
 		$pdf->Ln(5);
-		$pdf->Cell(45,5,'Tempat, Tanggal lahir',0,0,'L');
-		$pdf->Cell(10,5,' : ',0,0,'C');
-		$pdf->Cell(0,5,$bidan->tempat_lahir.', '.dateformatindo($bidan->tanggal_lahir,2),0,0,'L');
+		$pdf->Cell(35,5,'Pedidikan',0,0,'L');
+		$pdf->Cell(5,5,' : ',0,0,'C');
+		$pdf->Cell(55,5,$bidan->pendidikan_name,0,0,'L');
 		$pdf->Ln(5);
-		$pdf->Cell(45,5,'Pedidikan',0,0,'L');
-		$pdf->Cell(10,5,' : ',0,0,'C');
-		$pdf->Cell(0,5,$bidan->pendidikan_name,0,0,'L');
+		$pdf->Cell(35,5,'Alamat Praktik',0,0,'L');
+		$pdf->Cell(5,5,' : ',0,0,'C');
+		$pdf->Cell(55,5,$bidan->praktik_nama,0,0,'L');
 		$pdf->Ln(5);
-		$pdf->Cell(45,5,'Tahun Lulus',0,0,'L');
-		$pdf->Cell(10,5,' : ',0,0,'C');
-		$pdf->Cell(0,5,$bidan->tahun_lulus,0,0,'L');
+		$pdf->Cell(40,5,'',0,0,'C');
+		$pdf->MultiCell(55,5,$bidan->praktik_alamat,0,'L');
 		$pdf->Ln(5);
-		$pdf->Cell(45,5,'Tempat Bekerja',0,0,'L');
-		$pdf->Cell(10,5,' : ',0,0,'C');
-		$pdf->Cell(0,5,$bidan->praktik_nama,0,0,'L');
+		if ($sipb_m->tipe!=1 && $sipb_m->bidan_lain==false) {
+			$pdf->Cell(35,5,'Nomor SIPB LAMA',0,0,'L');
+			$pdf->Cell(5,5,' : ',0,0,'C');
+			$pdf->Cell(55,5,$last_sipb->nomor,0,0,'L');
+			$pdf->Ln(5);
+			$pdf->Cell(35,5,'Masa Berlaku SIPB LAMA',0,0,'L');
+			$pdf->Cell(5,5,' : ',0,0,'C');
+			$pdf->Cell(55,5,dateformatindo($last_sipb->masa_berlaku,2),0,0,'L');
+			$pdf->Ln(5);
+		}
+		$pdf->Cell(35,5,'Nomor STR',0,0,'L');
+		$pdf->Cell(5,5,' : ',0,0,'C');
+		$pdf->Cell(55,5,$str->nomor,0,0,'L');
 		$pdf->Ln(5);
-		$pdf->Cell(55,5,'',0,0,'C');
-		$pdf->MultiCell(0,5,$bidan->praktik_alamat,0,'L');
+		$pdf->Cell(35,5,'Masa Berlaku STR',0,0,'L');
+		$pdf->Cell(5,5,' : ',0,0,'C');
+		$pdf->Cell(55,5,dateformatindo($str->masa_berlaku,2),0,0,'L');
 		$pdf->Ln(5);
-		$pdf->Cell(45,5,'Nomor Kartu Anggota (KTA)',0,0,'L');
-		$pdf->Cell(10,5,' : ',0,0,'C');
-		$pdf->Cell(0,5,$bidan->kta_no,0,0,'L');
+		$pdf->Cell(35,5,'Nomor Kartu Anggota',0,0,'L');
+		$pdf->Cell(5,5,' : ',0,0,'C');
+		$pdf->Cell(55,5,$bidan->kta_no,0,0,'L');
 		$pdf->Ln(10);
 		$pdf->Cell(0,5,'Demikian surat rekomendasi ini dibuat, untuk dipergunakan sebagaimana mestinya.',0,0,'C');
 		$pdf->Ln(10);
@@ -278,6 +309,48 @@ class Bidan_sipb_p extends MY_Controller
 		$pdf->Ln(5);
 		$pdf->Cell(100,5,'',0,0,'C');
 		$pdf->Cell(0,5,'Liste Zulhijwati Wulan., AMKeb., SKM., M.Kes',0,0,'C');
+
+		if ($bidan_lain && $sipb_m->tipe==1) {			
+			$pdf->setXY(110,105);
+			$pdf->Cell(35,5,'Nama',0,0,'L');
+			$pdf->Cell(5,5,' : ',0,0,'C');
+			$pdf->Cell(0,5,$bidan_lain->name,0,0,'L');
+			$pdf->Ln(5);
+			$pdf->setX(110);
+			$pdf->Cell(35,5,'Tempat, Tanggal lahir',0,0,'L');
+			$pdf->Cell(5,5,' : ',0,0,'C');
+			$pdf->Cell(0,5,$bidan_lain->tempat_lahir.', '.dateformatindo($bidan_lain->tanggal_lahir,2),0,0,'L');
+			$pdf->Ln(5);
+			$pdf->setX(110);
+			$pdf->Cell(35,5,'Pedidikan',0,0,'L');
+			$pdf->Cell(5,5,' : ',0,0,'C');
+			$pdf->Cell(0,5,$bidan_lain->pendidikan_name,0,0,'L');
+			$pdf->Ln(5);
+			$pdf->setX(110);
+			$pdf->Cell(35,5,'Alamat Praktik',0,0,'L');
+			$pdf->Cell(5,5,' : ',0,0,'C');
+			$pdf->Cell(0,5,$bidan->praktik_nama,0,0,'L');
+			$pdf->Ln(5);
+			$pdf->setX(110);
+			$pdf->Cell(40,5,'',0,0,'C');
+			$pdf->MultiCell(0,5,$bidan->praktik_alamat,0,'L');
+			$pdf->Ln(5);
+			$pdf->setX(110);
+			$pdf->Cell(35,5,'Nomor STR',0,0,'L');
+			$pdf->Cell(5,5,' : ',0,0,'C');
+			$pdf->Cell(60,5,$str_lain->nomor,0,0,'L');
+			$pdf->Ln(5);
+			$pdf->setX(110);
+			$pdf->Cell(35,5,'Masa Berlaku STR',0,0,'L');
+			$pdf->Cell(5,5,' : ',0,0,'C');
+			$pdf->Cell(60,5,dateformatindo($str_lain->masa_berlaku,2),0,0,'L');
+			$pdf->Ln(5);
+			$pdf->setX(110);
+			$pdf->Cell(35,5,'Nomor Kartu Anggota',0,0,'L');
+			$pdf->Cell(5,5,' : ',0,0,'C');
+			$pdf->Cell(60,5,$bidan_lain->kta_no,0,0,'L');
+			$pdf->Ln(10);		
+		}				
 		$pdf->Output($title,"I");		
 	}
 }

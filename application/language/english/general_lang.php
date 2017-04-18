@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['save'] = 'Save';
 $lang['cancel'] = 'Cancel';
+$lang['back'] = 'Back';
 $lang['new'] = 'New';
 $lang['edit'] = 'Edit';
 $lang['delete'] = 'Delete';

@@ -16,7 +16,7 @@
 			    <tr>
 			      <td><?php echo $i ?>.</td>
 			      <td><a href="<?php echo site_url('bidan/kta/index/'.$row->bidan_id) ?>"><?php echo $row->bidan_name ?></a></td>
-			      <td><span class="badge <?php echo reminder_badge($row->masa_berlaku) ?>"><?php echo dateformatindo($row->masa_berlaku,2) ?></span></td>
+			      <td><span class="badge <?php echo reminder_badge_year($row->masa_berlaku) ?>"><?php echo $row->masa_berlaku ?></span></td>
 			    </tr>
 			    <?php $i++;endforeach ?>
 			  </tbody></table>

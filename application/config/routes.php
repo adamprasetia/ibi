@@ -87,6 +87,7 @@ $route['bidan/sipb_m/edit/(:num)/(:num)'] = 'bidan_sipb_m/edit/$1/$2';
 $route['bidan/sipb_m/delete/(:num)'] = 'bidan_sipb_m/delete/$1';
 $route['bidan/sipb_m/delete/(:num)/(:num)'] = 'bidan_sipb_m/delete/$1/$2';
 $route['bidan/sipb_m/search/(:num)'] = 'bidan_sipb_m/search/$1';
+$route['bidan/sipb_m/pdf/(:num)/(:num)'] = 'bidan_sipb_m/pdf/$1/$2';
 
 $route['bidan/sipb_p/index/(:num)'] = 'bidan_sipb_p/index/$1';
 $route['bidan/sipb_p/add/(:num)'] = 'bidan_sipb_p/add/$1';
@@ -94,6 +95,7 @@ $route['bidan/sipb_p/edit/(:num)/(:num)'] = 'bidan_sipb_p/edit/$1/$2';
 $route['bidan/sipb_p/delete/(:num)'] = 'bidan_sipb_p/delete/$1';
 $route['bidan/sipb_p/delete/(:num)/(:num)'] = 'bidan_sipb_p/delete/$1/$2';
 $route['bidan/sipb_p/search/(:num)'] = 'bidan_sipb_p/search/$1';
+$route['bidan/sipb_p/pdf/(:num)/(:num)'] = 'bidan_sipb_p/pdf/$1/$2';
 
 $route['bidan/sib/index/(:num)'] = 'bidan_sib/index/$1';
 $route['bidan/sib/add/(:num)'] = 'bidan_sib/add/$1';

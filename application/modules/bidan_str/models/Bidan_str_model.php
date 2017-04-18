@@ -80,4 +80,18 @@ class Bidan_str_model extends CI_Model
 			return $this->db->where('(a.nomor like "%'.$result.'%")');
 		}		
 	}		
+	function last($bidan = '',$tanggal = '')
+	{
+		$this->db->from($this->tbl_name);
+		$this->db->where('bidan',$bidan);
+		$this->db->where('status','1');
+		$this->db->where('tanggal <',$tanggal);
+		$this->db->order_by('masa_berlaku','desc');
+		$this->db->limit(1);
+		$result = $this->db->get();
+		if ($result->num_rows() > 0) {
+			return $result->row();
+		}
+		return '';
+	}	
 }
