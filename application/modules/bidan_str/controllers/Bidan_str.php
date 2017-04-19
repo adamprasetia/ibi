@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Bidan_str extends MY_Controller 
-{
+class Bidan_str extends MY_Controller {
+
 	private $data = array();
 
 	public function __construct()
@@ -9,11 +9,9 @@ class Bidan_str extends MY_Controller
 		parent::__construct();
 		$this->data['title'] = 'STR';
 		$this->data['subtitle'] = 'List';
-		$this->data['module'] = 'bidan';
-		$this->data['modulesub'] = 'str';
-		$this->data['index'] = $this->data['module'].'/'.$this->data['modulesub'];
-		$this->data['view'] = 'bidan_str';
-		$this->load->model($this->data['view'].'_model','model');
+		$this->data['module'] = 'bidan_str';
+		$this->data['url'] = 'bidan/str';
+		$this->load->model($this->data['module'].'_model','model');
 		$this->load->helper('text');
 	}
 	public function index($bidan_id)
@@ -28,15 +26,15 @@ class Bidan_str extends MY_Controller
 		$this->table->set_template(tbl_tmp());
 		$head_data = array(
 			'tanggal' => 'Tanggal Permohonan',
-			'bidan_'.$this->data['modulesub'].'_tipe_name' => 'Jenis Pengajuan',
-			'bidan_'.$this->data['modulesub'].'_status_name' => 'Status',
+			$this->data['module'].'_tipe_name' => 'Jenis Pengajuan',
+			$this->data['module'].'_status_name' => 'Status',
 			'nomor' => 'Nomor',
 			'masa_berlaku' => 'Masa Berlaku'
 		);
 		$heading[] = form_checkbox(array('id'=>'selectAll','value'=>1));
 		$heading[] = '#';
 		foreach($head_data as $r => $value){
-			$heading[] = anchor($this->data['index'].'/index/'.$bidan_id.get_query_string(array('order_column'=>"$r",'order_type'=>$this->general->order_type($r))),"$value ".$this->general->order_icon("$r"));
+			$heading[] = anchor($this->data['url'].'/index/'.$bidan_id.get_query_string(array('order_column'=>"$r",'order_type'=>$this->general->order_type($r))),"$value ".$this->general->order_icon("$r"));
 		}		
 		$heading[] = array('data'=>$this->lang->line('action'),'style'=>'min-width:110px');
 		$this->table->set_heading($heading);
@@ -47,26 +45,26 @@ class Bidan_str extends MY_Controller
 				array('data'=>form_checkbox(array('name'=>'check[]','value'=>$r->id)),'width'=>'10px'),
 				$i++,
 				dateformatindo($r->tanggal,2),
-				$r->{'bidan_'.$this->data['modulesub'].'_tipe_name'},
-				$r->{'bidan_'.$this->data['modulesub'].'_status_name'},
+				$r->{$this->data['module'].'_tipe_name'},
+				$r->{$this->data['module'].'_status_name'},
 				$r->nomor,
 				dateformatindo($r->masa_berlaku,2),
-				anchor($this->data['index'].'/edit/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
-				."&nbsp;|&nbsp;".anchor($this->data['index'].'/delete/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
+				anchor($this->data['url'].'/edit/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
+				."&nbsp;|&nbsp;".anchor($this->data['url'].'/delete/'.$bidan_id.'/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
 			);
 		}
 		$this->data['table'] = $this->table->generate();
 		$this->data['total'] = page_total($offset,$limit,$total);
 		
 		$config = pag_tmp();
-		$config['base_url'] = site_url($this->data['index'].'/index/'.$bidan_id.get_query_string(null,'offset'));
+		$config['base_url'] = site_url($this->data['url'].'/index/'.$bidan_id.get_query_string(null,'offset'));
 		$config['total_rows'] = $total;
 		$config['per_page'] = $limit;
 
 		$this->pagination->initialize($config); 
 		$this->data['pagination'] = $this->pagination->create_links();
 
-		$this->data['content'] = $this->load->view($this->data['view'].'_list',$this->data,true);
+		$this->data['content'] = $this->load->view($this->data['module'].'_list',$this->data,true);
 		$this->load->view('template_view',$this->data);
 	}
 	public function search($bidan_id)
@@ -79,7 +77,7 @@ class Bidan_str extends MY_Controller
 			'date_from'=>$this->input->post('date_from'),
 			'date_to'=>$this->input->post('date_to')
 		);
-		redirect($this->data['index'].'/index/'.$bidan_id.get_query_string($data));		
+		redirect($this->data['url'].'/index/'.$bidan_id.get_query_string($data));		
 	}
 	private function _field()
 	{
@@ -123,60 +121,56 @@ class Bidan_str extends MY_Controller
 	{
 		$this->_set_rules($bidan_id);
 		if($this->form_validation->run()===false){
-			$this->data['syarat'] = $this->general_model->get('bidan_'.$this->data['modulesub'].'_syarat')->result();
+			$this->data['syarat'] = $this->general_model->get($this->data['module'].'_syarat')->result();
 			$this->data['bidan_id'] = $bidan_id;
 			$this->data['bidan'] = $this->general_model->get_from_field('bidan','id',$bidan_id)->row();
-			$this->data['action'] = $this->data['index'].'/add/'.$bidan_id.get_query_string();
+			$this->data['action'] = $this->data['url'].'/add/'.$bidan_id.get_query_string();
 			$this->data['owner'] = '';
-			$this->data['content'] = $this->load->view($this->data['view'].'_form',$this->data,true);
+			$this->data['content'] = $this->load->view($this->data['module'].'_form',$this->data,true);
 			$this->load->view('template_view',$this->data);
 		}else{
 			$data = $this->_field();
 			$data['bidan'] = $bidan_id;
-			$data['user_create'] = $this->user_login['id'];
-			$data['date_create'] = date('Y-m-d H:i:s');
-			$this->model->add($data);
+			$this->general_model->add($this->data['module'],$data);
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('new_success').'</div>');
-			redirect($this->data['index'].'/index/'.$bidan_id.get_query_string());
+			redirect($this->data['url'].'/index/'.$bidan_id.get_query_string());
 		}
 	}
 	public function edit($bidan_id,$id)
 	{
 		$this->_set_rules();
 		if($this->form_validation->run()===false){
-			$this->data['syarat'] = $this->general_model->get('bidan_'.$this->data['modulesub'].'_syarat')->result();
+			$this->data['syarat'] = $this->general_model->get($this->data['module'].'_syarat')->result();
 			$this->data['bidan_id'] = $bidan_id;
 			$this->data['bidan'] = $this->general_model->get_from_field('bidan','id',$bidan_id)->row();
-			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
+			$this->data['row'] = $this->general_model->get_from_field($this->data['module'],'id',$id)->row();
 			$this->data['row']->tanggal = format_dmy($this->data['row']->tanggal);
 			$this->data['row']->masa_berlaku = format_dmy($this->data['row']->masa_berlaku);
 			$this->data['row']->syarat = explode(',', $this->data['row']->syarat);
-			$this->data['action'] = $this->data['index'].'/edit/'.$bidan_id.'/'.$id.get_query_string();
+			$this->data['action'] = $this->data['url'].'/edit/'.$bidan_id.'/'.$id.get_query_string();
 			$this->data['owner'] = '<div class="box-header owner">'.owner($this->data['row']).'</div>';
-			$this->data['content'] = $this->load->view($this->data['view'].'_form',$this->data,true);
+			$this->data['content'] = $this->load->view($this->data['module'].'_form',$this->data,true);
 			$this->load->view('template_view',$this->data);
 		}else{
 			$data = $this->_field();
 			$data['bidan'] = $bidan_id;
-			$data['user_update'] = $this->user_login['id'];
-			$data['date_update'] = date('Y-m-d H:i:s');
-			$this->model->edit($id,$data);
+			$this->general_model->edit($this->data['module'],$id,$data);
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('edit_success').'</div>');
-			redirect($this->data['index'].'/edit/'.$bidan_id.'/'.$id.get_query_string());
+			redirect($this->data['url'].'/edit/'.$bidan_id.'/'.$id.get_query_string());
 		}
 	}
 	public function delete($bidan_id,$id='')
 	{
 		if($id<>''){
-			$this->model->delete($id);
+			$this->general_model->delete($this->data['module'],$id);
 		}
 		$check = $this->input->post('check');
 		if($check<>''){
 			foreach($check as $c){
-				$this->model->delete($c);
+				$this->general_model->delete($this->data['module'],$c);
 			}
 		}
 		$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('delete_success').'</div>');
-		redirect($this->data['index'].'/index/'.$bidan_id.get_query_string());
+		redirect($this->data['url'].'/index/'.$bidan_id.get_query_string());
 	}
 }

@@ -19,6 +19,8 @@
 			<div class="form-group">
 				<?php echo form_dropdown('status',$this->general_model->dropdown('users_status','Status'),$this->input->get('status'),'class="form-control input-sm" onchange="submit()"')?>
 			</div>
+			<button class="btn btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+			<button class="btn btn-primary btn-sm" type="reset"><span class="glyphicon glyphicon-repeat"></span> Reset</button>			
 		</form>
 	</div>
 	<div class="box-body">

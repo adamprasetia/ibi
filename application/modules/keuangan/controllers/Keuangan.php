@@ -93,10 +93,10 @@ class Keuangan extends MY_Controller {
 	{
 		$this->form_validation->set_rules('tanggal','Tanggal','required|trim');
 		$this->form_validation->set_rules('tipe','Tipe','required|trim');
-		$this->form_validation->set_rules('jenis','Jenis','required|trim');
+		$this->form_validation->set_rules('jenis','Jenis','trim');
 		$this->form_validation->set_rules('bidan','Bidan','trim');
 		$this->form_validation->set_rules('jumlah','Jumlah','trim|required');
-		$this->form_validation->set_rules('ket','Keterangan','trim|required');
+		$this->form_validation->set_rules('ket','Keterangan','trim');
 		$this->form_validation->set_error_delimiters('<p class="error">','</p>');
 	}
 	public function add()

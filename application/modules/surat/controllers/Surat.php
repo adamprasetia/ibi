@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Surat extends MY_Controller 
-{
+class Surat extends MY_Controller  {
+
 	private $data = array();
 
 	function __construct()
@@ -39,7 +39,7 @@ class Surat extends MY_Controller
 			$this->table->add_row(
 				array('data'=>form_checkbox(array('name'=>'check[]','value'=>$r->id)),'width'=>'10px'),
 				$i++,
-				$r->surat_tipe_name."&nbsp;|&nbsp;".anchor(base_url('files/surat/'.$r->id.'.pdf'),'Print',array('target'=>'_blank','class'=>'btn btn-default btn-xs'))."&nbsp;|&nbsp;".anchor('surat/preview/'.$r->id,'Preview',array('target'=>'_blank','class'=>'btn btn-default btn-xs')),
+				$r->surat_tipe_name."&nbsp;|&nbsp;".anchor('surat/preview/'.$r->id,'Preview',array('target'=>'_blank','class'=>'btn btn-default btn-xs')),
 				format_dmy($r->date_from),
 				format_dmy($r->date_to),
 				$r->nomor,
@@ -96,10 +96,8 @@ class Surat extends MY_Controller
 			$this->load->view('template_view',$this->data);
 		}else{
 			$data = $this->_field();
-			$data['user_create'] = $this->user_login['id'];
-			$data['date_create'] = date('Y-m-d H:i:s');
-			$id = $this->model->add($data);
-			$this->generate($id);
+			$id = $this->general_model->add($this->data['module'],$data);
+			// $this->generate($id);
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('new_success').'</div>');
 			redirect($this->data['module'].get_query_string());
 		}
@@ -117,10 +115,8 @@ class Surat extends MY_Controller
 			$this->load->view('template_view',$this->data);
 		}else{
 			$data = $this->_field();
-			$data['user_update'] = $this->user_login['id'];
-			$data['date_update'] = date('Y-m-d H:i:s');
-			$this->model->edit($id,$data);
-			$this->generate($id);
+			$this->general_model->edit($this->data['module'],$id,$data);
+			// $this->generate($id);
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('edit_success').'</div>');
 			redirect($this->data['module'].'/edit/'.$id.get_query_string());
 		}
@@ -128,12 +124,12 @@ class Surat extends MY_Controller
 	public function delete($id='')
 	{
 		if($id<>''){
-			$this->model->delete($id);
+			$this->general_model->delete($this->data['module'],$id);
 		}
 		$check = $this->input->post('check');
 		if($check<>''){
 			foreach($check as $c){
-				$this->model->delete($c);
+				$this->general_model->delete($this->data['module'],$c);
 			}
 		}
 		$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('delete_success').'</div>');

@@ -12,8 +12,8 @@
 </div>
 <div class="box box-default">	
 	<div class="box-body">
-		<button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apa anda yakin ?')"><span class="glyphicon glyphicon-save"></span> Simpan</button>
-		<a href="<?php echo site_url('reference/'.$section.get_query_string()) ?>" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-repeat"></span> Kembali</a>
+		<button class="btn btn-success btn-sm" type="submit" onclick="return confirm('<?php echo $this->lang->line('confirm') ?>')"><span class="glyphicon glyphicon-save"></span> <?php echo $this->lang->line('save') ?></button>
+		<a href="<?php echo site_url($url.get_query_string()) ?>" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-repeat"></span> <?php echo $this->lang->line('back') ?></a>
 	</div>
 </div>
 </form>

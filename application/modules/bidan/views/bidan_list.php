@@ -8,9 +8,11 @@
 	<div class="box-header">
 		<form action="<?php echo site_url($module.'/search'.get_query_string(null,'offset')) ?>" method="post" class="form-inline">
 			<div class="form-group">
+				<label for="limit">Limit :</label>
 				<?php echo form_dropdown('limit',array('10'=>'10','50'=>'50','100'=>'100'),set_value('limit',$this->input->get('limit')),'onchange="submit()" class="form-control input-sm"')?> 
 			</div>
 			<div class="form-group">
+				<label for="search">Pencarian :</label>
 				<?php echo form_input(array('name'=>'search','value'=>$this->input->get('search'),'autocomplete'=>'off','placeholder'=>$this->lang->line('search').'..','onchange=>"submit()"','class'=>'form-control input-sm'))?>
 			</div>
 			<div class="form-group">
@@ -19,6 +21,8 @@
 			<div class="form-group">
 				<?php echo form_dropdown('status_pegawai',$this->general_model->dropdown('status_pegawai','Status Kepegawaian'),$this->input->get('status_pegawai'),'class="form-control input-sm" onchange="submit()"')?>
 			</div>
+			<button class="btn btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-filter"></span> Filter</button>			
+			<button class="btn btn-primary btn-sm" type="reset"><span class="glyphicon glyphicon-repeat"></span> Reset</button>
 		</form>
 	</div>
 	<div class="box-body">

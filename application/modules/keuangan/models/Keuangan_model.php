@@ -17,7 +17,6 @@ class Keuangan_model extends CI_Model {
 		$data[] = $this->db->join($this->tbl_name.'_tipe b','a.tipe = b.id');
 		$data[] = $this->db->join($this->tbl_name.'_jenis c','a.jenis = c.id');
 		$data[] = $this->db->join('bidan d','a.bidan = d.id');
-		$data[] = $this->db->where('a.status','1');
 		if($this->input->get('search') <> '')
 			$data[] = $this->db->where('(a.jumlah like "%'.$this->input->get('search').'%")');
 		if($this->input->get('tipe') <> '')
@@ -42,5 +41,4 @@ class Keuangan_model extends CI_Model {
 		$this->query();
 		return $this->db->get()->num_rows();
 	}
-
 }

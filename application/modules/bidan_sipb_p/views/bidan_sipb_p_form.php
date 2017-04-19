@@ -18,7 +18,7 @@
 				</div>
 				<div class="form-group form-inline">
 					<?php echo form_label('Jenis Pengajuan','tipe',array('class'=>'control-label'))?>
-					<?php echo form_dropdown('tipe',$this->general_model->dropdown('bidan_'.$modulesub.'_tipe','Jenis Pengajuan'),set_value('tipe',(isset($row->tipe)?$row->tipe:'')),'id="tipe" class="form-control input-sm"')?>
+					<?php echo form_dropdown('tipe',$this->general_model->dropdown($module.'_tipe','Jenis Pengajuan'),set_value('tipe',(isset($row->tipe)?$row->tipe:'')),'id="tipe" class="form-control input-sm"')?>
 					<small><?php echo form_error('tipe')?></small>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 			<div class="panel-body">
 				<div class="form-group form-inline">
 					<?php echo form_label('Status','status',array('class'=>'control-label'))?>
-					<?php echo form_dropdown('status',$this->general_model->dropdown('bidan_'.$modulesub.'_status','Status'),set_value('status',(isset($row->status)?$row->status:'2')),'id="status" class="form-control input-sm"')?>
+					<?php echo form_dropdown('status',$this->general_model->dropdown($module.'_status','Status'),set_value('status',(isset($row->status)?$row->status:'2')),'id="status" class="form-control input-sm"')?>
 					<small><?php echo form_error('status')?></small>
 				</div>
 				<div id="nomor" class="form-group form-inline">
@@ -75,7 +75,7 @@
 <div class="box box-default">
 	<div class="box-body">
 		<button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apa anda yakin ?')"><span class="glyphicon glyphicon-save"></span> Simpan</button>
-		<a href="<?php echo site_url($index.'/index/'.$bidan_id.get_query_string()) ?>" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-repeat"></span> Kembali</a>
+		<a href="<?php echo site_url($url.'/index/'.$bidan_id.get_query_string()) ?>" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-repeat"></span> Kembali</a>
 	</div>
 </div>
 </form>

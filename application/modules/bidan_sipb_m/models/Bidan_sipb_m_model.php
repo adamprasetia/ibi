@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Bidan_sipb_m_model extends CI_Model
-{
+class Bidan_sipb_m_model extends CI_Model {
+
 	private $tbl_name = 'bidan_sipb_m';
 	private $tbl_key = 'id';
 	
@@ -15,7 +15,9 @@ class Bidan_sipb_m_model extends CI_Model
 		$data[] = $this->db->from($this->tbl_name.' a');
 		$data[] = $this->db->join($this->tbl_name.'_tipe b','a.tipe = b.id','left');
 		$data[] = $this->db->join($this->tbl_name.'_status c','a.status = c.id','left');
-		$data[] = $this->search();
+		$search = $this->input->get('search');
+		if($search)
+			$data[] = $this->db->where('(a.nomor like "%'.$search.'%")');
 		if($this->input->get('tipe') <> '')
 			$data[] = $this->db->where('a.tipe',$this->input->get('tipe'));
 		if($this->input->get('status') <> '')
@@ -46,38 +48,24 @@ class Bidan_sipb_m_model extends CI_Model
 		}
 		return FALSE;
 	}
-	function add($data)
-	{
-		$this->db->insert($this->tbl_name,$data);
-		return $this->db->insert_id();
-	}
-	function edit($id,$data)
-	{
-		$this->db->where($this->tbl_key,$id);
-		$this->db->update($this->tbl_name,$data);
-	}
-	function delete($id)
-	{
-		$this->db->where($this->tbl_key,$id);
-		$this->db->delete($this->tbl_name);
-	}
-	function get_from_field($field,$value,$param=0)
-	{
-		if($param==1){$this->query();}
-		$this->db->where($field,$value);
-		return $this->db->get($this->tbl_name);	
-	}
 	function count_all($bidan_id)
 	{
 		$this->query();
 		$this->db->where('bidan',$bidan_id);
 		return $this->db->get()->num_rows();
 	}
-	function search()
+	function last($bidan = '',$tanggal = '')
 	{
-		$result = $this->input->get('search');
-		if($result <> ''){
-			return $this->db->where('(a.nomor like "%'.$result.'%")');
-		}		
+		$this->db->from($this->tbl_name);
+		$this->db->where('bidan',$bidan);
+		$this->db->where('status','1');
+		$this->db->where('tanggal <',$tanggal);
+		$this->db->order_by('masa_berlaku','desc');
+		$this->db->limit(1);
+		$result = $this->db->get();
+		if ($result->num_rows() > 0) {
+			return $result->row();
+		}
+		return '';
 	}		
 }

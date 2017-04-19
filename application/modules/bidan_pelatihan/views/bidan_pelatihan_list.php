@@ -7,12 +7,12 @@
 </div>
 <div class="box box-default">
 	<div class="box-body">
-		<a href="<?php echo site_url('bidan/'.$modulesub.'/add/'.$bidan_id.get_query_string()) ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
+		<a href="<?php echo site_url($url.'/add/'.$bidan_id.get_query_string()) ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
 	</div>
 </div>
 <div class="box box-default">
 	<div class="box-header">
-		<form action="<?php echo site_url($index.'/search/'.$bidan_id.get_query_string(null,'offset')) ?>" method="post" class="form-inline">
+		<form action="<?php echo site_url($url.'/search/'.$bidan_id.get_query_string(null,'offset')) ?>" method="post" class="form-inline">
 			<div class="form-group">
 				<label for="limit">Limit :</label>
 				<?php echo form_dropdown('limit',array('10'=>'10','50'=>'50','100'=>'100'),set_value('limit',$this->input->get('limit')),'onchange="submit()" class="form-control input-sm"')?> 
@@ -21,10 +21,12 @@
 				<label for="search">Pencarian :</label>
 				<?php echo form_input(array('name'=>'search','value'=>$this->input->get('search'),'autocomplete'=>'off','placeholder'=>$this->lang->line('search').'..','onchange=>"submit()"','class'=>'form-control input-sm'))?>
 			</div>
+			<button class="btn btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-filter"></span> Filter</button>			
+			<button class="btn btn-primary btn-sm" type="reset"><span class="glyphicon glyphicon-repeat"></span> Reset</button>			
 		</form>
 	</div>
 	<div class="box-body">
-		<form action="<?php echo site_url($index.'/delete/'.$bidan_id.get_query_string()) ?>" class="form-check-delete" method="post">
+		<form action="<?php echo site_url($url.'/delete/'.$bidan_id.get_query_string()) ?>" class="form-check-delete" method="post">
 			<div class="table-responsive">
 				<?php echo $table; ?>
 			</div>

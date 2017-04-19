@@ -8,9 +8,11 @@
 	<form action="<?php echo site_url($module.'/search'.get_query_string(null,'offset')) ?>" class="form-inline" method="post">
 		<div class="box-header">
 			<div class="form-group">
+				<label for="limit">Limit :</label>
 				<?php echo form_dropdown('limit',array('10'=>'10','50'=>'50','100'=>'100'),set_value('limit',$this->input->get('limit')),'onchange="submit()" class="form-control input-sm"')?> 
 			</div>
 			<div class="form-group">
+				<label for="limit">Pencarian :</label>
 				<?php echo form_input(array('name'=>'search','value'=>$this->input->get('search'),'autocomplete'=>'off','placeholder'=>$this->lang->line('search').'..','onchange=>"submit()"','class'=>'form-control input-sm'))?>
 			</div>
 			<div class="form-group">
@@ -20,7 +22,7 @@
 				<?php echo form_dropdown('jenis',$this->general_model->dropdown($module.'_jenis','Jenis'),$this->input->get('jenis'),'class="form-control input-sm" onchange="submit()"')?>
 			</div>
 			<div class="form-group">
-				Tanggal : 
+				<label for="tanggal">Tanggal :</label>
 				<?php echo form_input(array('name'=>'date_from','value'=>$this->input->get('date_from'),'autocomplete'=>'off','placeholder'=>'Dari','size'=>'10','class'=>'form-control input-sm input-tanggal'))?>
 				<?php echo form_input(array('name'=>'date_to','value'=>$this->input->get('date_to'),'autocomplete'=>'off','placeholder'=>'Sampai','size'=>'10','class'=>'form-control input-sm input-tanggal'))?>
 			</div>

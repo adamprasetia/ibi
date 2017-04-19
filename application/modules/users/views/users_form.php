@@ -5,23 +5,23 @@
 	<div class="box-body">
 		<div class="form-group form-inline">
 			<?php echo form_label($this->lang->line('fullname'),'name',array('class'=>'control-label'))?>
-			<?php echo form_input(array('name'=>'name','class'=>'form-control input-sm','maxlength'=>'50','size'=>'60','autocomplete'=>'off','value'=>set_value('name',(isset($row->name)?$row->name:'')),'autofocus'=>'autofocus'))?>
+			<?php echo form_input(array('name'=>'name','class'=>'form-control input-sm','maxlength'=>'50','size'=>'50','autocomplete'=>'off','value'=>set_value('name',(isset($row->name)?$row->name:'')),'autofocus'=>'autofocus'))?>
 			<small><?php echo form_error('name')?></small>
 		</div>
 		<div class="form-group form-inline">
 			<?php echo form_label($this->lang->line('username'),'username',array('class'=>'control-label'))?>
-			<?php echo form_input(array('name'=>'username','class'=>'form-control input-sm','maxlength'=>'50','size'=>'60','autocomplete'=>'off','value'=>set_value('username',(isset($row->username)?$row->username:''))))?>
+			<?php echo form_input(array('name'=>'username','class'=>'form-control input-sm','maxlength'=>'50','size'=>'30','autocomplete'=>'off','value'=>set_value('username',(isset($row->username)?$row->username:''))))?>
 			<small><?php echo form_error('username')?></small>
 		</div>
 		<hr>
 		<div class="form-group form-inline">
 			<?php echo form_label($this->lang->line('password'),'password',array('class'=>'control-label'))?>
-			<?php echo form_password(array('name'=>'password','class'=>'form-control input-sm','maxlength'=>'50','size'=>'60','autocomplete'=>'off','value'=>set_value('password','')))?>
+			<?php echo form_password(array('name'=>'password','class'=>'form-control input-sm','maxlength'=>'50','size'=>'20','autocomplete'=>'off','value'=>set_value('password','')))?>
 			<small><?php echo form_error('password')?></small>
 		</div>
 		<div class="form-group form-inline">
 			<?php echo form_label($this->lang->line('confirm_password'),'password2',array('class'=>'control-label'))?>
-			<?php echo form_password(array('name'=>'password2','class'=>'form-control input-sm','maxlength'=>'50','size'=>'60','autocomplete'=>'off','value'=>set_value('password2','')))?>
+			<?php echo form_password(array('name'=>'password2','class'=>'form-control input-sm','maxlength'=>'50','size'=>'20','autocomplete'=>'off','value'=>set_value('password2','')))?>
 			<small><?php echo form_error('password2')?></small>
 		</div>
 		<hr>

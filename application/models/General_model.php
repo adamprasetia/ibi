@@ -4,12 +4,10 @@ class General_model extends CI_Model {
 
 	function get($table_name)
 	{
-		$this->db->where('status','1');
 		return $this->db->get($table_name);	
 	}
 	function total($table_name = '',$filter = array())
 	{
-		$this->db->where('status','1');
 		$this->db->where($filter);
 		return $this->db->get($table_name)->num_rows();
 	}
@@ -65,13 +63,13 @@ class General_model extends CI_Model {
 	function add($table,$data)
 	{
 		$user_login = $this->session->userdata('user_login');
-		$data['status'] = '1';
 		$data['user_create'] = $user_login['id'];
 		$data['date_create'] = date('Y-m-d H:i:s');		
 		$this->db->insert($table,$data);
 		return $this->db->insert_id();
 	}
-	function add_batch($table,$data){
+	function add_batch($table,$data)
+	{
 		$this->db->insert_batch($table,$data);
 	}
 
@@ -85,16 +83,12 @@ class General_model extends CI_Model {
 	}
 	function delete($table,$id)
 	{
-		$user_login = $this->session->userdata('user_login');
-		$data['status'] = '2';
-		$data['user_update'] = $user_login['id'];
-		$data['date_update'] = date('Y-m-d H:i:s');		
 		$this->db->where('id',$id);
-		$this->db->update($table,$data);
+		$this->db->delete($table);
 	}
-	function delete_from_field($table,$field,$id)
+	function delete_from_field($table,$field,$value)
 	{
-		$this->db->where($field,$id);
+		$this->db->where($field,$value);
 		$this->db->delete($table);
 	}
 	function get_menu($parent = 0)
@@ -111,7 +105,6 @@ class General_model extends CI_Model {
 	{
 		$this->db->from($tbl_name);
 		$this->db->where('bidan',$bidan);
-		$this->db->where('status','1');
 		$this->db->where('tanggal <',$tanggal);
 		$this->db->order_by('masa_berlaku','desc');
 		$this->db->limit(1);

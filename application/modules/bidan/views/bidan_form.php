@@ -29,7 +29,7 @@
 				</div>
 				<div class="form-group form-inline">
 					<?php echo form_label('Tanggal Lahir','tanggal_lahir',array('class'=>'control-label'))?>
-					<?php echo form_input(array('name'=>'tanggal_lahir','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','autocomplete'=>'off','value'=>set_value('tanggal_lahir',(isset($row->tanggal_lahir)?$row->tanggal_lahir:''))))?>
+					<?php echo form_input(array('name'=>'tanggal_lahir','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','autocomplete'=>'off','value'=>set_value('tanggal_lahir',(isset($row->tanggal_lahir)?format_dmy($row->tanggal_lahir):''))))?>
 					<small><?php echo form_error('tanggal_lahir')?></small>
 				</div>
 				<div class="form-group form-inline">

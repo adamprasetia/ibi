@@ -16,7 +16,7 @@
 		</div>
 		<div class="form-group form-inline">
 			<?php echo form_label('Tanggal Pelatihan','tanggal',array('class'=>'control-label'))?>
-			<?php echo form_input(array('name'=>'tanggal','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','autocomplete'=>'off','value'=>set_value('tanggal',(isset($row->tanggal)?$row->tanggal:''))))?>
+			<?php echo form_input(array('name'=>'tanggal','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','autocomplete'=>'off','value'=>set_value('tanggal',(isset($row->tanggal)?format_dmy($row->tanggal):''))))?>
 			<small><?php echo form_error('tanggal')?></small>
 		</div>
 		<div class="form-group form-inline">
@@ -34,7 +34,7 @@
 <div class="box box-default">
 	<div class="box-body">
 		<button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Apa anda yakin ?')"><span class="glyphicon glyphicon-save"></span> Simpan</button>
-		<a href="<?php echo site_url($index.'/index/'.$bidan_id.get_query_string()) ?>" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-repeat"></span> Kembali</a>
+		<a href="<?php echo site_url($url.'/index/'.$bidan_id.get_query_string()) ?>" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-repeat"></span> Kembali</a>
 	</div>
 </div>
 </form>
