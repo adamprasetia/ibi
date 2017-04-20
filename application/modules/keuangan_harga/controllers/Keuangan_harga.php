@@ -1,15 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Keuangan extends MY_Controller {
+class Keuangan_harga extends MY_Controller {
 
 	private $data = array();
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['title'] = 'Keuangan';
-		$this->data['subtitle'] = 'Data pemasukan dan pengeluaran keuangan';
-		$this->data['module'] = 'keuangan';
+		$this->data['title'] = 'Keuangan Harga';
+		$this->data['subtitle'] = 'Data harga pemasukan dan pengeluaran keuangan';
+		$this->data['module'] = 'keuangan_harga';
 		$this->load->model($this->data['module'].'_model','model');
 	}
 	public function index()
@@ -21,12 +21,9 @@ class Keuangan extends MY_Controller {
 		$this->table->set_template(tbl_tmp());
 
 		$head_data = array(
-			'tanggal' => 'Tanggal',
-			'tipe_name' => 'Tipe',
 			'jenis_name' => 'Jenis',
-			'bidan_name' => 'Bidan',
-			'jumlah' => 'Jumlah',
-			'ket' => 'Keterangan'
+			'wilayah_name' => 'Wilayah',
+			'harga' => 'Harga'
 		);
 		$heading[] = form_checkbox(array('id'=>'selectAll','value'=>1));
 		$heading[] = '#';
@@ -41,12 +38,9 @@ class Keuangan extends MY_Controller {
 			$this->table->add_row(
 				array('data'=>form_checkbox(array('name'=>'check[]','value'=>$r->id)),'width'=>'10px'),
 				$i++,
-				dateformatindo($r->tanggal,2),
-				$r->tipe_name,
 				$r->jenis_name,
-				$r->bidan_name,
-				number_format($r->jumlah),
-				$r->ket,
+				$r->wilayah_name,
+				number_format($r->harga),
 				anchor($this->data['module'].'/edit/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
 				."&nbsp;|&nbsp;".anchor($this->data['module'].'/delete/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
 			);
@@ -70,33 +64,25 @@ class Keuangan extends MY_Controller {
 		$data = array(
 			'search'=>$this->input->post('search'),
 			'limit'=>$this->input->post('limit'),
-			'tipe'=>$this->input->post('tipe'),
 			'jenis'=>$this->input->post('jenis'),
-			'date_from'=>$this->input->post('date_from'),
-			'date_to'=>$this->input->post('date_to')
+			'wilayah'=>$this->input->post('wilayah')
 		);
 		redirect($this->data['module'].get_query_string($data));		
 	}
 	private function _field()
 	{
 		$data = array(
-			'tanggal' => format_ymd($this->input->post('tanggal')),
-			'tipe' => $this->input->post('tipe'),
 			'jenis' => $this->input->post('jenis'),
-			'bidan' => $this->input->post('bidan'),
-			'jumlah' => format_uang($this->input->post('jumlah')),
-			'ket' => $this->input->post('ket')
+			'wilayah' => $this->input->post('wilayah'),
+			'harga' => format_uang($this->input->post('harga'))
 		);
 		return $data;		
 	}
 	private function _set_rules()
 	{
-		$this->form_validation->set_rules('tanggal','Tanggal','required|trim');
-		$this->form_validation->set_rules('tipe','Tipe','required|trim');
 		$this->form_validation->set_rules('jenis','Jenis','trim');
-		$this->form_validation->set_rules('bidan','Bidan','trim');
-		$this->form_validation->set_rules('jumlah','Jumlah','trim|required');
-		$this->form_validation->set_rules('ket','Keterangan','trim');
+		$this->form_validation->set_rules('wilayah','Wilayah','required|trim');
+		$this->form_validation->set_rules('harga','Harga','required|trim');
 		$this->form_validation->set_error_delimiters('<p class="error">','</p>');
 	}
 	public function add()
@@ -138,10 +124,17 @@ class Keuangan extends MY_Controller {
 		$check = $this->input->post('check');
 		if($check<>''){
 			foreach($check as $c){
-				$this->general_model->delete($this->data['module'],$c);
+				$this->general_model->delete($this->module,$c);
 			}
 		}
 		$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('delete_success').'</div>');
 		redirect($this->data['module'].get_query_string());
+	}
+	public function get()
+	{
+		$jenis = $this->input->get('jenis');
+		$wilayah = $this->input->get('wilayah');
+		$result = $this->model->harga($jenis,$wilayah)->row();
+		echo json_encode($result);
 	}
 }

@@ -11,6 +11,9 @@
 	<div class="box-body">
 		<div class="panel panel-default">
 			<div class="panel-body">
+				<div class="checkbox pull-right">
+					<label><input type="checkbox" name="lunas" value="1" checked>Lunas</label>
+				</div>															
 				<div class="form-group form-inline">
 					<?php echo form_label('Tanggal Permohonan','tanggal',array('class'=>'control-label'))?>
 					<?php echo form_input(array('id'=>'tanggal','name'=>'tanggal','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','size'=>'10','autocomplete'=>'off','value'=>set_value('tanggal',(isset($row->tanggal)?$row->tanggal:date('d/m/Y')))))?>
@@ -26,7 +29,7 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="form-group form-inline">
-					<?php echo form_label('Bidan Lain','bidan_lain',array('class'=>'control-label'))?>
+					<?php echo form_label('Bidan Lain','bidan_lain',array('class'=>'control-label','id'=>'bidan_lain_label'))?>
 					: <?php echo form_dropdown('bidan_lain',$this->general_model->dropdown('bidan','Bidan'),set_value('bidan_lain',(isset($row->bidan_lain)?$row->bidan_lain:'')),'id="bidan_lain" class="form-control input-sm select2"')?>
 					<small><?php echo form_error('bidan_lain')?></small>
 				</div>
@@ -99,17 +102,17 @@
 		    dropdownAutoWidth:'true',
 		    width: 'auto',    
 		    ajax: {
-		    url: '<?php echo base_url() ?>index.php/api/bidan',
+		    url: '<?php echo site_url('bidan/get') ?>',
 		    dataType: 'json',
-		    processResults: function (data) {
-		          return {
-		              results: $.map(data, function (item) {
-		                  return {
-		                      text: item.name,
-		                      id: item.id
-		                  }
-		              })
-		          };
+		    processResults: function (data) {		    	
+				return {
+					results: $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id
+						}
+					})
+				};
 		      }
 		  	}
 		});
@@ -120,9 +123,12 @@
 		$('#nama_tempat').html('');
 		$('#alamat').html('');
 		$.ajax({
-			url:'<?php echo base_url() ?>index.php/api/bidan/get_by_id/<?php echo $bidan_id; ?>',
+			url:'<?php echo site_url('bidan/get') ?>',
 			dataType:'json',
-			type:'post',
+			type:'get',
+			data:{
+				id:<?php echo $bidan_id; ?>
+			},
 			success:function(str){
 				$('#nama_tempat').html(str.praktik_nama);
 				$('#alamat').html(str.praktik_alamat);
@@ -135,10 +141,13 @@
 	{
 		$('#nomor_str').html('');
 		$.ajax({
-			url:'<?php echo base_url() ?>index.php/api/str/last',
+			url:'<?php echo site_url('bidan/str/last') ?>',
 			dataType:'json',
-			type:'post',
-			data:{bidan:<?php echo $bidan_id; ?>,tanggal:$('#tanggal').val()},
+			type:'get',
+			data:{
+				bidan:<?php echo $bidan_id; ?>,
+				tanggal:$('#tanggal').val()
+			},
 			success:function(str){
 				if (str) {
 					$('#nomor_str').html(str.nomor);

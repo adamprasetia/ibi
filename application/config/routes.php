@@ -60,46 +60,21 @@ $route['reference/(:any)/delete/(:num)'] = 'reference/delete/$2';
 $route['reference/(:any)/delete'] = 'reference/delete';
 $route['reference/(:any)'] = 'reference/index';
 
-$route['bidan/pelatihan/index/(:num)'] = 'bidan_pelatihan/index/$1';
-$route['bidan/pelatihan/add/(:num)'] = 'bidan_pelatihan/add/$1';
-$route['bidan/pelatihan/edit/(:num)/(:num)'] = 'bidan_pelatihan/edit/$1/$2';
-$route['bidan/pelatihan/delete/(:num)'] = 'bidan_pelatihan/delete/$1';
-$route['bidan/pelatihan/delete/(:num)/(:num)'] = 'bidan_pelatihan/delete/$1/$2';
-$route['bidan/pelatihan/search/(:num)'] = 'bidan_pelatihan/search/$1';
+$route['bidan/pelatihan/(:any)/(:num)'] = 'bidan_pelatihan/$1/$2';
+$route['bidan/pelatihan/(:any)/(:num)/(:num)'] = 'bidan_pelatihan/$1/$2/$3';
 
-$route['bidan/kta/index/(:num)'] = 'bidan_kta/index/$1';
-$route['bidan/kta/add/(:num)'] = 'bidan_kta/add/$1';
-$route['bidan/kta/edit/(:num)/(:num)'] = 'bidan_kta/edit/$1/$2';
-$route['bidan/kta/delete/(:num)'] = 'bidan_kta/delete/$1';
-$route['bidan/kta/delete/(:num)/(:num)'] = 'bidan_kta/delete/$1/$2';
-$route['bidan/kta/search/(:num)'] = 'bidan_kta/search/$1';
+$route['bidan/kta/(:any)'] = 'bidan_kta/$1';
+$route['bidan/kta/(:any)/(:num)'] = 'bidan_kta/$1/$2';
+$route['bidan/kta/(:any)/(:num)/(:num)'] = 'bidan_kta/$1/$2/$3';
 
-$route['bidan/str/index/(:num)'] = 'bidan_str/index/$1';
-$route['bidan/str/add/(:num)'] = 'bidan_str/add/$1';
-$route['bidan/str/edit/(:num)/(:num)'] = 'bidan_str/edit/$1/$2';
-$route['bidan/str/delete/(:num)'] = 'bidan_str/delete/$1';
-$route['bidan/str/delete/(:num)/(:num)'] = 'bidan_str/delete/$1/$2';
-$route['bidan/str/search/(:num)'] = 'bidan_str/search/$1';
+$route['bidan/str/(:any)'] = 'bidan_str/$1';
+$route['bidan/str/(:any)/(:num)'] = 'bidan_str/$1/$2';
+$route['bidan/str/(:any)/(:num)/(:num)'] = 'bidan_str/$1/$2/$3';
 
-$route['bidan/sipb_m/index/(:num)'] = 'bidan_sipb_m/index/$1';
-$route['bidan/sipb_m/add/(:num)'] = 'bidan_sipb_m/add/$1';
-$route['bidan/sipb_m/edit/(:num)/(:num)'] = 'bidan_sipb_m/edit/$1/$2';
-$route['bidan/sipb_m/delete/(:num)'] = 'bidan_sipb_m/delete/$1';
-$route['bidan/sipb_m/delete/(:num)/(:num)'] = 'bidan_sipb_m/delete/$1/$2';
-$route['bidan/sipb_m/search/(:num)'] = 'bidan_sipb_m/search/$1';
-$route['bidan/sipb_m/pdf/(:num)/(:num)'] = 'bidan_sipb_m/pdf/$1/$2';
+$route['bidan/sipb_p/(:any)'] = 'bidan_sipb_p/$1';
+$route['bidan/sipb_p/(:any)/(:num)'] = 'bidan_sipb_p/$1/$2';
+$route['bidan/sipb_p/(:any)/(:num)/(:num)'] = 'bidan_sipb_p/$1/$2/$3';
 
-$route['bidan/sipb_p/index/(:num)'] = 'bidan_sipb_p/index/$1';
-$route['bidan/sipb_p/add/(:num)'] = 'bidan_sipb_p/add/$1';
-$route['bidan/sipb_p/edit/(:num)/(:num)'] = 'bidan_sipb_p/edit/$1/$2';
-$route['bidan/sipb_p/delete/(:num)'] = 'bidan_sipb_p/delete/$1';
-$route['bidan/sipb_p/delete/(:num)/(:num)'] = 'bidan_sipb_p/delete/$1/$2';
-$route['bidan/sipb_p/search/(:num)'] = 'bidan_sipb_p/search/$1';
-$route['bidan/sipb_p/pdf/(:num)/(:num)'] = 'bidan_sipb_p/pdf/$1/$2';
-
-$route['bidan/sib/index/(:num)'] = 'bidan_sib/index/$1';
-$route['bidan/sib/add/(:num)'] = 'bidan_sib/add/$1';
-$route['bidan/sib/edit/(:num)/(:num)'] = 'bidan_sib/edit/$1/$2';
-$route['bidan/sib/delete/(:num)'] = 'bidan_sib/delete/$1';
-$route['bidan/sib/delete/(:num)/(:num)'] = 'bidan_sib/delete/$1/$2';
-$route['bidan/sib/search/(:num)'] = 'bidan_sib/search/$1';
+$route['bidan/sipb_m/(:any)'] = 'bidan_sipb_m/$1';
+$route['bidan/sipb_m/(:any)/(:num)'] = 'bidan_sipb_m/$1/$2';
+$route['bidan/sipb_m/(:any)/(:num)/(:num)'] = 'bidan_sipb_m/$1/$2/$3';

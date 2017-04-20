@@ -133,10 +133,34 @@ class Bidan_sipb_p extends MY_Controller {
 			$data = $this->_field();
 			$data['bidan'] = $bidan_id;
 			$this->general_model->add($this->data['module'],$data);
+			if ($this->input->post('lunas')) {
+				$this->keuangan($bidan_id);	
+			}			
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('new_success').'</div>');
 			redirect($this->data['url'].'/index/'.$bidan_id.get_query_string());
 		}
 	}
+	private function keuangan($bidan_id)
+	{
+		$tipe = $this->input->post('tipe');
+		$data = array(
+			'bidan'=>$bidan_id,
+			'tanggal'=>format_ymd($this->input->post('tanggal')),
+			'tipe'=>'1'
+		);
+		$this->load->model('bidan/bidan_model');
+		$bidan = $this->bidan_model->get($bidan_id)->row();
+		if ($tipe==1) {
+			$data['jenis'] = '6'; //SIPB P - Baru
+		}else {
+			$data['jenis'] = '7'; //SIPB P - Perpanjang
+		}
+		$this->load->model('keuangan_harga/keuangan_harga_model');
+		$keuangan_harga = $result = $this->keuangan_harga_model->harga($data['jenis'],$bidan->wilayah)->row();
+		$data['jumlah'] = $keuangan_harga->harga;
+		$data['ket'] = 'Otomatis';
+		$this->general_model->add('keuangan',$data);
+	}		
 	public function edit($bidan_id,$id)
 	{
 		$this->_set_rules();
@@ -178,8 +202,7 @@ class Bidan_sipb_p extends MY_Controller {
 	{
 		$this->load->model('bidan_str/bidan_str_model');
 		$this->load->model('bidan/bidan_model');
-		$filter[] = array('field'=>'a.id','value'=>$bidan_id);
-		$bidan = $this->bidan_model->get($filter)->row();
+		$bidan = $this->bidan_model->get($bidan_id)->row();
 		$sipb_p = $this->general_model->get_from_field('bidan_sipb_p','id',$id)->row();
 		$str = $this->bidan_str_model->last($bidan->id,$sipb_p->tanggal);
 
@@ -275,4 +298,11 @@ class Bidan_sipb_p extends MY_Controller {
 		$pdf->Cell(0,5,'Liste Zulhijwati Wulan., AMKeb., SKM., M.Kes',0,0,'C');
 		$pdf->Output($title,"I");		
 	}
+	public function last()
+	{
+		$bidan = $this->input->get('bidan');
+		$tanggal = format_ymd($this->input->get('tanggal'));
+		$result = $this->model->last($bidan,$tanggal);
+		echo json_encode($result);
+	}	
 }

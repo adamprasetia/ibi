@@ -99,9 +99,7 @@ class Module extends MY_Controller
 			$this->load->view('template_view',$this->data);
 		}else{
 			$data = $this->_field();
-			$data['user_create'] = $this->user_login['id'];
-			$data['date_create'] = date('Y-m-d H:i:s');
-			$this->model->add($data);
+			$this->general_model->add($this->data['module'],$data);
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('new_success').'</div>');
 			redirect($this->data['module'].'/add'.get_query_string());
 		}
@@ -110,16 +108,14 @@ class Module extends MY_Controller
 	{
 		$this->_set_rules();
 		if($this->form_validation->run()===false){
-			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
+			$this->data['row'] = $this->general_model->get_from_field($this->data['module'],'id',$id)->row();
 			$this->data['action'] = $this->data['module'].'/edit/'.$id.get_query_string();
 			$this->data['owner'] = '<div class="box-header owner">'.owner($this->data['row']).'</div>';
 			$this->data['content'] = $this->load->view($this->data['module'].'_form',$this->data,true);
 			$this->load->view('template_view',$this->data);
 		}else{
 			$data = $this->_field();
-			$data['user_update'] = $this->user_login['id'];;
-			$data['date_update'] = date('Y-m-d H:i:s');
-			$this->model->edit($id,$data);
+			$this->general_model->edit($this->data['module'],$id,$data);
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('edit_success').'</div>');
 			redirect($this->data['module'].'/edit/'.$id.get_query_string());
 		}

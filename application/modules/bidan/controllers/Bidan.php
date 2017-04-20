@@ -219,4 +219,14 @@ class Bidan extends MY_Controller
 		}
 		return FALSE;
 	}	
+	public function get()
+	{
+		$id = $this->input->get('id');
+		if ($id) {
+			$result = $this->model->get($id)->row();	
+		}else{
+			$result = $this->model->get()->result();
+		}
+		echo json_encode($result);
+	}	
 }

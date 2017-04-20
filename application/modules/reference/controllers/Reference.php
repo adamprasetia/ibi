@@ -93,7 +93,7 @@ class Reference extends MY_Controller
 	{
 		$this->_set_rules();
 		if($this->form_validation->run()===false){
-			$this->data['row'] = $this->model->get_from_field('id',$id)->row();
+			$this->data['row'] = $this->general_model->get_from_field($this->data['module'],'id',$id)->row();
 			$this->data['action'] = site_url($this->data['url'].'/edit/'.$id.get_query_string());
 			$this->data['owner'] = '<div class="box-header owner">'.owner($this->data['row']).'</div>';
 			$data['content'] = $this->load->view('reference_form',$this->data,true);

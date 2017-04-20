@@ -132,10 +132,34 @@ class Bidan_str extends MY_Controller {
 			$data = $this->_field();
 			$data['bidan'] = $bidan_id;
 			$this->general_model->add($this->data['module'],$data);
+			if ($this->input->post('lunas')) {
+				$this->keuangan($bidan_id);	
+			}			
 			$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('new_success').'</div>');
 			redirect($this->data['url'].'/index/'.$bidan_id.get_query_string());
 		}
 	}
+	private function keuangan($bidan_id)
+	{
+		$tipe = $this->input->post('tipe');
+		$data = array(
+			'bidan'=>$bidan_id,
+			'tanggal'=>format_ymd($this->input->post('tanggal')),
+			'tipe'=>'1'
+		);
+		$this->load->model('bidan/bidan_model');
+		$bidan = $this->bidan_model->get($bidan_id)->row();
+		if ($tipe==1) {
+			$data['jenis'] = '4'; //STR - Baru
+		}else {
+			$data['jenis'] = '5'; //STR - Perpanjang/SIB - Pemutihan
+		}
+		$this->load->model('keuangan_harga/keuangan_harga_model');
+		$keuangan_harga = $result = $this->keuangan_harga_model->harga($data['jenis'],$bidan->wilayah)->row();
+		$data['jumlah'] = $keuangan_harga->harga;
+		$data['ket'] = 'Otomatis';
+		$this->general_model->add('keuangan',$data);
+	}	
 	public function edit($bidan_id,$id)
 	{
 		$this->_set_rules();
@@ -172,5 +196,12 @@ class Bidan_str extends MY_Controller {
 		}
 		$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('delete_success').'</div>');
 		redirect($this->data['url'].'/index/'.$bidan_id.get_query_string());
+	}
+	public function last()
+	{
+		$bidan = $this->input->get('bidan');
+		$tanggal = format_ymd($this->input->get('tanggal'));
+		$result = $this->model->last($bidan,$tanggal);
+		echo json_encode($result);
 	}
 }

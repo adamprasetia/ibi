@@ -5,7 +5,7 @@ class Bidan_model extends CI_Model
 	private $tbl_name = 'bidan';
 	private $tbl_key = 'id';
 	
-	function query($filter = array())
+	function query($id = '')
 	{	
 		$data[] = $this->db->select(array(
 			'a.*',
@@ -22,18 +22,16 @@ class Bidan_model extends CI_Model
 			$data[] = $this->db->where('a.pendidikan',$this->input->get('pendidikan'));
 		if($this->input->get('status_pegawai') <> '')
 			$data[] = $this->db->where('a.status_pegawai',$this->input->get('status_pegawai'));
-		if ($filter) {
-			foreach ($filter as $row) {
-				$data[] = $this->db->where($row['field'],$row['value']);	
-			}
+		if ($id) {
+			$data[] = $this->db->where('a.id',$id);	
 		}
 		$data[] = $this->db->order_by($this->general->get_order_column('a.id'),$this->general->get_order_type('desc'));
 		$data[] = $this->db->offset($this->general->get_offset());
 		return $data;
 	}
-	function get($filter = array())
+	function get($id = '')
 	{
-		$this->query($filter);
+		$this->query($id);
 		$this->db->limit($this->general->get_limit());
 		return $this->db->get();
 	}

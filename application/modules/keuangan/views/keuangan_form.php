@@ -10,12 +10,12 @@
 		</div>
 		<div class="form-group form-inline">
 			<?php echo form_label('Tipe','tipe',array('class'=>'control-label'))?>
-			<?php echo form_dropdown('tipe',$this->general_model->dropdown($module.'_tipe','Tipe'),set_value('tipe',(isset($row->tipe)?$row->tipe:'')),'id="tipe" class="form-control input-sm"')?>
+			<?php echo form_dropdown('tipe',$this->general_model->dropdown($module.'_tipe','Tipe'),set_value('tipe',(isset($row->tipe)?$row->tipe:'')),'id="tipe" class="form-control input-sm select2"')?>
 			<small><?php echo form_error('tipe')?></small>
 		</div>	
 		<div class="form-group form-inline">
 			<?php echo form_label('Jenis','jenis',array('class'=>'control-label'))?>
-			<?php echo form_dropdown('jenis',$this->general_model->dropdown($module.'_jenis','Jenis'),set_value('jenis',(isset($row->jenis)?$row->jenis:'')),'id="jenis" class="form-control input-sm"')?>
+			<?php echo form_dropdown('jenis',array(''=>'- Jenis -'),set_value('jenis',(isset($row->jenis)?$row->jenis:'')),'id="jenis" class="form-control input-sm select2"')?>
 			<small><?php echo form_error('jenis')?></small>
 		</div>	
 		<div class="form-group form-inline">
@@ -25,7 +25,7 @@
 		</div>
 		<div class="form-group form-inline">
 			<?php echo form_label('Wilayah Bidan','wilayah',array('class'=>'control-label'))?>
-			<?php echo form_input(array('id'=>'wilayah','name'=>'wilayah','class'=>'form-control input-sm input-uang','maxlength'=>'20','autocomplete'=>'off','value'=>'0'))?>
+			<?php echo form_input(array('id'=>'wilayah','name'=>'wilayah','class'=>'form-control input-sm input-uang','maxlength'=>'20','autocomplete'=>'off','value'=>'0','readonly'=>'true'))?>
 			<small><?php echo form_error('wilayah')?></small>
 		</div>
 		<div class="form-group form-inline">
@@ -42,7 +42,7 @@
 </div>
 <div class="box box-default">	
 	<div class="box-body">
-		<button class="btn btn-success btn-sm" type="submit" onclick="return confirm('Are you sure')"><span class="glyphicon glyphicon-save"></span> <?php echo $this->lang->line('save') ?></button>
+		<button class="btn btn-success btn-sm" type="submit" onclick="return confirm('<?php echo $this->lang->line('confirm') ?>')"><span class="glyphicon glyphicon-save"></span> <?php echo $this->lang->line('save') ?></button>
 		<a class="btn btn-danger btn-sm" href="<?php echo site_url($module.get_query_string()) ?>"><span class="glyphicon glyphicon-repeat"></span> <?php echo $this->lang->line('back') ?></a>
 	</div>
 </div>
@@ -50,7 +50,8 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		var app = {
-			bidan:$('#bidan')
+			bidan:$('#bidan'),
+			jenis:$('#jenis')
 		};
 
 		app.bidan.select2({
@@ -58,7 +59,7 @@
 		    dropdownAutoWidth:'true',
 		    width: 'auto',    
 		    ajax: {
-		    url: '<?php echo base_url() ?>index.php/api/bidan',
+		    url: '<?php echo base_url() ?>index.php/bidan/get',
 		    dataType: 'json',
 		    processResults: function (data) {
 		          return {
@@ -75,7 +76,30 @@
 	});
 </script>
 <script type="text/javascript">
-	function number_format(user_input){
+	function jenis()
+	{
+		$.ajax({
+			url:'<?php echo site_url('keuangan_jenis/get') ?>',
+			dataType:'json',
+			type:'get',
+			data:{
+				tipe:$('#tipe').val()
+			},
+			success:function(str){
+				var $el = $("#jenis");
+				$el.empty();
+				$el.append($("<option></option>").attr("value", "").text('- Jenis -'));
+				$.each(str, function(value,key) {
+					$el.append($("<option></option>").attr("value", key.id).text(key.name));
+				});	
+				var value = '<?php echo set_value("jenis",(isset($row->jenis)?$row->jenis:'')) ?>';
+				$('#jenis').val(value);				
+			}
+		});
+	}
+	jenis();
+	function number_format(user_input)
+	{
 	    var filtered_number = user_input.replace(/[^0-9]/gi, '');
 	    var length = filtered_number.length;
 	    var breakpoint = 1;
@@ -97,20 +121,25 @@
 	function wilayah()
 	{
 		$.ajax({
-			url:'<?php echo base_url() ?>index.php/api/bidan/get_by_id/'+$('#bidan').val(),
+			url:'<?php echo site_url('bidan/get') ?>',
 			dataType:'json',
-			type:'post',
+			type:'get',
+			data:{
+				id:$('#bidan').val()
+			},
 			success:function(str){
+				console.log(str);
 				$('#wilayah').val(str.wilayah);
 				price();
 			}
 		});
 	}
+	wilayah();
 	function price()
 	{
 		$.ajax({
-			url:'<?php echo site_url('api/keuangan_harga') ?>',
-			type:'post',
+			url:'<?php echo site_url('keuangan_harga/get') ?>',
+			type:'get',
 			dataType:'json',
 			data:{
 				jenis:$('#jenis').val(),
@@ -122,6 +151,9 @@
 		})
 	}
 	$(document).ready(function(){	
+		$('#tipe').change(function(){
+			jenis();
+		});
 		$('#jenis').change(function(){
 			wilayah();
 		});

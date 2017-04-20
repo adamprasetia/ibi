@@ -11,6 +11,9 @@
 	<div class="box-body">
 		<div class="panel panel-default">
 			<div class="panel-body">
+				<div class="checkbox pull-right">
+					<label><input type="checkbox" name="lunas" value="1" checked>Lunas</label>
+				</div>															
 				<div class="form-group form-inline">
 					<?php echo form_label('Tanggal Permohonan','tanggal',array('class'=>'control-label'))?>
 					<?php echo form_input(array('id'=>'tanggal','name'=>'tanggal','class'=>'form-control input-sm input-tanggal','maxlength'=>'10','size'=>'10','autocomplete'=>'off','value'=>set_value('tanggal',(isset($row->tanggal)?$row->tanggal:date('d/m/Y')))))?>
@@ -79,9 +82,12 @@
 	function bidan(){
 		$('#nomor_sebelum').html('');
 		$.ajax({
-			url:'<?php echo base_url() ?>index.php/api/bidan/get_by_id/<?php echo $bidan_id; ?>',
+			url:'<?php echo site_url('bidan/get') ?>',
 			dataType:'json',
-			type:'post',
+			type:'get',
+			data:{
+				id:<?php echo $bidan_id; ?>
+			},
 			success:function(str){
 				$('#nomor_sebelum').html(str.sertikom);
 			}
@@ -92,10 +98,13 @@
 		$('#nomor_sebelum').html('');
 		$('#masa_berlaku_sebelum').html('');
 		$.ajax({
-			url:'<?php echo base_url() ?>index.php/api/str/last',
+			url:'<?php echo site_url('bidan/str/last') ?>',
 			dataType:'json',
-			type:'post',
-			data:{bidan:<?php echo $bidan_id; ?>,tanggal:$('#tanggal').val()},
+			type:'get',
+			data:{
+				bidan:<?php echo $bidan_id; ?>,
+				tanggal:$('#tanggal').val()
+			},
 			success:function(str){
 				if (str) {
 					$('#nomor_sebelum').html(str.nomor);

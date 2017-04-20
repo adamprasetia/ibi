@@ -14,8 +14,8 @@ class Keuangan_model extends CI_Model {
 			'd.name as bidan_name'
 		));
 		$data[] = $this->db->from($this->tbl_name.' a');
-		$data[] = $this->db->join($this->tbl_name.'_tipe b','a.tipe = b.id');
-		$data[] = $this->db->join($this->tbl_name.'_jenis c','a.jenis = c.id');
+		$data[] = $this->db->join($this->tbl_name.'_tipe b','a.tipe = b.id','left');
+		$data[] = $this->db->join($this->tbl_name.'_jenis c','a.jenis = c.id','left');
 		$data[] = $this->db->join('bidan d','a.bidan = d.id');
 		if($this->input->get('search') <> '')
 			$data[] = $this->db->where('(a.jumlah like "%'.$this->input->get('search').'%")');
