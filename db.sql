@@ -41,9 +41,9 @@ CREATE TABLE IF NOT EXISTS `bidan` (
   KEY `status_kepegawaian` (`status_pegawai`),
   KEY `golongan_darah` (`golongan_darah`),
   KEY `wilayah` (`wilayah`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ibi.bidan: ~48 rows (approximately)
+-- Dumping data for table ibi.bidan: ~49 rows (approximately)
 /*!40000 ALTER TABLE `bidan` DISABLE KEYS */;
 INSERT INTO `bidan` (`id`, `name`, `tempat_lahir`, `tanggal_lahir`, `alamat`, `tlp`, `golongan_darah`, `wilayah`, `praktik_nama`, `praktik_alamat`, `pendidikan`, `kampus`, `tahun_lulus`, `no_ijazah`, `tempat_kerja`, `status_pegawai`, `nip`, `nomor`, `kta_no`, `sertikom`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
 	(1, 'LINDA LIDYAWATI', 'CIANJUR', '1974-04-23', 'PERUM BUMI MAS BLOK B3 NO 05 SIRNAGALIH CIANJUR', '0813 2169 4664', 1, 1, '', '', 2, '', '2012', '', 'DINKES CIANJUR', 0, '', '', '10.06.0084', '77.99.7777', 0, '0000-00-00 00:00:00', 1, '2017-04-12 22:49:41'),
@@ -93,7 +93,8 @@ INSERT INTO `bidan` (`id`, `name`, `tempat_lahir`, `tanggal_lahir`, `alamat`, `t
 	(45, 'FITRI IRMA SAPUTRI', 'CIANJUR', '1991-04-03', 'BTN PURI ASRI LIMBANGAN BLOK A9 NO 34 DS CIKAROYA KEC. WARUNGKONDANG', '0815 1779 1993', 1, 0, '', '', 2, '', '2012', '', 'PKM CIBAREGBEG', 0, '', '', '', '', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
 	(46, 'EVA FATIMAH', 'CIANJUR', '1985-02-22', 'KP SINDANG RERET 01/01 KEC. CIRANJANG KAB. CIANJUR', '', 0, 0, '', '', 2, '', '2007', '', 'PKM CIRANJANG', 0, '', '', '', '', 0, '0000-00-00 00:00:00', 1, '2017-04-12 23:42:15'),
 	(47, 'INA ROSIANA', 'CIANJUR', '1965-02-04', 'KP BARU RT 02/RW 21 KEL. SAYANG', '', 0, 0, '', '', 2, '', '2012', '', 'PKM CJR KOTA', 0, '', '33443.2223.222', '2233.222.112', '636363663', 0, '0000-00-00 00:00:00', 1, '2017-04-17 21:24:12'),
-	(48, 'NENENG MULYANI', 'CIANJUR', '1979-04-11', 'KP CIBACANG 06/05 DS SITUHIANG KEC. PAGELARAN-CIANJUR', '083817321885', 3, 1, 'Nama Tempat Praktik', 'Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik', 2, 'AKBID CIANJUR', '2012', '1232.12323.2323.2323', 'RSUD PAGELARAN', 0, '', 'no rek', 'nomor kta', 'no sert', 0, '0000-00-00 00:00:00', 1, '2017-04-15 16:39:55');
+	(48, 'NENENG MULYANI', 'CIANJUR', '1997-04-10', 'KP CIBACANG 06/05 DS SITUHIANG KEC. PAGELARAN-CIANJUR', '083817321885', 3, 1, 'Nama Tempat Praktik', 'Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik Alamat Praktik', 2, 'AKBID CIANJUR', '2012', '1232.12323.2323.2323', 'RSUD PAGELARAN', 0, '', 'no rek', 'nomor kta', 'no sert', 0, '0000-00-00 00:00:00', 1, '2017-04-18 21:09:19'),
+	(49, 'Adam Prasetia', 'Bandung', '1989-02-16', 'Warujajar', '083817321885', 2, 6, 'DamzSoft', 'Palmerah, Jakarta Pusat', 4, 'Universitas Suryakancana', '2011', '1234.5678.90001', 'PT Kompas Cyber Media', 2, '033152', '222.222.222', '111.111.111', '333.333.333', 1, '2017-04-18 21:13:49', 1, '2017-04-20 21:42:26');
 /*!40000 ALTER TABLE `bidan` ENABLE KEYS */;
 
 
@@ -114,9 +115,9 @@ CREATE TABLE IF NOT EXISTS `bidan_kta` (
   KEY `bidan` (`bidan`),
   KEY `type` (`tipe`),
   KEY `status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ibi.bidan_kta: ~49 rows (approximately)
+-- Dumping data for table ibi.bidan_kta: ~51 rows (approximately)
 /*!40000 ALTER TABLE `bidan_kta` DISABLE KEYS */;
 INSERT INTO `bidan_kta` (`id`, `tanggal`, `bidan`, `tipe`, `syarat`, `masa_berlaku`, `status`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
 	(2, '2017-03-28', 2, 2, '', 0, 2, 1, '2017-03-28 07:36:37', 0, '0000-00-00 00:00:00'),
@@ -152,8 +153,8 @@ INSERT INTO `bidan_kta` (`id`, `tanggal`, `bidan`, `tipe`, `syarat`, `masa_berla
 	(34, '2017-03-28', 32, 1, '', 0, 2, 1, '2017-03-28 08:50:26', 0, '0000-00-00 00:00:00'),
 	(35, '2017-03-28', 33, 1, '', 0, 2, 1, '2017-03-28 09:15:48', 0, '0000-00-00 00:00:00'),
 	(36, '2017-03-28', 34, 1, '', 0, 2, 1, '2017-03-28 09:15:58', 0, '0000-00-00 00:00:00'),
-	(37, '2017-03-28', 35, 1, '', 0, 2, 1, '2017-03-28 09:16:13', 0, '0000-00-00 00:00:00'),
-	(38, '2017-03-28', 36, 1, '', 0, 2, 1, '2017-03-28 09:16:24', 0, '0000-00-00 00:00:00'),
+	(37, '2017-03-28', 35, 1, '', 2019, 1, 1, '2017-03-28 09:16:13', 1, '2017-04-21 01:04:42'),
+	(38, '2017-03-28', 36, 1, '', 2016, 1, 1, '2017-03-28 09:16:24', 1, '2017-04-21 01:02:09'),
 	(39, '2017-03-28', 37, 1, '', 0, 2, 1, '2017-03-28 09:16:37', 1, '2017-03-28 09:17:28'),
 	(40, '2017-03-28', 38, 1, '', 0, 2, 1, '2017-03-28 09:16:45', 0, '0000-00-00 00:00:00'),
 	(41, '2017-03-28', 39, 1, '', 0, 2, 1, '2017-03-28 09:18:05', 0, '0000-00-00 00:00:00'),
@@ -165,10 +166,12 @@ INSERT INTO `bidan_kta` (`id`, `tanggal`, `bidan`, `tipe`, `syarat`, `masa_berla
 	(47, '2017-03-28', 45, 1, '', 0, 2, 1, '2017-03-28 09:19:00', 0, '0000-00-00 00:00:00'),
 	(48, '2017-03-28', 46, 1, '', 0, 2, 1, '2017-03-28 09:19:09', 0, '0000-00-00 00:00:00'),
 	(49, '2017-03-28', 47, 1, '', 2017, 1, 1, '2017-03-28 09:19:17', 1, '2017-04-15 11:49:41'),
-	(52, '2017-03-28', 48, 1, '', 2017, 1, 1, '2017-03-28 10:36:00', 1, '2017-04-12 21:24:01'),
-	(53, '2017-04-12', 1, 1, '', 2018, 1, 1, '2017-04-12 21:19:49', 1, '2017-04-15 11:48:49'),
-	(54, '2017-04-12', 48, 2, '', 2022, 1, 1, '2017-04-12 21:24:12', 1, '2017-04-12 21:24:38'),
-	(55, '2017-04-15', 47, 2, '', 0, 2, 1, '2017-04-15 11:50:39', 0, '0000-00-00 00:00:00');
+	(53, '2017-04-12', 1, 1, '', 2000, 1, 1, '2017-04-12 21:19:49', 1, '2017-04-21 01:42:43'),
+	(59, '2017-04-20', 48, 1, '', 0, 2, 1, '2017-04-20 23:46:31', 0, '0000-00-00 00:00:00'),
+	(60, '2017-04-19', 49, 1, '', 2003, 1, 1, '2017-04-20 23:47:24', 1, '2017-04-21 01:16:28'),
+	(61, '2017-04-20', 49, 2, '', 2018, 1, 1, '2017-04-20 23:47:40', 1, '2017-04-21 01:15:27'),
+	(62, '2017-04-21', 49, 2, '', 0, 2, 1, '2017-04-21 01:16:58', 0, '0000-00-00 00:00:00'),
+	(63, '2017-04-21', 1, 2, '', 2005, 1, 1, '2017-04-21 01:42:55', 0, '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `bidan_kta` ENABLE KEYS */;
 
 
@@ -246,13 +249,15 @@ CREATE TABLE IF NOT EXISTS `bidan_pelatihan` (
   `user_update` int(11) NOT NULL,
   `date_update` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ibi.bidan_pelatihan: ~0 rows (approximately)
+-- Dumping data for table ibi.bidan_pelatihan: ~3 rows (approximately)
 /*!40000 ALTER TABLE `bidan_pelatihan` DISABLE KEYS */;
 INSERT INTO `bidan_pelatihan` (`id`, `bidan`, `pelatihan`, `tanggal`, `alamat`, `nomor`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
 	(1, 2, 1, '2017-03-27', 'Hotel Palace', '5647.475.884.89554', 1, '2017-03-27 18:09:45', 1, '2017-03-27 19:51:50'),
-	(2, 48, 5, '2017-03-20', 'Kab Cianjur', '123/gsf', 4, '2017-03-28 17:27:01', 0, '0000-00-00 00:00:00');
+	(2, 48, 5, '2017-03-20', 'Kab Cianjur', '123/gsf', 4, '2017-03-28 17:27:01', 1, '2017-04-18 21:40:23'),
+	(3, 48, 1, '2017-04-18', 'Puncak', '123.123.123', 1, '2017-04-18 21:34:30', 1, '2017-04-18 21:37:20'),
+	(4, 49, 8, '2017-04-18', '', '', 1, '2017-04-18 22:01:18', 0, '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `bidan_pelatihan` ENABLE KEYS */;
 
 
@@ -276,15 +281,17 @@ CREATE TABLE IF NOT EXISTS `bidan_sipb_m` (
   KEY `type` (`tipe`),
   KEY `status` (`status`),
   KEY `bidan_2` (`bidan_lain`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table ibi.bidan_sipb_m: ~3 rows (approximately)
+-- Dumping data for table ibi.bidan_sipb_m: ~6 rows (approximately)
 /*!40000 ALTER TABLE `bidan_sipb_m` DISABLE KEYS */;
 INSERT INTO `bidan_sipb_m` (`id`, `tanggal`, `bidan`, `bidan_lain`, `tipe`, `syarat`, `nomor`, `masa_berlaku`, `status`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
-	(1, '2017-04-14', 48, 1, 1, '', '1231.23231.232', '2017-04-16', 1, 1, '2017-04-15 10:34:25', 1, '2017-04-15 16:27:43'),
-	(2, '2017-04-15', 48, 1, 2, '', '', '0000-00-00', 2, 1, '2017-04-15 11:23:49', 1, '2017-04-15 16:22:20'),
 	(3, '2017-04-14', 47, 0, 1, '', '123.123.123', '2017-04-16', 1, 1, '2017-04-15 17:24:16', 1, '2017-04-15 17:41:02'),
-	(4, '2017-04-15', 47, 0, 2, '', '', '0000-00-00', 2, 1, '2017-04-15 17:40:04', 0, '0000-00-00 00:00:00');
+	(4, '2017-04-15', 47, 0, 2, '', '', '0000-00-00', 2, 1, '2017-04-15 17:40:04', 0, '0000-00-00 00:00:00'),
+	(7, '2017-04-21', 49, 49, 1, '', '123', '2017-04-22', 1, 1, '2017-04-21 00:15:56', 1, '2017-04-21 00:17:01'),
+	(8, '2017-04-22', 49, 0, 2, '', '123', '2017-04-23', 1, 1, '2017-04-21 00:17:24', 1, '2017-04-21 01:44:08'),
+	(10, '2017-04-21', 48, 0, 1, '', '', '0000-00-00', 1, 1, '2017-04-21 00:19:26', 1, '2017-04-21 00:23:02'),
+	(11, '2017-04-21', 48, 0, 2, '', '', '0000-00-00', 1, 1, '2017-04-21 00:23:14', 0, '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `bidan_sipb_m` ENABLE KEYS */;
 
 
@@ -355,8 +362,8 @@ CREATE TABLE IF NOT EXISTS `bidan_sipb_m_tipe` (
 /*!40000 ALTER TABLE `bidan_sipb_m_tipe` DISABLE KEYS */;
 INSERT INTO `bidan_sipb_m_tipe` (`id`, `name`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
 	(1, 'Baru', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
-	(2, 'Perpanjangan < 5 Tahun Visitasi', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
-	(3, 'Perpanjangan > 5 Tahun Visitasi', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');
+	(2, 'Perpanjangan > 5 Tahun Visitasi', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(3, 'Perpanjangan < 5 Tahun Visitasi', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `bidan_sipb_m_tipe` ENABLE KEYS */;
 
 
@@ -378,13 +385,15 @@ CREATE TABLE IF NOT EXISTS `bidan_sipb_p` (
   KEY `bidan` (`bidan`),
   KEY `type` (`tipe`),
   KEY `status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table ibi.bidan_sipb_p: ~0 rows (approximately)
+-- Dumping data for table ibi.bidan_sipb_p: ~4 rows (approximately)
 /*!40000 ALTER TABLE `bidan_sipb_p` DISABLE KEYS */;
 INSERT INTO `bidan_sipb_p` (`id`, `tanggal`, `bidan`, `tipe`, `syarat`, `nomor`, `masa_berlaku`, `status`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
 	(1, '2017-03-27', 1, 1, '1,2,3,4,5,6,7,8,9,10,11', '213213123', '2017-03-27', 1, 1, '2017-03-27 12:36:30', 1, '2017-03-27 12:36:40'),
-	(2, '2017-04-15', 48, 1, '', '765.567.765', '2017-04-16', 1, 1, '2017-04-15 08:19:08', 0, '0000-00-00 00:00:00');
+	(2, '2017-04-15', 48, 1, '', '765.567.765', '2017-04-16', 1, 1, '2017-04-15 08:19:08', 0, '0000-00-00 00:00:00'),
+	(8, '2017-04-21', 49, 1, '', '123', '2017-04-21', 1, 1, '2017-04-21 00:07:11', 0, '0000-00-00 00:00:00'),
+	(9, '2017-04-22', 49, 2, '', '', '0000-00-00', 2, 1, '2017-04-21 00:07:55', 1, '2017-04-21 01:39:26');
 /*!40000 ALTER TABLE `bidan_sipb_p` ENABLE KEYS */;
 
 
@@ -473,9 +482,9 @@ CREATE TABLE IF NOT EXISTS `bidan_str` (
   KEY `bidan` (`bidan`),
   KEY `type` (`tipe`),
   KEY `status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table ibi.bidan_str: ~7 rows (approximately)
+-- Dumping data for table ibi.bidan_str: ~8 rows (approximately)
 /*!40000 ALTER TABLE `bidan_str` DISABLE KEYS */;
 INSERT INTO `bidan_str` (`id`, `tanggal`, `bidan`, `tipe`, `syarat`, `nomor`, `masa_berlaku`, `status`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
 	(1, '2017-03-27', 1, 1, '', 'STR-123.456.789', '2017-04-23', 1, 1, '2017-03-28 11:21:40', 1, '2017-03-28 15:47:09'),
@@ -485,7 +494,8 @@ INSERT INTO `bidan_str` (`id`, `tanggal`, `bidan`, `tipe`, `syarat`, `nomor`, `m
 	(7, '2017-04-13', 48, 2, '', '222.222.222', '2017-04-13', 1, 1, '2017-04-12 21:43:00', 1, '2017-04-12 21:44:05'),
 	(9, '2017-04-13', 47, 2, '', '', '0000-00-00', 2, 1, '2017-04-12 23:37:10', 0, '0000-00-00 00:00:00'),
 	(10, '2017-04-12', 46, 1, '', 'asdadsd', '2017-04-12', 1, 1, '2017-04-12 23:41:42', 0, '0000-00-00 00:00:00'),
-	(11, '2017-04-13', 46, 2, '', '', '0000-00-00', 2, 1, '2017-04-12 23:42:09', 0, '0000-00-00 00:00:00');
+	(11, '2017-04-13', 46, 2, '', '', '0000-00-00', 2, 1, '2017-04-12 23:42:09', 0, '0000-00-00 00:00:00'),
+	(15, '2017-04-20', 49, 1, '', '123', '2017-04-25', 1, 1, '2017-04-20 23:55:02', 1, '2017-04-21 01:34:29');
 /*!40000 ALTER TABLE `bidan_str` ENABLE KEYS */;
 
 
@@ -603,7 +613,6 @@ CREATE TABLE IF NOT EXISTS `keuangan` (
   `jumlah` int(11) NOT NULL,
   `jenis` int(11) NOT NULL,
   `ket` varchar(200) NOT NULL,
-  `status` tinyint(4) NOT NULL,
   `user_create` int(11) NOT NULL,
   `date_create` datetime NOT NULL,
   `user_update` int(11) NOT NULL,
@@ -612,32 +621,95 @@ CREATE TABLE IF NOT EXISTS `keuangan` (
   KEY `tipe` (`tipe`),
   KEY `bidan` (`bidan`),
   KEY `ket` (`jenis`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ibi.keuangan: ~2 rows (approximately)
+-- Dumping data for table ibi.keuangan: ~11 rows (approximately)
 /*!40000 ALTER TABLE `keuangan` DISABLE KEYS */;
-INSERT INTO `keuangan` (`id`, `tanggal`, `tipe`, `bidan`, `jumlah`, `jenis`, `ket`, `status`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
-	(1, '2017-04-18', 1, 2, 25000, 1, '', 1, 1, '2017-04-18 07:21:45', 0, '0000-00-00 00:00:00'),
-	(2, '2017-04-19', 1, 1, 67000, 1, 'keterangan ajah', 2, 1, '2017-04-18 07:35:07', 1, '2017-04-18 08:15:07');
+INSERT INTO `keuangan` (`id`, `tanggal`, `tipe`, `bidan`, `jumlah`, `jenis`, `ket`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
+	(6, '2017-04-20', 1, 48, 125000, 2, 'Otomatis', 1, '2017-04-20 23:46:31', 0, '0000-00-00 00:00:00'),
+	(7, '2017-04-20', 1, 49, 125000, 2, 'Otomatis', 1, '2017-04-20 23:47:24', 0, '0000-00-00 00:00:00'),
+	(8, '2017-04-20', 1, 49, 75000, 3, 'Otomatis', 1, '2017-04-20 23:47:40', 0, '0000-00-00 00:00:00'),
+	(9, '2017-04-20', 1, 49, 250000, 4, 'Otomatis', 1, '2017-04-20 23:55:02', 0, '0000-00-00 00:00:00'),
+	(10, '2017-04-21', 1, 49, 250000, 5, 'Otomatis', 1, '2017-04-20 23:55:50', 0, '0000-00-00 00:00:00'),
+	(12, '2017-04-21', 1, 49, 50000, 6, 'Otomatis', 1, '2017-04-21 00:07:11', 0, '0000-00-00 00:00:00'),
+	(13, '2017-04-21', 1, 49, 50000, 7, 'Otomatis', 1, '2017-04-21 00:07:55', 0, '0000-00-00 00:00:00'),
+	(14, '2017-04-21', 1, 49, 580000, 8, 'Otomatis', 1, '2017-04-21 00:15:57', 0, '0000-00-00 00:00:00'),
+	(15, '2017-04-21', 1, 49, 580000, 9, 'Otomatis', 1, '2017-04-21 00:17:24', 0, '0000-00-00 00:00:00'),
+	(16, '2017-04-21', 1, 49, 100000, 10, 'Otomatis', 1, '2017-04-21 00:17:42', 0, '0000-00-00 00:00:00'),
+	(17, '2017-04-21', 1, 48, 350000, 8, 'Otomatis', 1, '2017-04-21 00:19:26', 0, '0000-00-00 00:00:00'),
+	(18, '2017-04-21', 1, 48, 350000, 9, 'Otomatis', 1, '2017-04-21 00:23:14', 0, '0000-00-00 00:00:00'),
+	(19, '2017-04-21', 1, 49, 75000, 3, 'Otomatis', 1, '2017-04-21 01:16:58', 0, '0000-00-00 00:00:00'),
+	(20, '2017-04-21', 1, 1, 75000, 3, 'Otomatis', 1, '2017-04-21 01:42:55', 0, '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `keuangan` ENABLE KEYS */;
+
+
+-- Dumping structure for table ibi.keuangan_harga
+CREATE TABLE IF NOT EXISTS `keuangan_harga` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `jenis` int(11) NOT NULL,
+  `wilayah` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
+  `user_create` int(11) NOT NULL,
+  `date_create` datetime NOT NULL,
+  `user_update` int(11) NOT NULL,
+  `date_update` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+-- Dumping data for table ibi.keuangan_harga: ~20 rows (approximately)
+/*!40000 ALTER TABLE `keuangan_harga` DISABLE KEYS */;
+INSERT INTO `keuangan_harga` (`id`, `jenis`, `wilayah`, `harga`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
+	(1, 1, 0, 25000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(2, 2, 0, 125000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(3, 3, 0, 75000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(4, 4, 0, 250000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(5, 5, 0, 250000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(6, 6, 0, 50000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(7, 7, 0, 50000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(8, 8, 1, 350000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(9, 8, 2, 350000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(10, 8, 3, 350000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(11, 8, 4, 580000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(12, 8, 5, 580000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(13, 8, 6, 580000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(14, 9, 1, 350000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(15, 9, 2, 350000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(16, 9, 3, 350000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(17, 9, 4, 580000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(18, 9, 5, 580000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(19, 9, 6, 580000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(20, 10, 0, 100000, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');
+/*!40000 ALTER TABLE `keuangan_harga` ENABLE KEYS */;
 
 
 -- Dumping structure for table ibi.keuangan_jenis
 CREATE TABLE IF NOT EXISTS `keuangan_jenis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
+  `tipe` int(11) NOT NULL,
   `user_create` int(11) NOT NULL,
   `date_create` datetime NOT NULL,
   `user_update` int(11) NOT NULL,
   `date_update` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table ibi.keuangan_jenis: ~2 rows (approximately)
+-- Dumping data for table ibi.keuangan_jenis: ~13 rows (approximately)
 /*!40000 ALTER TABLE `keuangan_jenis` DISABLE KEYS */;
-INSERT INTO `keuangan_jenis` (`id`, `name`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
-	(1, 'Registrasi KTA', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
-	(2, 'Perpanjang KTA', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');
+INSERT INTO `keuangan_jenis` (`id`, `name`, `tipe`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
+	(1, 'Iuran Bulanan', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(2, 'KTA - Baru', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(3, 'KTA - Perpanjang/Hilang KTA', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(4, 'STR - Baru', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(5, 'STR - Perpanjang/SIB - Pemutihan', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(6, 'SIPB P - Baru', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(7, 'SIPB P - Perpanjang', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(8, 'SIPB M - Baru', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(9, 'SIPB M - Perpanjang > 5 Tahun', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(10, 'SIPB M - Perpanjang < 5 Tahun', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(11, 'Pembayaran Listrik', 2, 1, '2017-04-20 09:31:17', 0, '0000-00-00 00:00:00'),
+	(12, 'Pembayaran Uang Makan Pegawai', 2, 1, '2017-04-20 09:31:40', 0, '0000-00-00 00:00:00'),
+	(13, 'Uang Lembur', 2, 1, '2017-04-20 09:32:07', 0, '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `keuangan_jenis` ENABLE KEYS */;
 
 
@@ -655,7 +727,7 @@ CREATE TABLE IF NOT EXISTS `keuangan_tipe` (
 -- Dumping data for table ibi.keuangan_tipe: ~2 rows (approximately)
 /*!40000 ALTER TABLE `keuangan_tipe` DISABLE KEYS */;
 INSERT INTO `keuangan_tipe` (`id`, `name`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
-	(1, 'Pemasukan', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(1, 'Pemasukan', 0, '0000-00-00 00:00:00', 1, '2017-04-20 09:45:36'),
 	(2, 'Pengeluaran', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `keuangan_tipe` ENABLE KEYS */;
 
@@ -673,15 +745,15 @@ CREATE TABLE IF NOT EXISTS `module` (
   `user_update` int(11) NOT NULL,
   `date_update` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table ibi.module: ~20 rows (approximately)
+-- Dumping data for table ibi.module: ~23 rows (approximately)
 /*!40000 ALTER TABLE `module` DISABLE KEYS */;
 INSERT INTO `module` (`id`, `name`, `url`, `icon`, `parent`, `order`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
 	(1, 'Beranda', 'home', 'fa fa-home', 0, 1, 1, '2016-12-15 22:24:48', 1, '2016-12-15 23:23:09'),
 	(2, 'Data Master', '', 'fa fa-database', 0, 2, 1, '2016-12-15 22:25:55', 1, '2016-12-15 23:23:29'),
-	(23, 'Level User', 'users_level', '', 51, 2, 1, '2016-12-15 23:12:35', 1, '2017-04-15 10:31:52'),
-	(24, 'Status User', 'reference/users_status', '', 51, 3, 1, '2016-12-15 23:13:12', 1, '2017-04-15 10:32:11'),
+	(23, 'Level', 'users_level', '', 51, 2, 1, '2016-12-15 23:12:35', 1, '2017-04-20 09:18:50'),
+	(24, 'Status', 'reference/users_status', '', 51, 3, 1, '2016-12-15 23:13:12', 1, '2017-04-20 09:19:07'),
 	(25, 'Pengguna', 'users', '', 51, 1, 1, '2016-12-15 23:15:54', 1, '2017-04-15 10:31:27'),
 	(26, 'Backup', 'backup', 'fa fa-download', 0, 8, 1, '2016-12-15 23:16:42', 1, '2016-12-16 00:21:36'),
 	(27, 'Module', 'module', 'fa fa-check', 0, 7, 1, '2016-12-16 00:21:22', 0, '0000-00-00 00:00:00'),
@@ -691,12 +763,20 @@ INSERT INTO `module` (`id`, `name`, `url`, `icon`, `parent`, `order`, `user_crea
 	(40, 'Bidan', 'bidan', '', 2, 1, 1, '2017-03-15 22:14:17', 0, '0000-00-00 00:00:00'),
 	(42, 'KTA', 'kta', '', 41, 1, 1, '2017-03-21 20:23:22', 0, '0000-00-00 00:00:00'),
 	(43, 'Golongan Darah', 'reference/golongan_darah', '', 2, 5, 1, '2017-03-21 23:56:30', 0, '0000-00-00 00:00:00'),
-	(46, 'Reminder', 'reminder', 'fa fa-bell', 0, 4, 1, '2017-03-22 21:02:53', 1, '2017-03-22 21:04:18'),
+	(46, 'Reminder', '', 'fa fa-bell', 0, 4, 1, '2017-03-22 21:02:53', 1, '2017-04-21 00:42:14'),
 	(48, 'STR/SIB', 'str', '', 41, 2, 1, '2017-03-26 17:47:36', 1, '2017-03-28 10:03:00'),
 	(49, 'SIPB-P', 'sipb_p', '', 41, 3, 1, '2017-03-27 12:27:47', 0, '0000-00-00 00:00:00'),
 	(50, 'Surat', 'surat', 'fa fa-tasks', 0, 4, 1, '2017-03-27 20:00:30', 1, '2017-03-28 15:58:58'),
 	(51, 'Keamanan', '', 'fa fa-lock', 0, 3, 1, '2017-04-15 10:30:56', 0, '0000-00-00 00:00:00'),
-	(52, 'Keuangan', 'keuangan', '', 0, 4, 1, '2017-04-18 06:31:43', 0, '0000-00-00 00:00:00');
+	(52, 'Keuangan', '', 'fa fa-money', 0, 4, 1, '2017-04-18 06:31:43', 1, '2017-04-20 09:17:05'),
+	(53, 'Pemasukan dan Pengeluaran', 'keuangan', '', 52, 1, 1, '2017-04-20 09:17:38', 0, '0000-00-00 00:00:00'),
+	(54, 'Jenis', 'keuangan_jenis', '', 52, 3, 1, '2017-04-20 09:18:06', 1, '2017-04-20 09:25:16'),
+	(55, 'Harga', 'keuangan_harga', '', 52, 4, 1, '2017-04-20 09:18:33', 1, '2017-04-20 09:21:14'),
+	(56, 'Tipe', 'reference/keuangan_tipe', '', 52, 2, 1, '2017-04-20 09:20:11', 0, '0000-00-00 00:00:00'),
+	(57, 'KTA', 'reminder_kta', '', 46, 1, 1, '2017-04-21 00:42:32', 0, '0000-00-00 00:00:00'),
+	(58, 'STR', 'reminder_str', '', 46, 2, 1, '2017-04-21 01:30:30', 0, '0000-00-00 00:00:00'),
+	(59, 'SIPB P', 'reminder_sipb_p', '', 46, 3, 1, '2017-04-21 01:30:54', 0, '0000-00-00 00:00:00'),
+	(60, 'SIPB M', 'reminder_sipb_m', '', 46, 4, 1, '2017-04-21 01:31:16', 0, '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `module` ENABLE KEYS */;
 
 
@@ -736,7 +816,7 @@ CREATE TABLE IF NOT EXISTS `pendidikan` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table ibi.pendidikan: ~6 rows (approximately)
+-- Dumping data for table ibi.pendidikan: ~7 rows (approximately)
 /*!40000 ALTER TABLE `pendidikan` DISABLE KEYS */;
 INSERT INTO `pendidikan` (`id`, `name`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
 	(1, 'D1', 0, '0000-00-00 00:00:00', 1, '2017-03-27 18:53:30'),
@@ -744,7 +824,7 @@ INSERT INTO `pendidikan` (`id`, `name`, `user_create`, `date_create`, `user_upda
 	(3, 'D4', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
 	(4, 'S1', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
 	(5, 'S2', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
-	(6, 'Lain-Lain', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');
+	(6, 'Lain-Lain', 0, '0000-00-00 00:00:00', 1, '2017-04-19 19:15:16');
 /*!40000 ALTER TABLE `pendidikan` ENABLE KEYS */;
 
 
@@ -786,7 +866,7 @@ CREATE TABLE IF NOT EXISTS `surat` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table ibi.surat: ~7 rows (approximately)
+-- Dumping data for table ibi.surat: ~8 rows (approximately)
 /*!40000 ALTER TABLE `surat` DISABLE KEYS */;
 INSERT INTO `surat` (`id`, `tipe`, `nomor`, `date_from`, `date_to`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
 	(1, 1, '248/PCIBI/CJR/XII/2016', '2017-03-01', '2017-03-31', 1, '2017-03-28 06:27:48', 1, '2017-04-10 21:30:44'),
@@ -795,7 +875,7 @@ INSERT INTO `surat` (`id`, `tipe`, `nomor`, `date_from`, `date_to`, `user_create
 	(5, 4, '006/REK/PC-IBI/CJR/I/2017', '2017-03-01', '2017-03-31', 1, '2017-03-29 15:38:21', 1, '2017-04-11 21:03:45'),
 	(6, 5, '', '2017-03-01', '2017-04-30', 1, '2017-03-30 06:37:18', 1, '2017-04-12 21:49:07'),
 	(7, 6, '', '2017-03-01', '2017-04-30', 1, '2017-04-11 21:09:22', 1, '2017-04-11 21:19:19'),
-	(8, 7, '', '2017-03-01', '2017-04-30', 1, '2017-04-12 22:09:19', 1, '2017-04-12 22:30:54');
+	(8, 7, '1212323', '2017-03-01', '2017-04-30', 1, '2017-04-12 22:09:19', 1, '2017-04-19 18:56:25');
 /*!40000 ALTER TABLE `surat` ENABLE KEYS */;
 
 
@@ -816,7 +896,7 @@ INSERT INTO `surat_tipe` (`id`, `name`, `user_create`, `date_create`, `user_upda
 	(1, 'SURAT PENGAJUAN KTA', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
 	(2, 'DAFTAR NAMA PENGAJUAN KTA PD', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
 	(3, 'DAFTAR NAMA PENGAJUAN KTA PC', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
-	(4, 'SURAT REKOMENDASI', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
+	(4, 'SURAT REKOMENDASI STR', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
 	(5, 'DAFTAR NAMA PENGUSUL REGISTRASI STR', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
 	(6, 'DAFTAR NAMA PENGUSUL RE-REGISTRASI STR', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
 	(7, 'PENGUSULAN RE-REGISTRASI STR', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');
@@ -845,7 +925,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table ibi.users: ~5 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `level`, `ip_login`, `date_login`, `user_agent`, `status`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
-	(1, 'Adam Prasetia', 'damz', '202cb962ac59075b964b07152d234b70', 1, '::1', '2017-04-18 06:32:11', 'Windows 7(Google Chrome 57.0.2987.133)', 1, 0, '0000-00-00 00:00:00', 2, '2016-10-21 09:34:23'),
+	(1, 'Adam Prasetia', 'damz', '202cb962ac59075b964b07152d234b70', 1, '::1', '2017-04-21 01:31:38', 'Windows 7(Google Chrome 57.0.2987.133)', 1, 0, '0000-00-00 00:00:00', 2, '2016-10-21 09:34:23'),
 	(2, 'Farida Ambarwati', 'ambar', 'caf1a3dfb505ffed0d024130f58c5cfa', 2, '::1', '2016-12-16 01:56:01', 'Windows 7(Google Chrome 55.0.2883.87)', 1, 1, '2016-10-21 09:21:00', 1, '2016-12-16 01:12:10'),
 	(3, 'Budiarti', 'adhe', '202cb962ac59075b964b07152d234b70', 3, '::1', '2017-01-01 15:10:28', 'Windows 7(Google Chrome 55.0.2883.87)', 1, 1, '2016-12-30 20:17:58', 0, '0000-00-00 00:00:00'),
 	(4, 'Ulfi Alawiah', 'ulfi', '202cb962ac59075b964b07152d234b70', 1, '::1', '2017-03-28 17:18:54', 'Windows 7(Google Chrome 56.0.2924.87)', 1, 1, '2017-03-23 19:41:56', 1, '2017-03-23 19:42:12');
@@ -867,7 +947,7 @@ CREATE TABLE IF NOT EXISTS `users_level` (
 -- Dumping data for table ibi.users_level: ~2 rows (approximately)
 /*!40000 ALTER TABLE `users_level` DISABLE KEYS */;
 INSERT INTO `users_level` (`id`, `name`, `module`, `user_create`, `date_create`, `user_update`, `date_update`) VALUES
-	(1, 'ADMIN', '1,2,40,37,38,39,43,51,25,23,24,46,50,52,27,26', 0, '0000-00-00 00:00:00', 1, '2017-04-18 06:31:59');
+	(1, 'ADMIN', '1,2,40,37,38,39,43,51,25,23,24,46,57,58,59,60,50,52,53,56,54,55,27,26', 0, '0000-00-00 00:00:00', 1, '2017-04-21 01:31:30');
 /*!40000 ALTER TABLE `users_level` ENABLE KEYS */;
 
 
