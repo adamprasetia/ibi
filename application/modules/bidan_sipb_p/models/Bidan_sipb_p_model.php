@@ -54,4 +54,20 @@ class Bidan_sipb_p_model extends CI_Model
 		$this->db->where('bidan',$bidan_id);
 		return $this->db->get()->num_rows();
 	}
+	function last($bidan = '',$tanggal = '')
+	{
+		$this->db->from($this->tbl_name);
+		$this->db->where('bidan',$bidan);
+		$this->db->where('status','1');
+		if ($tanggal) {
+			$this->db->where('tanggal <=',$tanggal);			
+		}
+		$this->db->order_by('masa_berlaku','desc');
+		$this->db->limit(1);
+		$result = $this->db->get();
+		if ($result->num_rows() > 0) {
+			return $result->row();
+		}
+		return '';
+	}		
 }

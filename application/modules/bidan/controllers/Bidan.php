@@ -21,36 +21,59 @@ class Bidan extends MY_Controller
 		
 		$this->table->set_template(tbl_tmp());
 		$head_data = array(
-			'name' => 'Nama Lengkap',
-			'tanggal_lahir' => 'TTL',
-			'tlp' => 'No Telp/HP',
-			'tempat_kerja' => 'Instansi/Tempat Kerja',
-			'kta_no' => 'Nomor KTA',
+			'name' => 'Identitas Bidan',
+			'tempat_kerja' => 'Tempat Kerja',
+			'praktik_nama' => 'Praktik',
+			'pendidikan_name' => 'Pendidikan'
 		);
 		$heading[] = form_checkbox(array('id'=>'selectAll','value'=>1));
 		$heading[] = '#';
 		foreach($head_data as $r => $value){
 			$heading[] = anchor($this->data['module'].get_query_string(array('order_column'=>"$r",'order_type'=>$this->general->order_type($r))),"$value ".$this->general->order_icon("$r"));
 		}		
+		$heading[] = array('data'=>'Surat');
 		$heading[] = array('data'=>$this->lang->line('action'),'style'=>'min-width:120px');
 		$this->table->set_heading($heading);
 		$result = $this->model->get()->result();
 		$i=1+$offset;
+
+		$this->load->model('bidan_str/bidan_str_model');
+		$this->load->model('bidan_sipb_p/bidan_sipb_p_model');
+		$this->load->model('bidan_sipb_m/bidan_sipb_m_model');
+
 		foreach($result as $r){
+			$str = $this->bidan_str_model->last($r->id);
+			$sipb_p = $this->bidan_sipb_p_model->last($r->id);
+			$sipb_m = $this->bidan_sipb_m_model->last($r->id);
 			$this->table->add_row(
 				array('data'=>form_checkbox(array('name'=>'check[]','value'=>$r->id)),'width'=>'10px'),
 				$i++,
-				anchor($this->data['module'].'/edit/'.$r->id.get_query_string(),$r->name),
-				$r->tempat_lahir.', '.dateformatindo($r->tanggal_lahir,2),
-				$r->tlp,
-				$r->tempat_kerja,
-				$r->kta_no,
+				anchor($this->data['module'].'/edit/'.$r->id.get_query_string(),$r->name).' ('.$r->wilayah_name.')'
+				.'<br><b>TTL</b> : '.$r->tempat_lahir.', '.dateformatindo($r->tanggal_lahir,2)
+				.'<br><b>ALM</b> : '.$r->alamat
+				.'<br><b>TLP</b> : '.$r->tlp
+				.'<br><b>KTA</b> : '.$r->kta_no,
+				$r->tempat_kerja
+				.'<br><b>NIP</b> : '.$r->nip
+				.'<br><b>STAT</b> : '.$r->status_pegawai_name,
+				$r->praktik_nama
+				.'<br>'.$r->praktik_alamat,
+				$r->kampus
+				.'<br>'.$r->pendidikan_name
+				.'<br>'.$r->tahun_lulus,
+				'<b>No STR</b> : '.($str?$str->nomor:'')
+				.'<br><b>Masa Berlaku</b> : <br>'.($str?dateformatindo($str->masa_berlaku,2):'')
+				.'<br><b>No SIPB-P</b> : '.($sipb_p?$sipb_p->nomor:'')
+				.'<br><b>Masa Berlaku</b> : <br>'.($sipb_p?dateformatindo($sipb_p->masa_berlaku,2):'')
+				.'<br><b>No SIPB-M</b> : '.($sipb_m?$sipb_m->nomor:'')
+				.'<br><b>Masa Berlaku</b> : <br>'.($sipb_m?dateformatindo($sipb_m->masa_berlaku,2):''),
 				anchor($this->data['module'].'/edit/'.$r->id.get_query_string(),$this->lang->line('edit'),array('class'=>'btn btn-default btn-xs'))
 				."&nbsp;|&nbsp;".anchor($this->data['module'].'/delete/'.$r->id.get_query_string(),$this->lang->line('delete'),array('class'=>'btn btn-danger btn-xs','onclick'=>"return confirm('".$this->lang->line('confirm')."')"))
 			);
 		}
 		$this->data['table'] = $this->table->generate();
 		$this->data['total'] = page_total($offset,$limit,$total);
+		$this->data['jumlah'] = $total;
 		
 		$config = pag_tmp();
 		$config['base_url'] = site_url($this->data['module'].get_query_string(null,'offset'));
@@ -63,13 +86,41 @@ class Bidan extends MY_Controller
 		$this->data['content'] = $this->load->view($this->data['module'].'_list',$this->data,true);
 		$this->load->view('template_view',$this->data);
 	}
+	public function filter()
+	{
+		$this->data['action'] = 'bidan/search';
+		$this->data['content'] = $this->load->view($this->data['module'].'_filter',$this->data,true);
+		$this->load->view('template_view',$this->data);
+	}
 	public function search()
 	{
 		$data = array(
 			'search'=>$this->input->post('search'),
 			'limit'=>$this->input->post('limit'),
+			'name'=>$this->input->post('name'),
+			'tempat_lahir'=>$this->input->post('tempat_lahir'),
+			'tanggal_lahir_from'=>$this->input->post('tanggal_lahir_from'),
+			'tanggal_lahir_to'=>$this->input->post('tanggal_lahir_to'),
+			'alamat'=>$this->input->post('alamat'),
+			'tlp'=>$this->input->post('tlp'),
+			'golongan_darah'=>$this->input->post('golongan_darah'),
+			'wilayah'=>$this->input->post('wilayah'),
+			'kta_no'=>$this->input->post('kta_no'),
+			'nomor'=>$this->input->post('nomor'),
+			'sertikom'=>$this->input->post('sertikom'),
+			'praktik_nama'=>$this->input->post('praktik_nama'),
+			'praktik_alamat'=>$this->input->post('praktik_alamat'),
 			'pendidikan'=>$this->input->post('pendidikan'),
-			'status_pegawai'=>$this->input->post('status_pegawai')
+			'kampus'=>$this->input->post('kampus'),
+			'no_ijazah'=>$this->input->post('no_ijazah'),
+			'tahun_lulus'=>$this->input->post('tahun_lulus'),
+			'tempat_kerja'=>$this->input->post('tempat_kerja'),
+			'status_pegawai'=>$this->input->post('status_pegawai'),
+			'nip'=>$this->input->post('nip'),
+			'kta'=>$this->input->post('kta'),
+			'str'=>$this->input->post('str'),
+			'sipb_p'=>$this->input->post('sipb_p'),
+			'sipb_m'=>$this->input->post('sipb_m'),
 		);
 		redirect($this->data['module'].get_query_string($data));		
 	}

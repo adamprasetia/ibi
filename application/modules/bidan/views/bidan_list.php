@@ -2,6 +2,7 @@
 <div class="box box-default">
 	<div class="box-body">
 		<a href="<?php echo site_url($module.'/add'.get_query_string()) ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
+		<a href="<?php echo site_url('bidan/filter'.get_query_string()) ?>" class="btn btn-primary btn-sm">Filtering</a>
 	</div>
 </div>		
 <div class="box box-default">
@@ -16,13 +17,8 @@
 				<?php echo form_input(array('name'=>'search','value'=>$this->input->get('search'),'autocomplete'=>'off','placeholder'=>$this->lang->line('search').'..','onchange=>"submit()"','class'=>'form-control input-sm'))?>
 			</div>
 			<div class="form-group">
-				<?php echo form_dropdown('pendidikan',$this->general_model->dropdown('pendidikan','Pendidikan'),$this->input->get('pendidikan'),'class="form-control input-sm" onchange="submit()"')?>
+				<label for="search">Jumlah : <b><?php echo number_format($jumlah) ?></b></label>
 			</div>
-			<div class="form-group">
-				<?php echo form_dropdown('status_pegawai',$this->general_model->dropdown('status_pegawai','Status Kepegawaian'),$this->input->get('status_pegawai'),'class="form-control input-sm" onchange="submit()"')?>
-			</div>
-			<button class="btn btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-filter"></span> Filter</button>			
-			<button class="btn btn-primary btn-sm" type="reset"><span class="glyphicon glyphicon-repeat"></span> Reset</button>
 		</form>
 	</div>
 	<div class="box-body">

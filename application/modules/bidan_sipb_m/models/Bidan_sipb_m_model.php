@@ -59,7 +59,9 @@ class Bidan_sipb_m_model extends CI_Model {
 		$this->db->from($this->tbl_name);
 		$this->db->where('bidan',$bidan);
 		$this->db->where('status','1');
-		$this->db->where('tanggal <',$tanggal);
+		if ($tanggal) {
+			$this->db->where('tanggal <',$tanggal);			
+		}
 		$this->db->order_by('masa_berlaku','desc');
 		$this->db->limit(1);
 		$result = $this->db->get();

@@ -144,4 +144,67 @@ class Keuangan extends MY_Controller {
 		$this->session->set_flashdata('alert','<div class="alert alert-success">'.$this->lang->line('delete_success').'</div>');
 		redirect($this->data['module'].get_query_string());
 	}
+	public function pdf()
+	{
+		require_once "assets/plugins/fpdf/fpdf.php";		
+		$pdf = new FPDF();
+		$pdf->SetAutoPageBreak(TRUE, 10);
+		$pdf->AliasNbPages();
+		
+		$result = $this->model->get()->result();
+		$periode = '';
+		if ($this->input->get('date_from') && $this->input->get('date_to')) {
+			$periode = 'PERIODE '.format_dmy($this->input->get('date_from')).' S/D '.format_dmy($this->input->get('date_to'));			
+		}
+		$title = 'LAPORAN KEUANGAN '.$periode;
+
+		$pdf->AddPage('L','A4');
+		$pdf->SetTitle($title);
+
+		$pdf->SetFont('Arial','B',14);
+		$pdf->Cell(0,5,$title,0,0,'C');
+		$pdf->Ln(5);
+		$pdf->Cell(0,5,'PENGURUS CABANG IBI CIANJUR - WILAYAH JAWA BARAT',0,0,'C');
+		$pdf->Ln(10);
+		$pdf->SetFont('Arial','B',10);
+		if ($this->input->get('tipe')) {
+			$pdf->Cell(20,5,'TIPE',0,0,'L');
+			$pdf->Cell(0,5,' : '.$result[0]->tipe_name,0,0,'L');
+			$pdf->Ln(10);			
+		}
+		if ($this->input->get('jenis')) {
+			$pdf->Cell(20,5,'JENIS',0,0,'L');
+			$pdf->Cell(0,5,' : '.$result[0]->jenis_name,0,0,'L');
+			$pdf->Ln(10);
+		}
+		$pdf->SetFont('Arial','B',6);
+		$pdf->Cell(10,15,'NO',1,0,'C');
+		$pdf->Cell(35,15,'TANGGAL',1,0,'C');
+		$pdf->Cell(30,15,'TIPE',1,0,'C');
+		$pdf->Cell(40,15,'JENIS',1,0,'C');
+		$pdf->Cell(40,15,'BIDAN',1,0,'C');
+		$pdf->Cell(30,15,'JUMLAH',1,0,'C');
+		$pdf->Cell(0,15,'KETERANGAN',1,0,'C');
+		$pdf->Ln(15);
+		$pdf->SetFont('Arial','',6);
+		$i = 1;
+		$total = 0;
+		foreach ($result as $b) {
+			$pdf->Cell(10,5,$i,1,0,'C');
+			$pdf->Cell(35,5,dateformatindo($b->tanggal,2),1,0,'L');
+			$pdf->Cell(30,5,$b->tipe_name,1,0,'L');
+			$pdf->Cell(40,5,$b->jenis_name,1,0,'L');
+			$pdf->Cell(40,5,$b->bidan_name,1,0,'L');
+			$pdf->Cell(30,5,number_format($b->jumlah),1,0,'R');
+			$pdf->Cell(0,5,$b->ket,1,0,'L');
+			$pdf->Ln(5);
+			$total += $b->jumlah;
+			$i++;
+		}
+		$pdf->SetFont('Arial','B',6);
+		$pdf->Cell(155,5,'TOTAL',1,0,'C');
+		$pdf->Cell(30,5,number_format($total),1,0,'R');
+		$pdf->Cell(0,5,'',1,0,'R');
+		$pdf->Output($title,"I");		
+	}
 }

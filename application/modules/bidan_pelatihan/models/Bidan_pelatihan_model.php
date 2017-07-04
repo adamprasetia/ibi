@@ -15,7 +15,7 @@ class Bidan_pelatihan_model extends CI_Model
 		$data[] = $this->db->join('pelatihan b','a.pelatihan = b.id','left');
 		$search = $this->input->get('search');
 		if($search)
-			$data[] = $this->db->where('(a.alamat like "%'.$search.'%" or a.nomor like "%'.$search.'%")');
+			$data[] = $this->db->where('(b.name like "%'.$search.'%" or a.alamat like "%'.$search.'%" or a.nomor like "%'.$search.'%")');
 		$data[] = $this->db->order_by($this->general->get_order_column('a.tanggal'),$this->general->get_order_type('desc'));
 		$data[] = $this->db->offset($this->general->get_offset());
 		return $data;

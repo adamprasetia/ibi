@@ -292,8 +292,8 @@ class Bidan_sipb_p extends MY_Controller {
 		$pdf->Cell(0,5,'Ketua',0,0,'C');
 		$pdf->Ln(5);
 		$pdf->Cell(120,5,'',0,0,'C');
-		$pdf->Image(base_url('assets/img/ttd_ketua.jpg'),null,null,50);
-		$pdf->Ln(5);
+		// $pdf->Image(base_url('assets/img/ttd_ketua.jpg'),null,null,50);
+		$pdf->Ln(20);
 		$pdf->Cell(100,5,'',0,0,'C');
 		$pdf->Cell(0,5,'Liste Zulhijwati Wulan., AMKeb., SKM., M.Kes',0,0,'C');
 		$pdf->Output($title,"I");		

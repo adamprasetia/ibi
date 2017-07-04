@@ -413,7 +413,7 @@ function opt_year()
 }
 function dateformatindo($vardate,$type='')
 {
-    if ($vardate=='0000-00-00') {
+    if ($vardate=='0000-00-00' || $vardate=='') {
         return '';
     }
     $hari = array('Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu');

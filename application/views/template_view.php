@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="<?php echo base_url("assets/plugins/AdminLTE-2.3.3/dist/css/AdminLTE.min.css") ?>">
   <link rel="stylesheet" href="<?php echo base_url("assets/plugins/AdminLTE-2.3.3/dist/css/skins/skin-black.min.css") ?>">
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/select2-4.0.3/css/select2.min.css')?>"/>
-  <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css?v=2')?>"/>
+  <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css?v=4')?>"/>
   
   <script type="text/javascript" src="<?php echo base_url("assets/plugins/AdminLTE-2.3.3/plugins/jQuery/jQuery-2.2.0.min.js") ?>"></script>
   <script type="text/javascript" src="<?php echo base_url("assets/plugins/AdminLTE-2.3.3/plugins/slimScroll/jquery.slimscroll.min.js") ?>"></script>

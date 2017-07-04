@@ -2,6 +2,7 @@
 <div class="box box-default">
 	<div class="box-body">		
 		<a href="<?php echo site_url($module.'/add'.get_query_string()) ?>" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span> Tambah</a>
+		<a href="<?php echo site_url($module.'/pdf'.get_query_string()) ?>" class="btn btn-primary btn-sm" target="_blank"><span class="glyphicon glyphicon-plus"></span> Export To PDF</a>
 	</div>
 </div>			
 <div class="box box-default">
